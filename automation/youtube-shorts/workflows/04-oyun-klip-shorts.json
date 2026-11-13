@@ -1,0 +1,764 @@
+{
+  "name": "Oyun trendlerinden klip Shorts üret",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 12,18,21 * * *"
+            }
+          ]
+        }
+      },
+      "id": "2bacd4b3-7bf6-5f91-9ca4-188e9e35d635",
+      "name": "Günde 3 kez (12:00, 18:00, 21:00)",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        240,
+        0
+      ],
+      "notes": "Türkiye saatiyle öğle arası, okul/iş çıkışı ve akşam izlenme zirvesi."
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0f8f9aa2-78d7-586e-889b-c801acf8a03b",
+              "name": "allowed_channels",
+              "value": "",
+              "type": "string"
+            },
+            {
+              "id": "47b6d0d8-9687-5403-8353-c1908ff3e296",
+              "name": "privacy",
+              "value": "private",
+              "type": "string"
+            },
+            {
+              "id": "23a98a80-46a4-5ae1-b49d-6a05666e22c3",
+              "name": "min_seconds",
+              "value": 20,
+              "type": "number"
+            },
+            {
+              "id": "db2bd5b9-f0b0-52a1-8751-27c03051c888",
+              "name": "max_seconds",
+              "value": 45,
+              "type": "number"
+            },
+            {
+              "id": "c2f7a078-8da8-5ca7-b97a-3a3ca04ea8d6",
+              "name": "target_seconds",
+              "value": 30,
+              "type": "number"
+            },
+            {
+              "id": "fae87dea-4e6b-51e4-bf52-285f202c80c2",
+              "name": "min_source_seconds",
+              "value": 90,
+              "type": "number"
+            },
+            {
+              "id": "d308b0af-d0f4-5642-bcb3-a271b4e94885",
+              "name": "max_age_hours",
+              "value": 72,
+              "type": "number"
+            },
+            {
+              "id": "4e6b8ab8-decc-51bc-b5a3-89c6b1509d5d",
+              "name": "style_hashtags",
+              "value": "oyun, gamingtürkiye, oyunvideoları, valoranttürkiye, minecrafttürkiye",
+              "type": "string"
+            },
+            {
+              "id": "d1bbdd2a-e9e1-5170-8d05-776667f0faa2",
+              "name": "region_code",
+              "value": "TR",
+              "type": "string"
+            },
+            {
+              "id": "cc6fb11a-588d-5123-aaa7-23f738e5d121",
+              "name": "output_dir",
+              "value": "/data/shorts",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "ad5e261a-2527-5697-a5cf-c18f83e906ec",
+      "name": "Klip ayarları",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        480,
+        0
+      ],
+      "notes": "allowed_channels: kesit almanıza izin veren kanalların UC... kimlikleri, virgülle. Boşsa yalnızca Creative Commons lisanslı videolar kullanılır."
+    },
+    {
+      "parameters": {
+        "url": "https://www.googleapis.com/youtube/v3/videos",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "youTubeOAuth2Api",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "part",
+              "value": "id"
+            },
+            {
+              "name": "chart",
+              "value": "mostPopular"
+            },
+            {
+              "name": "regionCode",
+              "value": "={{ $json.region_code }}"
+            },
+            {
+              "name": "videoCategoryId",
+              "value": "20"
+            },
+            {
+              "name": "maxResults",
+              "value": "50"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "51607284-6d71-5092-ade8-e7a43fea4474",
+      "name": "Türkiye oyun trendleri",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        720,
+        0
+      ],
+      "onError": "continueRegularOutput",
+      "alwaysOutputData": true,
+      "notes": "YouTube'un Türkiye Oyun kategorisi trend listesi (1 kota birimi)."
+    },
+    {
+      "parameters": {
+        "url": "https://www.googleapis.com/youtube/v3/search",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "youTubeOAuth2Api",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "part",
+              "value": "id"
+            },
+            {
+              "name": "type",
+              "value": "video"
+            },
+            {
+              "name": "regionCode",
+              "value": "={{ $('Klip ayarları').first().json.region_code }}"
+            },
+            {
+              "name": "relevanceLanguage",
+              "value": "tr"
+            },
+            {
+              "name": "videoCategoryId",
+              "value": "20"
+            },
+            {
+              "name": "videoLicense",
+              "value": "creativeCommon"
+            },
+            {
+              "name": "order",
+              "value": "viewCount"
+            },
+            {
+              "name": "publishedAfter",
+              "value": "={{ new Date(Date.now() - $('Klip ayarları').first().json.max_age_hours * 3600e3).toISOString() }}"
+            },
+            {
+              "name": "maxResults",
+              "value": "25"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "3d7765c4-8ba8-583a-9baa-caf9fd19a873",
+      "name": "CC lisanslı oyun videoları",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        960,
+        0
+      ],
+      "onError": "continueRegularOutput",
+      "alwaysOutputData": true,
+      "executeOnce": true,
+      "notes": "Son 3 günün en çok izlenen, yeniden kullanıma açık (CC BY) Türkçe oyun videoları (100 kota birimi)."
+    },
+    {
+      "parameters": {
+        "jsCode": "// Channels that gave permission to clip them. Their uploads playlist is \"UU\" + the\n// rest of the channel ID, and reading it costs 1 quota unit instead of 100 for search.\nconst ids = String($('Klip ayarları').first().json.allowed_channels || '')\n  .split(',').map(s => s.trim()).filter(s => /^UC[A-Za-z0-9_-]{22}$/.test(s));\nif (!ids.length) return [{ json: { playlistId: null } }];\nreturn ids.map(id => ({ json: { channelId: id, playlistId: 'UU' + id.slice(2) } }));"
+      },
+      "id": "4871ba00-d85e-56d9-91ae-0a9dc8351ced",
+      "name": "İzinli kanal listesi",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1200,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://www.googleapis.com/youtube/v3/playlistItems",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "youTubeOAuth2Api",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "part",
+              "value": "contentDetails"
+            },
+            {
+              "name": "playlistId",
+              "value": "={{ $json.playlistId || 'yok' }}"
+            },
+            {
+              "name": "maxResults",
+              "value": "10"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "4d738575-6fa9-59f6-95e0-a9dcd522192d",
+      "name": "İzinli kanalların son videoları",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1440,
+        0
+      ],
+      "onError": "continueRegularOutput",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "jsCode": "// Collect candidate IDs from the three sources, keeping trend order first.\nconst cfg = $('Klip ayarları').first().json;\nconst maxAgeMs = Number(cfg.max_age_hours) * 3600e3;\nconst fresh = iso => iso && Date.now() - Date.parse(iso) <= maxAgeMs;\nconst rank = {};\nconst add = (id, source) => { if (id && !(id in rank)) rank[id] = { order: Object.keys(rank).length, source }; };\n\nfor (const v of $('Türkiye oyun trendleri').first().json.items || []) add(v.id, 'trend');\nfor (const v of $('CC lisanslı oyun videoları').first().json.items || []) add(v.id?.videoId, 'cc-search');\nfor (const it of $input.all()) {\n  for (const p of it.json.items || []) if (fresh(p.contentDetails?.videoPublishedAt)) add(p.contentDetails.videoId, 'allowlist');\n}\nconst ids = Object.keys(rank).slice(0, 50);\nif (!ids.length) return [];\nreturn [{ json: { ids: ids.join(','), rank } }];"
+      },
+      "id": "169ecb09-5ee3-5564-92c6-d0943ee6042c",
+      "name": "Adayları birleştir",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1680,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://www.googleapis.com/youtube/v3/videos",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "youTubeOAuth2Api",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "part",
+              "value": "snippet,status,contentDetails,statistics"
+            },
+            {
+              "name": "id",
+              "value": "={{ $json.ids }}"
+            },
+            {
+              "name": "maxResults",
+              "value": "50"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "357df970-f3f3-527e-ac16-933a824803d6",
+      "name": "Aday detayları",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1920,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Choose today's clip source. Only videos we may reuse: Creative Commons licensed, or\n// from a channel on the permission list. Skip lives, very short or very long videos,\n// anything already clipped, and the channel clipped in the last 24 hours, so the three\n// daily Shorts come from different creators.\nconst cfg = $('Klip ayarları').first().json;\nconst { rank } = $('Adayları birleştir').first().json;\nconst allowed = new Set(String(cfg.allowed_channels || '').split(',').map(s => s.trim()).filter(Boolean));\nconst state = $getWorkflowStaticData('global');\nstate.used = state.used || [];\nstate.channels = (state.channels || []).filter(c => Date.now() - c.at < 24 * 3600e3);\nconst usedIds = new Set(state.used);\nconst recentChannels = new Set(state.channels.map(c => c.id));\n\nconst secs = iso => {\n  const m = /P(?:(\\d+)D)?T?(?:(\\d+)H)?(?:(\\d+)M)?(?:(\\d+)S)?/.exec(iso || '') || [];\n  return (+m[1] || 0) * 86400 + (+m[2] || 0) * 3600 + (+m[3] || 0) * 60 + (+m[4] || 0);\n};\n\nconst candidates = ($input.first().json.items || [])\n  .map(v => ({\n    v,\n    permission: v.status?.license === 'creativeCommon' ? 'cc' : allowed.has(v.snippet?.channelId) ? 'allowlist' : null,\n    length: secs(v.contentDetails?.duration),\n    r: rank[v.id] || { order: 999 },\n  }))\n  .filter(c => c.permission)\n  .filter(c => c.v.snippet?.liveBroadcastContent === 'none')\n  .filter(c => c.length >= Number(cfg.min_source_seconds) && c.length <= 3 * 3600)\n  .filter(c => !usedIds.has(c.v.id) && !recentChannels.has(c.v.snippet.channelId))\n  .sort((a, b) => a.r.order - b.r.order || Number(b.v.statistics?.viewCount || 0) - Number(a.v.statistics?.viewCount || 0));\n\nif (!candidates.length) return [];\nconst c = candidates[0];\nstate.used = state.used.concat(c.v.id).slice(-1000);\nstate.channels.push({ id: c.v.snippet.channelId, at: Date.now() });\n\nreturn [{ json: {\n  videoId: c.v.id,\n  sourceTitle: c.v.snippet.title,\n  channelTitle: c.v.snippet.channelTitle,\n  channelId: c.v.snippet.channelId,\n  sourceDescription: String(c.v.snippet.description || '').slice(0, 800),\n  sourceTags: (c.v.snippet.tags || []).slice(0, 15),\n  views: Number(c.v.statistics?.viewCount || 0),\n  permission: c.permission,\n  foundVia: c.r.source,\n} }];"
+      },
+      "id": "b82bd487-d111-5137-8e45-637fb96ef8f9",
+      "name": "Videoyu seç",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2160,
+        0
+      ],
+      "notes": "Uygun video yoksa akış burada sessizce biter; o saat paylaşım yapılmaz."
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.apify.com/v2/acts/apify~instagram-hashtag-scraper/run-sync-get-dataset-items?timeout=150",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ hashtags: $('Klip ayarları').first().json.style_hashtags.split(',').map(h => h.trim().replace(/^#/, '')).filter(Boolean), resultsType: 'reels', resultsLimit: 15 }) }}",
+        "options": {
+          "timeout": 180000
+        }
+      },
+      "id": "8e4e2fa5-5f98-5d21-906c-189d8b27937e",
+      "name": "Trend oyun Reels (Instagram)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2400,
+        0
+      ],
+      "onError": "continueRegularOutput",
+      "alwaysOutputData": true,
+      "executeOnce": true,
+      "notes": "Apify kimlik bilgisi. Sadece metin ve izlenme sayısı alınır; görüntüleri kullanılmaz."
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.apify.com/v2/acts/streamers~youtube-scraper/run-sync-get-dataset-items?timeout=150",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ searchQueries: ['oyun', $('Videoyu seç').first().json.sourceTitle.split(/[|:\\-]/)[0].trim()], maxResults: 0, maxResultsShorts: 10, maxResultStreams: 0, sortingOrder: 'views', dateFilter: 'week' }) }}",
+        "options": {
+          "timeout": 180000
+        }
+      },
+      "id": "42f3db76-6d18-5e9b-af46-88460de6fa32",
+      "name": "Trend oyun Shorts (YouTube)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2640,
+        0
+      ],
+      "onError": "continueRegularOutput",
+      "alwaysOutputData": true,
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "jsCode": "// Trending gaming Reels (Instagram) and Shorts (YouTube) in Turkey, as style examples\n// for hooks and captions. Only their wording style is used, never their footage.\nconst pick = (items, text, views) => items\n  .map(i => i.json)\n  .filter(x => x && !x.error && text(x))\n  .map(x => ({ t: String(text(x)).replace(/\\s+/g, ' ').slice(0, 160), v: Number(views(x) || 0) }));\nconst reels = pick($('Trend oyun Reels (Instagram)').all(), x => x.caption, x => x.videoPlayCount ?? x.videoViewCount ?? x.likesCount);\nconst shorts = pick($('Trend oyun Shorts (YouTube)').all(), x => x.title, x => x.viewCount);\nconst top = [...reels.map(r => ({ ...r, s: 'Reels' })), ...shorts.map(r => ({ ...r, s: 'Shorts' }))]\n  .sort((a, b) => b.v - a.v)\n  .slice(0, 15)\n  .map(r => `- [${r.s}, ${r.v} izlenme] ${r.t}`);\nreturn [{ json: { ...$('Videoyu seç').first().json, styleExamples: top.length ? top.join('\\n') : '(örnek alınamadı)' } }];"
+      },
+      "id": "bdebcd88-3ddb-56b6-bcef-470bbf3d819b",
+      "name": "Trend stil örnekleri",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2880,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.anthropic.com/v1/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "anthropic-version",
+              "value": "2023-06-01"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ model: 'claude-sonnet-5-5', max_tokens: 600, system: 'Türk oyun Shorts kanalı için metin yazıyorsun. Yalnızca JSON döndür: ' + '{\"hook\": string (videonun üstüne yazılacak, en fazla 32 karakter, merak uyandıran Türkçe kanca), ' + '\"title\": string (en fazla 70 karakter Türkçe YouTube başlığı, oyunun adını içersin), ' + '\"description\": string (2 kısa Türkçe cümle, ne olduğunu anlatsın, sonunda soru sorup yorum istesin), ' + '\"tags\": string[] (6-10 Türkçe/İngilizce etiket, oyunun adı dahil), ' + '\"peak_text\": string (hype anında ekranda patlayan komik tepki yazısı, en fazla 18 karakter, BÜYÜK HARF, emoji yok; ör. NASIL YANİ?!, ABİ NE OLDU), ' + '\"end_text\": string (ağır çekim tekrarın etiketi, en fazla 12 karakter, BÜYÜK HARF; ör. TEKRAR, BİR DAHA)}. ' + 'Üslubu, verilen trend Reels/Shorts örneklerinin kanca ve dil tarzından al ama cümlelerini kopyalama. ' + 'Videoda olmayan bir şeyi vaat etme, yanıltıcı clickbait yazma, kaynağı kendi içeriğin gibi sunma. Küfür ve hakaret yok.', messages: [{ role: 'user', content: 'Kaynak video başlığı: ' + $json.sourceTitle + '\\nKanal: ' + $json.channelTitle + '\\nAçıklama: ' + $json.sourceDescription + '\\nEtiketler: ' + $json.sourceTags.join(', ') + '\\n\\nBu videonun en çok tekrar izlenen, en heyecanlı anından 20-45 saniyelik dikey bir kesit paylaşıyoruz; hype anında yakınlaştırma, bum efekti ve tepki yazısı, sonda ağır çekim tekrar var.' + '\\n\\nŞu an Türkiye\\'de trend olan oyun Reels/Shorts örnekleri (üslup için):\\n' + $json.styleExamples }] }) }}",
+        "options": {
+          "timeout": 120000
+        }
+      },
+      "id": "7b7ad8cf-055c-5439-9177-8de9777e0bd5",
+      "name": "Başlık ve açıklama yaz (Claude)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3120,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parse Claude's copy, add the attribution the licence requires, and hand the overlay\n// texts to the render script base64-encoded so no title text ever reaches the shell.\nconst src = $('Videoyu seç').first().json;\nconst text = ($input.first().json.content || []).map(c => c.text || '').join('');\nconst s = JSON.parse(text.slice(text.indexOf('{'), text.lastIndexOf('}') + 1));\nif (!s.title || !s.hook) throw new Error('Claude yanıtında başlık veya kanca yok: ' + text.slice(0, 200));\n\nconst link = `https://youtu.be/${src.videoId}`;\nconst credit = src.permission === 'cc'\n  ? `Kaynak: ${src.channelTitle} (CC BY)`\n  : `Kaynak: ${src.channelTitle} (izinli)`;\nconst attribution = src.permission === 'cc'\n  ? `🎮 Orijinal video: \"${src.sourceTitle}\" – ${src.channelTitle}\\n${link}\\nCreative Commons Atıf (CC BY) lisansıyla kullanılmıştır.`\n  : `🎮 Orijinal video: \"${src.sourceTitle}\" – ${src.channelTitle}\\n${link}\\nKanal sahibinin izniyle kullanılmıştır.`;\n\nlet title = String(s.title).trim();\nif (!/#shorts/i.test(title)) title = (title.length > 90 ? title.slice(0, 90) : title) + ' #Shorts';\nconst tags = [...new Set([...(s.tags || []), ...src.sourceTags].map(t => String(t).replace(/[<>,]/g, '').trim()).filter(Boolean))].slice(0, 15);\nconst runId = new Date().toISOString().replace(/[-:]/g, '').replace(/\\..*/, '').replace('T', '-');\n\nreturn [{ json: {\n  runDir: `${$('Klip ayarları').first().json.output_dir}/klip-${runId}`,\n  title: title.slice(0, 100),\n  description: `${String(s.description).trim()}\\n\\n${attribution}\\n\\n#Shorts #oyun`,\n  tags: tags.join(','),\n  hookB64: Buffer.from(String(s.hook).slice(0, 60), 'utf8').toString('base64'),\n  creditB64: Buffer.from(credit, 'utf8').toString('base64'),\n  peakTextB64: Buffer.from(String(s.peak_text || '').slice(0, 24), 'utf8').toString('base64'),\n  endTextB64: Buffer.from(String(s.end_text || 'TEKRAR').slice(0, 14), 'utf8').toString('base64'),\n} }];"
+      },
+      "id": "a2ead738-5e70-5406-83d7-010d1fcf9606",
+      "name": "Metinleri hazırla",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3360,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "executeOnce": true,
+        "command": "=node /data/scripts/make-clip.mjs --id {{ $('Videoyu seç').first().json.videoId }} --out {{ $json.runDir }} --min {{ $('Klip ayarları').first().json.min_seconds }} --max {{ $('Klip ayarları').first().json.max_seconds }} --target {{ $('Klip ayarları').first().json.target_seconds }} --hook-b64 {{ $json.hookB64 }} --credit-b64 {{ $json.creditB64 }} --peak-text-b64 {{ $json.peakTextB64 || 'IA==' }} --end-text-b64 {{ $json.endTextB64 }}"
+      },
+      "id": "7b5a5417-7408-51ce-afd0-db9291ba81e8",
+      "name": "Hype anını kes ve dikey montajla",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        3600,
+        0
+      ],
+      "notes": "En çok tekrar izlenen bölümü (YouTube heatmap) bulur; yoksa sesin en yüksek olduğu anı seçer. Süreyi 20-45 sn arasında kendisi belirler, sadece o bölümü indirir. Hype anına yakınlaştırma, bum sesi ve tepki yazısı, sona ağır çekim tekrar ekler."
+    },
+    {
+      "parameters": {
+        "jsCode": "// make-clip.mjs prints one JSON line at the end of stdout.\nconst lines = String($input.first().json.stdout || '').trim().split('\\n');\nreturn [{ json: JSON.parse(lines[lines.length - 1]) }];"
+      },
+      "id": "37928a90-1ff3-57d6-9ac9-43d25de02794",
+      "name": "Klip sonucunu oku",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3840,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "fileSelector": "={{ $json.file }}",
+        "options": {
+          "dataPropertyName": "data"
+        }
+      },
+      "id": "9b4f34a4-2046-5511-af03-31b24d49501d",
+      "name": "Klibi oku",
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        4080,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "video",
+        "operation": "upload",
+        "title": "={{ $('Metinleri hazırla').first().json.title }}",
+        "regionCode": "={{ $('Klip ayarları').first().json.region_code }}",
+        "categoryId": "20",
+        "binaryProperty": "data",
+        "options": {
+          "description": "={{ $('Metinleri hazırla').first().json.description }}",
+          "tags": "={{ $('Metinleri hazırla').first().json.tags }}",
+          "privacyStatus": "={{ $('Klip ayarları').first().json.privacy }}",
+          "selfDeclaredMadeForKids": false,
+          "notifySubscribers": true
+        }
+      },
+      "id": "4355c6d9-5845-567d-a9ba-be55cb613b2f",
+      "name": "Klibi YouTube'a yükle",
+      "type": "n8n-nodes-base.youTube",
+      "typeVersion": 1,
+      "position": [
+        4320,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const src = $('Videoyu seç').first().json;\nconst clip = $('Klip sonucunu oku').first().json;\nreturn [{ json: {\n  videoId: $input.first().json.id,\n  url: `https://youtube.com/shorts/${$input.first().json.id}`,\n  title: $('Metinleri hazırla').first().json.title,\n  source: `https://youtu.be/${src.videoId}?t=${Math.floor(clip.start)}`,\n  permission: src.permission,\n  cut: `${clip.start}s – ${clip.end}s (${clip.duration} sn, yöntem: ${clip.method})`,\n} }];"
+      },
+      "id": "861681ef-16ec-585b-b98a-32b5156c43aa",
+      "name": "Paylaşımı özetle",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4560,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "content": "### Yalnızca izinli kaynak\nCC BY lisanslı veya izin listesindeki kanallar. Diğer trend videolar atlanır.",
+        "width": 1740,
+        "height": 320,
+        "color": 3
+      },
+      "id": "1a3d7e23-705f-51c4-8b2e-23c0b42c1f39",
+      "name": "Not: Yalnızca izinli kaynak",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        400,
+        -160
+      ]
+    },
+    {
+      "parameters": {
+        "content": "### Trend üslup\nTürk oyun Reels/Shorts trendlerinin kanca dili örnek alınır.",
+        "width": 960,
+        "height": 320,
+        "color": 6
+      },
+      "id": "ef5863bf-3bce-5b21-83d3-ea54cba259c9",
+      "name": "Not: Trend üslup",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2240,
+        -160
+      ]
+    },
+    {
+      "parameters": {
+        "content": "### Kesit, edit, paylaşım\nHype anı → zoom, bum, tepki yazısı, ağır çekim tekrar → kaynak gösterilerek yükleme.",
+        "width": 1500,
+        "height": 320,
+        "color": 4
+      },
+      "id": "81d3daf1-4c26-5dc6-b3f3-df7377b89be7",
+      "name": "Not: Kesit, edit, paylaşım",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        3300,
+        -160
+      ]
+    }
+  ],
+  "connections": {
+    "Günde 3 kez (12:00, 18:00, 21:00)": {
+      "main": [
+        [
+          {
+            "node": "Klip ayarları",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Klip ayarları": {
+      "main": [
+        [
+          {
+            "node": "Türkiye oyun trendleri",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Türkiye oyun trendleri": {
+      "main": [
+        [
+          {
+            "node": "CC lisanslı oyun videoları",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CC lisanslı oyun videoları": {
+      "main": [
+        [
+          {
+            "node": "İzinli kanal listesi",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "İzinli kanal listesi": {
+      "main": [
+        [
+          {
+            "node": "İzinli kanalların son videoları",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "İzinli kanalların son videoları": {
+      "main": [
+        [
+          {
+            "node": "Adayları birleştir",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Adayları birleştir": {
+      "main": [
+        [
+          {
+            "node": "Aday detayları",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aday detayları": {
+      "main": [
+        [
+          {
+            "node": "Videoyu seç",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Videoyu seç": {
+      "main": [
+        [
+          {
+            "node": "Trend oyun Reels (Instagram)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Trend oyun Reels (Instagram)": {
+      "main": [
+        [
+          {
+            "node": "Trend oyun Shorts (YouTube)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Trend oyun Shorts (YouTube)": {
+      "main": [
+        [
+          {
+            "node": "Trend stil örnekleri",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Trend stil örnekleri": {
+      "main": [
+        [
+          {
+            "node": "Başlık ve açıklama yaz (Claude)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Başlık ve açıklama yaz (Claude)": {
+      "main": [
+        [
+          {
+            "node": "Metinleri hazırla",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Metinleri hazırla": {
+      "main": [
+        [
+          {
+            "node": "Hype anını kes ve dikey montajla",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Hype anını kes ve dikey montajla": {
+      "main": [
+        [
+          {
+            "node": "Klip sonucunu oku",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Klip sonucunu oku": {
+      "main": [
+        [
+          {
+            "node": "Klibi oku",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Klibi oku": {
+      "main": [
+        [
+          {
+            "node": "Klibi YouTube'a yükle",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Klibi YouTube'a yükle": {
+      "main": [
+        [
+          {
+            "node": "Paylaşımı özetle",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Europe/Istanbul"
+  },
+  "meta": {
+    "description": "Günde 3 kez Türkiye oyun trendlerinden yeniden kullanımı serbest (CC BY) veya izinli kanalların videolarını seçer, en çok tekrar izlenen anı 20-45 sn dikey Short olarak keser, kaynağı belirterek YouTube'a yükler."
+  },
+  "pinData": {},
+  "active": false
+}
