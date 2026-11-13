@@ -1,0 +1,2 @@
+apify-ultimate-scraper — from https://github.com/apify/agent-skills
+License: Apache-2.0 (declared in the repository README).
