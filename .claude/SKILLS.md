@@ -1,0 +1,45 @@
+# Skill paketi — site · oyun · montaj · otomasyon
+
+Bu repo bir oturuma eklendiğinde `.claude/skills/` altındaki tüm skill'ler otomatik yüklenir.
+Her projede çalışsın istersen: `bash .claude/install-skills.sh` (→ `~/.claude/skills`).
+Kaynaklar: `agent-skills33` (Addy Osmani, MIT), `ECC` (MIT), `claude-video` (`watch`). Lisanslar `licenses/` altında.
+
+## 🎬 Video / montaj
+| Skill | Ne işe yarar |
+|---|---|
+| `watch` | Video/URL'yi izle: kare + transkript çıkar, soru sor (`/watch <url> [soru]`) |
+| `video-editing` | Ham çekimden kurguya: FFmpeg, Remotion, ElevenLabs, fal.ai pipeline |
+| `remotion-video-creation` | React ile kodla video (animasyon, altyazı, geçiş, grafik) |
+| `manim-video` | Teknik/anlatım animasyonları (Manim) |
+| `fal-ai-media` | fal.ai ile görsel / video / ses üretimi |
+| `videodb` | Video indeksleme, arama, otomatik kesme (VideoDB API) |
+| `ui-demo` | Web uygulamasının Playwright ile demo videosu |
+| `content-engine` | YouTube/TikTok/X için senaryo ve içerik sistemleri |
+
+## 🌐 Web sitesi / frontend
+`frontend-ui-engineering`, `frontend-design-direction`, `frontend-patterns`, `make-interfaces-feel-better`,
+`design-system`, `react-patterns`, `react-performance`, `react-testing`, `nextjs-turbopack`, `vite-patterns`,
+`typescript-patterns`, `motion-foundations`, `motion-patterns`, `motion-advanced`, `accessibility`, `seo`,
+`frontend-slides` (HTML sunum), `api-and-interface-design`
+
+## 🎮 Oyun
+Oyun skill'leri zaten hesabında var (`mobile-browser-game`, `phaser-core`, `phaser-arcade-physics`,
+`game-dev-agent-team`). Bu paket onları şunlarla tamamlar: `performance-optimization`,
+`browser-testing-with-devtools`, `browser-qa`, `e2e-testing`, `motion-*`.
+
+## ⚙️ Otomasyon
+| Skill | Ne işe yarar |
+|---|---|
+| `data-scraper-agent` | Zamanlanmış veri toplama ajanı (fiyat, haber, ilan…) |
+| `api-connector-builder` | Yeni API entegrasyonu |
+| `mcp-server-patterns` | Kendi MCP sunucunu yaz |
+| `social-publisher`, `crosspost`, `x-api` | Sosyal medyada paylaşım otomasyonu |
+| `github-ops`, `ci-cd-and-automation`, `deployment-patterns`, `docker-patterns` | Repo, CI/CD, yayına alma |
+| `python-patterns` | Script / otomasyon kodu kalitesi |
+
+## 🧭 Genel çalışma akışı
+`idea-refine` → `spec-driven-development` → `planning-and-task-breakdown` → `incremental-implementation`
+→ `test-driven-development` / `debugging-and-error-recovery` → `code-review-and-quality`, `security-and-hardening`
+→ `verification-loop` → `shipping-and-launch`. Ayrıca `search-first`, `git-workflow-and-versioning`.
+
+Ajanlar (`.claude/agents/`): `code-reviewer`, `security-auditor`, `test-engineer`, `web-performance-auditor`.
