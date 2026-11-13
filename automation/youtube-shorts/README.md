@@ -1,12 +1,13 @@
 # Yüzsüz YouTube Shorts otomasyonu (n8n)
 
-Dört n8n akışı:
+Beş n8n akışı:
 
 | Dosya | Ne zaman | Ne yapar |
 |---|---|---|
 | `workflows/01-shorts-uret-ve-yukle.json` | Her gün 18:00 | Konudaki trend Shorts'lara bakar (Apify) → Claude senaryo, başlık, açıklama, etiket yazar → fal.ai her sahne için dikey görsel üretir → ElevenLabs seslendirir → ffmpeg yavaş zoom + kelime kelime altyazı ile 1080x1920 video yapar → YouTube'a yükler |
 | `workflows/02-yorumlara-yanit.json` | 3 saatte bir | Kendi videolarındaki yanıtlanmamış yeni yorumlara Claude ile kısa yanıt yazar. Varsayılan olarak **göndermez**, sadece listeler |
 | `workflows/03-istatistik-raporu.json` | Her gün 09:00 | Son 7 günün izlenme, izlenme süresi, abone, etkileşim ve (kanal para kazanıyorsa) gelir verisini Google Sheets'e yazar, haftalık özet çıkarır |
+| `workflows/05-kick-yayin-kesitleri.json` | Her gün 12:00, 18:00, 21:00 | **Yayın kesitleri.** İzin veren Kick yayıncılarının en çok izlenen kliplerini komik editlerle dikey Short yapar, yayıncıyı belirterek yükler (ayrıntı aşağıda) |
 | `workflows/04-oyun-klip-shorts.json` | Her gün 12:00, 18:00, 21:00 | **İlk kanal: oyun klipleri.** Türkiye oyun trendlerinden izinli bir video seçer, en "hype" anını keser, komik editlerle dikey Short yapar, kaynağı belirterek yükler (ayrıntı aşağıda) |
 
 ```
@@ -71,11 +72,12 @@ Sonra http://localhost:5678 adresini açıp hesap oluşturun. Sunucu internete a
 
 ## 5. Akışları içe aktar
 
-1. n8n → **Workflows → Import from File** ile dört JSON dosyasını ayrı ayrı içe aktarın.
+1. n8n → **Workflows → Import from File** ile beş JSON dosyasını ayrı ayrı içe aktarın.
 2. Her akışta kimlik bilgisi isteyen **her düğümü açın** ve yukarıdaki doğru kimlik bilgisini seçin (n8n içe aktarmada bunları otomatik bağlamaz).
 3. Ayar düğümlerini doldurun:
    - **Kanal ayarları** (01): `topic` (kanal konusu), `language`, `tone`, `voice_id`, `target_seconds` (varsayılan 45), `scene_count` (6), `privacy` (**`private` ile başlayın**), `category_id` (27 = Eğitim, 24 = Eğlence, 22 = Kişiler ve Bloglar), `region_code`.
    - **Yorum ayarları** (02): `auto_reply` (önce `false`), `persona`, `max_per_run`.
+   - **Yayıncı ayarları** (05): `streamers` (izin veren Kick kanal adları), `privacy` (önce `private`), `clip_period` (`week` veya `day`).
    - **Klip ayarları** (04): `allowed_channels`, `privacy` (önce `private`), `style_hashtags`; süre sınırları `min_seconds`/`max_seconds`.
    - **Rapor ayarları** (03): `sheet_id` ve sayfa adı (`Gunluk`). Tablonun ilk satırına şu başlıkları yazın: `tarih, izlenme, izlenme_dakika, ort_izlenme_sn, abone_net, begeni, yorum, paylasim, gelir_usd, cpm_usd`.
 
@@ -85,6 +87,24 @@ Sonra http://localhost:5678 adresini açıp hesap oluşturun. Sunucu internete a
 2. Birkaç denemeden memnunsanız `privacy` değerini `public` yapın ve akışı **Publish/Active** yapın.
 3. 02 akışını aktif edin, birkaç gün Executions sekmesinde **Onay bekleyen yanıtlar** düğümünü kontrol edin; uygunsa `auto_reply` = `true`.
 4. 03 akışını aktif edin.
+
+## Yayın kesitleri (05) nasıl çalışır
+
+Kick'te izleyiciler en hype anları zaten klipliyor; akış bunların en çok izleneninden Short yapar.
+
+1. `streamers` listesindeki her yayıncının son 7 gündeki klipleri Kick'ten çekilir (anahtar gerekmez). Son 48 saatin klipleri iki kat puan alır, yani bugünün anları önde gelir.
+2. En yüksek puanlı, daha önce kullanılmamış, 8–60 sn arası, en az 30 izlenmeli klip seçilir. Son 8 saatte paylaşılan yayıncı atlanır; günün 3 videosu farklı yayıncılardan gelir.
+3. Claude başlık, açıklama, kanca, tepki yazısı yazar; üslup için trend Türk yayın/oyun Reels'leri örnek verilir.
+4. `make-clip.mjs --clip-url`: klibin tamamı alınır (en fazla 50 sn), sesin en yüksek olduğu saniyeye yakınlaştırma + bum + tepki yazısı, sona ağır çekim tekrar eklenir.
+5. Açıklamaya ve ekrana yayıncının adı ve Kick linki yazılır, YouTube'a yüklenir.
+
+**Önemli:** Listeye yalnızca kesit paylaşımına **izin veren** yayıncıları yazın. İzinsiz yayın kesiti telif şikâyetiyle kaldırılır; üç şikâyet kanalı kapatır. İzin gelene kadar `privacy` = `private` kalsın.
+
+### İzin isteme mesajı (DM / e-posta)
+
+> Merhaba [yayıncı adı], ben [adın], YouTube'da [kanal adı] adında bir yayın kesitleri kanalı açıyorum. Kick'teki yayınlarından kısa (20–50 sn) dikey kesitler paylaşmak istiyorum. Her videonun açıklamasında ve ekranda adın ve Kick linkin yer alacak, yayınına izleyici yönlendirmek amacım. İzin verir misin? Kaldırılmasını istediğin bir kesit olursa hemen silerim. Varsa uymamı istediğin kurallar (gelir paylaşımı, etiket, belirli içerikleri paylaşmama vb.) için de beklerim. Teşekkürler!
+
+Yanıtı (ekran görüntüsü) saklayın; telif itirazında işinize yarar.
 
 ## Oyun klip kanalı (04) nasıl çalışır
 
@@ -132,7 +152,7 @@ automation/youtube-shorts/
 ├── docker-compose.yml
 ├── scripts/render-short.sh  sahneler + ses + altyazı → final.mp4 (1080x1920, 30 fps)
 ├── scripts/make-clip.mjs    hype anını bul, kes, dikey montaj + editler (oyun klipleri)
-└── workflows/               içe aktarılacak dört n8n akışı
+└── workflows/               içe aktarılacak beş n8n akışı
 ```
 
 `render-short.sh` tek başına da çalışır: bir klasöre `scene_01.jpg …`, `voice.mp3`, `subs.ass` koyup `sh scripts/render-short.sh <klasör>` deyin.

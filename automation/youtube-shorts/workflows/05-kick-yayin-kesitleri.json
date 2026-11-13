@@ -1,0 +1,523 @@
+{
+  "name": "Kick yayın kesitlerinden Shorts üret",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 12,18,21 * * *"
+            }
+          ]
+        }
+      },
+      "id": "6a9e2de0-d1a3-5108-ab0c-28cae3028de2",
+      "name": "Günde 3 kez (12:00, 18:00, 21:00)",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        240,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "8f776280-96de-52f8-9fec-2761b7715f97",
+              "name": "streamers",
+              "value": "elraenn, eray, kendinemuzisyen, unlost",
+              "type": "string"
+            },
+            {
+              "id": "47b6d0d8-9687-5403-8353-c1908ff3e296",
+              "name": "privacy",
+              "value": "private",
+              "type": "string"
+            },
+            {
+              "id": "fe664b12-76c7-5d2d-b81c-01b317337ea0",
+              "name": "min_clip_seconds",
+              "value": 8,
+              "type": "number"
+            },
+            {
+              "id": "ab797b16-c21e-5dc5-bca4-13e2e154399c",
+              "name": "max_clip_seconds",
+              "value": 60,
+              "type": "number"
+            },
+            {
+              "id": "82b4730a-e954-5068-8d91-1b954c4e435e",
+              "name": "min_views",
+              "value": 30,
+              "type": "number"
+            },
+            {
+              "id": "cf6c44e2-f69e-558c-8454-e047fe7d6d82",
+              "name": "clip_period",
+              "value": "week",
+              "type": "string"
+            },
+            {
+              "id": "db2bd5b9-f0b0-52a1-8751-27c03051c888",
+              "name": "max_seconds",
+              "value": 50,
+              "type": "number"
+            },
+            {
+              "id": "4e6b8ab8-decc-51bc-b5a3-89c6b1509d5d",
+              "name": "style_hashtags",
+              "value": "yayınkesitleri, kickturkiye, elraenn, oyun",
+              "type": "string"
+            },
+            {
+              "id": "cc6fb11a-588d-5123-aaa7-23f738e5d121",
+              "name": "output_dir",
+              "value": "/data/shorts",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a22fe19f-04bd-5dec-9982-f3bcba00c4ef",
+      "name": "Yayıncı ayarları",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        480,
+        0
+      ],
+      "notes": "clip_period: day (son 24 saat) veya week (son 7 gün, son 48 saat önceliklidir). streamers: Kick kanal adları (kick.com/<ad>), virgülle. YALNIZCA kesit paylaşımına izin veren yayıncıları yazın; izin gelmeden privacy'yi public yapmayın."
+    },
+    {
+      "parameters": {
+        "jsCode": "// One item per streamer (Kick channel slug) on the permission list.\nconst slugs = String($input.first().json.streamers || '')\n  .split(',').map(s => s.trim().toLowerCase()).filter(s => /^[a-z0-9_-]{2,30}$/.test(s));\nif (!slugs.length) throw new Error('Yayıncı ayarları → streamers boş');\nreturn slugs.map(slug => ({ json: { slug } }));"
+      },
+      "id": "9c4c91ae-1c81-5e68-9b40-25a5f69152a1",
+      "name": "Yayıncı listesi",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        720,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "url": "=https://kick.com/api/v2/channels/{{ $json.slug }}/clips",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "sort",
+              "value": "view"
+            },
+            {
+              "name": "time",
+              "value": "={{ $('Yayıncı ayarları').first().json.clip_period }}"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "User-Agent",
+              "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+            },
+            {
+              "name": "Accept",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "2570a629-5908-5359-8977-9fed6a513143",
+      "name": "Kick klipleri",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        960,
+        0
+      ],
+      "onError": "continueRegularOutput",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 3000,
+      "notes": "Kick'in herkese açık klip listesi; anahtar gerekmez. Bir yayıncıda hata olursa diğerleriyle devam eder."
+    },
+    {
+      "parameters": {
+        "jsCode": "// The most viewed recent clips (clip_period: day or week) across all permitted streamers. Viewers\n// clip the hype moments themselves, so the view count is the hype score. Skip clips\n// already used and streamers posted in the last 8 hours so the day's three Shorts mix\n// different streamers.\nconst cfg = $('Yayıncı ayarları').first().json;\nconst state = $getWorkflowStaticData('global');\nstate.used = state.used || [];\nstate.recent = (state.recent || []).filter(r => Date.now() - r.at < 8 * 3600e3);\nconst used = new Set(state.used);\nconst recent = new Set(state.recent.map(r => r.slug));\n\n// Fresh clips (last 48 h) count double, so today's moments win over last week's.\nconst score = c => (c.view_count ?? c.views ?? 0) * (Date.now() - Date.parse(c.created_at) < 48 * 3600e3 ? 2 : 1);\nconst clips = $input.all()\n  .flatMap(i => i.json.clips || [])\n  .filter(c => c.privacy === 'public' && /^https:\\/\\/clips\\.kick\\.com\\//.test(c.video_url || c.clip_url || ''))\n  .filter(c => c.duration >= Number(cfg.min_clip_seconds) && c.duration <= Number(cfg.max_clip_seconds))\n  .filter(c => (c.view_count ?? c.views ?? 0) >= Number(cfg.min_views))\n  .filter(c => !used.has(c.id))\n  .sort((a, b) => score(b) - score(a));\n\nconst c = clips.find(x => !recent.has(x.channel?.slug)) || clips[0];\nif (!c) return [];\nstate.used = state.used.concat(c.id).slice(-2000);\nstate.recent.push({ slug: c.channel?.slug, at: Date.now() });\n\nreturn [{ json: {\n  clipId: c.id,\n  clipUrl: c.video_url || c.clip_url,\n  clipTitle: c.title,\n  views: c.view_count ?? c.views,\n  duration: c.duration,\n  game: c.category?.name || '',\n  streamer: c.channel?.username || c.channel?.slug,\n  streamerSlug: c.channel?.slug,\n  clipper: c.creator?.username || '',\n  createdAt: c.created_at,\n} }];"
+      },
+      "id": "82ae5b33-6245-512a-916e-5b355388eb37",
+      "name": "Klibi seç",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1200,
+        0
+      ],
+      "notes": "Uygun klip yoksa akış burada biter; o saat paylaşım yapılmaz."
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.apify.com/v2/acts/apify~instagram-hashtag-scraper/run-sync-get-dataset-items?timeout=150",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ hashtags: $('Yayıncı ayarları').first().json.style_hashtags.split(',').map(h => h.trim().replace(/^#/, '')).filter(Boolean), resultsType: 'reels', resultsLimit: 15 }) }}",
+        "options": {
+          "timeout": 180000
+        }
+      },
+      "id": "b1d27a95-7516-581a-9ab6-476208ce8470",
+      "name": "Trend Reels örnekleri (Instagram)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1440,
+        0
+      ],
+      "onError": "continueRegularOutput",
+      "alwaysOutputData": true,
+      "executeOnce": true,
+      "notes": "Apify kimlik bilgisi. Yalnızca açıklama metni ve izlenme sayısı alınır."
+    },
+    {
+      "parameters": {
+        "jsCode": "// Trending Turkish gaming/streamer Reels, as wording examples only.\nconst top = $input.all()\n  .map(i => i.json)\n  .filter(x => x && !x.error && x.caption)\n  .map(x => ({ t: String(x.caption).replace(/\\s+/g, ' ').slice(0, 160), v: Number(x.videoPlayCount ?? x.videoViewCount ?? x.likesCount ?? 0) }))\n  .sort((a, b) => b.v - a.v)\n  .slice(0, 12)\n  .map(r => `- [${r.v} izlenme] ${r.t}`);\nreturn [{ json: { ...$('Klibi seç').first().json, styleExamples: top.length ? top.join('\\n') : '(örnek alınamadı)' } }];"
+      },
+      "id": "817a51fb-6ac0-50a8-a691-0eda1e936bf4",
+      "name": "Trend üslup örnekleri",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1680,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.anthropic.com/v1/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "anthropic-version",
+              "value": "2023-06-01"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ model: 'claude-sonnet-5-5', max_tokens: 600, system: 'Türk yayın kesitleri Shorts kanalı için metin yazıyorsun. Yalnızca JSON döndür: ' + '{\"hook\": string (videonun üstüne yazılacak, en fazla 32 karakter, merak uyandıran Türkçe kanca), ' + '\"title\": string (en fazla 70 karakter, yayıncının adı geçsin, Türk yayın kesiti kanallarının üslubunda), ' + '\"description\": string (2 kısa Türkçe cümle; sonunda izleyiciye soru sorup yorum istesin), ' + '\"tags\": string[] (6-10 etiket), ' + '\"peak_text\": string (en heyecanlı anda ekranda patlayan komik tepki yazısı, en fazla 18 karakter, BÜYÜK HARF, emoji yok), ' + '\"end_text\": string (ağır çekim tekrar etiketi, en fazla 12 karakter, BÜYÜK HARF)}. ' + 'Klip başlığı izleyicinin yazdığı kısa bir nottur; videoyu görmediğin için olmayan bir olayı uydurma, yayıncı hakkında aşağılayıcı veya yanlış iddia yazma. ' + 'Üslubu verilen trend Reels örneklerinden al ama cümlelerini kopyalama.', messages: [{ role: 'user', content: 'Yayıncı: ' + $json.streamer + '\\nOyun/kategori: ' + $json.game + '\\nKlip başlığı: ' + $json.clipTitle + '\\nKick izlenme: ' + $json.views + '\\nSüre: ' + $json.duration + ' sn' + '\\n\\nŞu an trend olan Türk oyun/yayın Reels örnekleri (üslup için):\\n' + $json.styleExamples }] }) }}",
+        "options": {
+          "timeout": 120000
+        }
+      },
+      "id": "0ccf5b77-9cb1-5a4d-b829-4f1a4b1f5243",
+      "name": "Kesit metni yaz (Claude)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1920,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parse Claude's copy and credit the streamer (with a link) in the description and on\n// screen. Overlay texts go to the render script base64-encoded.\nconst src = $('Klibi seç').first().json;\nconst text = ($input.first().json.content || []).map(c => c.text || '').join('');\nconst s = JSON.parse(text.slice(text.indexOf('{'), text.lastIndexOf('}') + 1));\nif (!s.title || !s.hook) throw new Error('Claude yanıtında başlık veya kanca yok: ' + text.slice(0, 200));\n\nconst link = `https://kick.com/${src.streamerSlug}`;\nconst attribution = `🎥 Yayıncı: ${src.streamer} – ${link}\\nBu kesit ${src.streamer} yayınından, yayıncının izniyle paylaşılmıştır.`\n  + (src.clipper ? `\\nKlibi oluşturan: ${src.clipper}` : '');\nlet title = String(s.title).trim();\nif (!/#shorts/i.test(title)) title = (title.length > 90 ? title.slice(0, 90) : title) + ' #Shorts';\nconst tags = [...new Set([...(s.tags || []), src.streamer, src.game, 'kick', 'yayın kesitleri'].map(t => String(t || '').replace(/[<>,]/g, '').trim()).filter(Boolean))].slice(0, 15);\nconst runId = new Date().toISOString().replace(/[-:]/g, '').replace(/\\..*/, '').replace('T', '-');\nconst b64 = v => Buffer.from(String(v || ''), 'utf8').toString('base64');\n\nreturn [{ json: {\n  runDir: `${$('Yayıncı ayarları').first().json.output_dir}/yayin-${runId}`,\n  clipUrl: src.clipUrl,\n  title: title.slice(0, 100),\n  description: `${String(s.description).trim()}\\n\\n${attribution}\\n\\n#Shorts #${String(src.streamer).replace(/[^\\p{L}\\p{N}]/gu, '')} #yayınkesitleri`,\n  tags: tags.join(','),\n  hookB64: b64(String(s.hook).slice(0, 60)),\n  creditB64: b64(`Yayıncı: ${src.streamer} (kick.com/${src.streamerSlug})`),\n  peakTextB64: b64(String(s.peak_text || ' ').slice(0, 24)),\n  endTextB64: b64(String(s.end_text || 'TEKRAR').slice(0, 14)),\n} }];"
+      },
+      "id": "94c7c3c2-ae88-582d-9180-5f2975274ffd",
+      "name": "Kesit metinlerini hazırla",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2160,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "executeOnce": true,
+        "command": "=node /data/scripts/make-clip.mjs --clip-url {{ $json.clipUrl }} --out {{ $json.runDir }} --max {{ $('Yayıncı ayarları').first().json.max_seconds }} --hook-b64 {{ $json.hookB64 }} --credit-b64 {{ $json.creditB64 }} --peak-text-b64 {{ $json.peakTextB64 }} --end-text-b64 {{ $json.endTextB64 }}"
+      },
+      "id": "e0db24bf-c60f-531b-b596-9e83e7825674",
+      "name": "Klibi indir ve editle",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        2400,
+        0
+      ],
+      "notes": "Klibin tamamını alır (en fazla 50 sn), en yüksek ses anına yakınlaştırma + bum + tepki yazısı, sona ağır çekim tekrar ekler, dikey 1080x1920 yapar."
+    },
+    {
+      "parameters": {
+        "jsCode": "// make-clip.mjs prints one JSON line at the end of stdout.\nconst lines = String($input.first().json.stdout || '').trim().split('\\n');\nreturn [{ json: JSON.parse(lines[lines.length - 1]) }];"
+      },
+      "id": "d3e75755-4dcd-5bf4-acfb-d69c544ccc69",
+      "name": "Kesit sonucunu oku",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2640,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "fileSelector": "={{ $json.file }}",
+        "options": {
+          "dataPropertyName": "data"
+        }
+      },
+      "id": "dfe5f933-d1fb-56f6-a813-0c5dbcf37c68",
+      "name": "Kesiti oku",
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        2880,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "video",
+        "operation": "upload",
+        "title": "={{ $('Kesit metinlerini hazırla').first().json.title }}",
+        "regionCode": "TR",
+        "categoryId": "20",
+        "binaryProperty": "data",
+        "options": {
+          "description": "={{ $('Kesit metinlerini hazırla').first().json.description }}",
+          "tags": "={{ $('Kesit metinlerini hazırla').first().json.tags }}",
+          "privacyStatus": "={{ $('Yayıncı ayarları').first().json.privacy }}",
+          "selfDeclaredMadeForKids": false,
+          "notifySubscribers": true
+        }
+      },
+      "id": "8eb3343c-1c17-5a42-b906-e595206bfff0",
+      "name": "Kesiti YouTube'a yükle",
+      "type": "n8n-nodes-base.youTube",
+      "typeVersion": 1,
+      "position": [
+        3120,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const src = $('Klibi seç').first().json;\nconst clip = $('Kesit sonucunu oku').first().json;\nreturn [{ json: {\n  videoId: $input.first().json.id,\n  url: `https://youtube.com/shorts/${$input.first().json.id}`,\n  title: $('Kesit metinlerini hazırla').first().json.title,\n  streamer: src.streamer,\n  kickViews: src.views,\n  length: `${clip.duration} sn (klip ${src.duration} sn + ağır çekim tekrar)`,\n} }];"
+      },
+      "id": "81fdedb5-92e7-5f86-a813-f945f601be4b",
+      "name": "Paylaşımı özetle",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3360,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "content": "### Yalnızca izin veren yayıncılar\nstreamers listesine izin alınmamış yayıncı eklemeyin.",
+        "width": 960,
+        "height": 320,
+        "color": 3
+      },
+      "id": "895e46fb-aec9-57ef-bde4-baa3c15d1235",
+      "name": "Not: Yalnızca izin veren yayıncılar",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        400,
+        -160
+      ]
+    },
+    {
+      "parameters": {
+        "content": "### Kesit, edit, paylaşım\nEn çok izlenen klip → zoom, bum, tepki yazısı, tekrar → yayıncı belirtilerek yükleme.",
+        "width": 2700,
+        "height": 320,
+        "color": 4
+      },
+      "id": "bde0443d-5e12-59b8-aced-94d69a5574f3",
+      "name": "Not: Kesit, edit, paylaşım",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1640,
+        -160
+      ]
+    }
+  ],
+  "connections": {
+    "Günde 3 kez (12:00, 18:00, 21:00)": {
+      "main": [
+        [
+          {
+            "node": "Yayıncı ayarları",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Yayıncı ayarları": {
+      "main": [
+        [
+          {
+            "node": "Yayıncı listesi",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Yayıncı listesi": {
+      "main": [
+        [
+          {
+            "node": "Kick klipleri",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Kick klipleri": {
+      "main": [
+        [
+          {
+            "node": "Klibi seç",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Klibi seç": {
+      "main": [
+        [
+          {
+            "node": "Trend Reels örnekleri (Instagram)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Trend Reels örnekleri (Instagram)": {
+      "main": [
+        [
+          {
+            "node": "Trend üslup örnekleri",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Trend üslup örnekleri": {
+      "main": [
+        [
+          {
+            "node": "Kesit metni yaz (Claude)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Kesit metni yaz (Claude)": {
+      "main": [
+        [
+          {
+            "node": "Kesit metinlerini hazırla",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Kesit metinlerini hazırla": {
+      "main": [
+        [
+          {
+            "node": "Klibi indir ve editle",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Klibi indir ve editle": {
+      "main": [
+        [
+          {
+            "node": "Kesit sonucunu oku",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Kesit sonucunu oku": {
+      "main": [
+        [
+          {
+            "node": "Kesiti oku",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Kesiti oku": {
+      "main": [
+        [
+          {
+            "node": "Kesiti YouTube'a yükle",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Kesiti YouTube'a yükle": {
+      "main": [
+        [
+          {
+            "node": "Paylaşımı özetle",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Europe/Istanbul"
+  },
+  "meta": {
+    "description": "Günde 3 kez izin veren Kick yayıncılarının son günlerde en çok izlenen kliplerini seçer, komik editlerle dikey Short yapar ve yayıncıyı belirterek YouTube'a yükler. Klipleri izleyiciler hype anda açtığı için kesit yeri hazırdır."
+  },
+  "pinData": {},
+  "active": false
+}

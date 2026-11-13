@@ -14,6 +14,7 @@
 //   node make-clip.mjs --id <videoId> --out <dir> --hook-b64 <b64> --credit-b64 <b64>
 //                      [--peak-text-b64 <b64>] [--end-text-b64 <b64>] [--edits 1]
 //                      [--min 20] [--max 45] [--target 30]
+//   Kick stream clip (whole clip, edits timed to its loudest second): --clip-url <m3u8>
 //   Testing without network: --local <video.mp4> [--heatmap <heatmap.json>]
 // Prints one JSON line: {file, start, end, duration, method, peak}.
 
@@ -24,9 +25,9 @@ import path from 'node:path';
 const args = Object.fromEntries(
   process.argv.slice(2).reduce((acc, a, i, all) => (a.startsWith('--') ? [...acc, [a.slice(2), all[i + 1]]] : acc), []),
 );
-const MIN = Number(args.min || 20);
+let MIN = Number(args.min || 20);
 const MAX = Number(args.max || 45);
-const TARGET = Number(args.target || 30);
+let TARGET = Number(args.target || 30);
 const OUT = args.out;
 const FONT = path.join(process.env.FONTS_DIR || '/opt/fonts', 'DejaVuSans-Bold.ttf');
 const YTDLP = process.env.YTDLP || 'yt-dlp';
@@ -34,7 +35,8 @@ const YTDLP_BASE = ['--no-warnings', '--no-playlist', '--js-runtimes', 'node'];
 if (process.env.YTDLP_COOKIES) YTDLP_BASE.push('--cookies', process.env.YTDLP_COOKIES);
 
 if (!OUT) fail('--out gerekli');
-if (!args.local && !/^[A-Za-z0-9_-]{11}$/.test(args.id || '')) fail('geçersiz video kimliği');
+if (args['clip-url'] && !/^https:\/\/clips\.kick\.com\/[A-Za-z0-9_\/.-]+$/.test(args['clip-url'])) fail('geçersiz klip adresi');
+if (!args.local && !args['clip-url'] && !/^[A-Za-z0-9_-]{11}$/.test(args.id || '')) fail('geçersiz video kimliği');
 fs.mkdirSync(OUT, { recursive: true });
 
 function fail(msg) {
@@ -48,6 +50,13 @@ const ffprobeDuration = f => Number(run('ffprobe', ['-v', 'error', '-show_entrie
 // ---------------------------------------------------------------- 1. metadata
 let duration;
 let heatmap = [];
+// A stream clip (Kick) is already the moment viewers clipped: keep all of it (up to
+// --max) and only look for the loudest second to time the edits.
+const WHOLE_CLIP = Boolean(args['clip-url']);
+if (WHOLE_CLIP) {
+  args.local = path.join(OUT, 'clip_full.mp4');
+  run('ffmpeg', ['-hide_banner', '-loglevel', 'error', '-y', '-i', args['clip-url'], '-c', 'copy', '-bsf:a', 'aac_adtstoasc', args.local]);
+}
 if (args.local) {
   duration = ffprobeDuration(args.local);
   if (args.heatmap) heatmap = JSON.parse(fs.readFileSync(args.heatmap, 'utf8'));
@@ -57,10 +66,14 @@ if (args.local) {
   duration = Number(info.duration);
   heatmap = info.heatmap || [];
 }
-if (!duration || duration < MIN + 5) fail(`video çok kısa (${duration}s)`);
+if (WHOLE_CLIP) {
+  if (!duration || duration < 6) fail(`klip çok kısa (${duration}s)`);
+  MIN = Math.min(MIN, duration);
+  TARGET = Math.min(duration, MAX);
+} else if (!duration || duration < MIN + 5) fail(`video çok kısa (${duration}s)`);
 
 // Skip the opening: intros and "most replayed" spikes at 0:00 are rarely the highlight.
-const skipHead = Math.min(20, duration * 0.05);
+const skipHead = WHOLE_CLIP ? 0 : Math.min(20, duration * 0.05);
 const clampWindow = (center, len) => {
   len = Math.min(Math.max(len, MIN), MAX, duration);
   let start = Math.max(0, center - len / 2);
@@ -103,7 +116,7 @@ if (usable.length >= 5) {
     '-f', 'null', '-'], { maxBuffer: 1 << 28 });
   const stderr = probe.stderr.toString();
   const energy = [...stderr.matchAll(/RMS_level=(-?[\d.]+|-inf)/g)].map(m => (m[1] === '-inf' ? 0 : 10 ** (Number(m[1]) / 10)));
-  if (energy.length < MIN) fail('ses analizi başarısız');
+  if (energy.length < 5) fail('ses analizi başarısız');
   const len = Math.min(TARGET, MAX, energy.length);
   let best = -1;
   let bestAt = 0;
