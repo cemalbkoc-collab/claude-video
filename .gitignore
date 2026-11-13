@@ -22,3 +22,6 @@ docs/superpowers/
 # youtube-uploader skill: OAuth token and credentials stay local
 .claude/skills/youtube-uploader/scripts/.youtube-token.json
 .claude/skills/youtube-uploader/scripts/.env
+
+# youtube-shorts automation: rendered videos and local assets
+/automation/youtube-shorts/data/

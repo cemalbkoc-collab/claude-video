@@ -1,0 +1,421 @@
+{
+  "name": "YouTube yorumlarına yanıt hazırla",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 3
+            }
+          ]
+        }
+      },
+      "id": "fdd5edd2-2d59-5429-a7c2-fcfe51737662",
+      "name": "Her 3 saatte bir",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        240,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "5f21f9a4-77ca-582d-b78a-93c667c63b6e",
+              "name": "auto_reply",
+              "value": false,
+              "type": "boolean"
+            },
+            {
+              "id": "682f7535-7c7a-532d-906f-32b8aff53961",
+              "name": "max_per_run",
+              "value": 15,
+              "type": "number"
+            },
+            {
+              "id": "94ae9070-a157-5a7f-ac47-81106b7033f8",
+              "name": "persona",
+              "value": "Sıcak, kısa, bilgili; izleyiciye ismiyle değil 'sen' diye hitap eder",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "d17071d7-4ef3-531f-a010-5cc42470a5ee",
+      "name": "Yorum ayarları",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        480,
+        0
+      ],
+      "notes": "auto_reply kapalıyken yanıtlar sadece yazılır, gönderilmez: Executions sekmesinde 'Onay bekleyen yanıtlar' düğümünde görünür. Birkaç gün kontrol ettikten sonra açın."
+    },
+    {
+      "parameters": {
+        "url": "https://www.googleapis.com/youtube/v3/channels",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "youTubeOAuth2Api",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "part",
+              "value": "id"
+            },
+            {
+              "name": "mine",
+              "value": "true"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "5ae07715-7d66-552a-a1ec-90f60991858a",
+      "name": "Kanal kimliğini al",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        720,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://www.googleapis.com/youtube/v3/commentThreads",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "youTubeOAuth2Api",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "part",
+              "value": "snippet"
+            },
+            {
+              "name": "allThreadsRelatedToChannelId",
+              "value": "={{ $json.items[0].id }}"
+            },
+            {
+              "name": "maxResults",
+              "value": "50"
+            },
+            {
+              "name": "order",
+              "value": "time"
+            },
+            {
+              "name": "textFormat",
+              "value": "plainText"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "6210b871-23ca-5ae7-bf52-f7b9cd1c85d0",
+      "name": "Son yorumları çek",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        960,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Keep only fresh top-level comments on our own videos that nobody has answered yet\n// and that this workflow has not already looked at. Seen IDs live in workflow static\n// data, which n8n saves only for runs of the active (published) workflow.\nconst cfg = $('Yorum ayarları').first().json;\nconst channelId = $('Kanal kimliğini al').first().json.items?.[0]?.id;\nconst seen = $getWorkflowStaticData('global');\nseen.ids = seen.ids || [];\nconst seenSet = new Set(seen.ids);\n\nconst picked = [];\nfor (const t of $input.first().json.items || []) {\n  const top = t.snippet?.topLevelComment;\n  const sn = top?.snippet;\n  if (!top || !sn) continue;\n  if (seenSet.has(top.id)) continue;\n  if (t.snippet.totalReplyCount > 0 || t.snippet.canReply === false) continue;\n  if (sn.authorChannelId?.value === channelId) continue;\n  picked.push({ commentId: top.id, videoId: t.snippet.videoId, author: sn.authorDisplayName, text: sn.textOriginal || sn.textDisplay });\n  if (picked.length >= Number(cfg.max_per_run)) break;\n}\nseen.ids = seen.ids.concat(picked.map(p => p.commentId)).slice(-2000);\nreturn picked.map(p => ({ json: p }));"
+      },
+      "id": "10cb1099-05d7-58a3-9958-4e69f53e6596",
+      "name": "Yanıtlanacakları seç",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1200,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.anthropic.com/v1/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "anthropic-version",
+              "value": "2023-06-01"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ model: 'claude-sonnet-5-5', max_tokens: 400, system: 'Bir YouTube kanalının sahibi adına izleyici yorumlarına kısa, samimi ve doğru yanıtlar yazıyorsun. Yalnızca JSON döndür: ' + '{\"skip\": boolean, \"reason\": string, \"reply\": string}. ' + 'skip=true yap: spam, reklam, link, hakaret, siyasi tartışma, kişisel bilgi, tıbbi/hukuki/finansal tavsiye isteyen veya yanıtı kanal sahibinin bilmesi gereken bir bilgiye dayanan yorumlar. ' + 'Yanıt yorumun dilinde, en fazla 2 cümle, emoji en fazla 1 tane, link yok, abone ol/beğen çağrısı yok, bilmediğin bir şeyi uydurma. ' + 'Kanal sesi: ' + $('Yorum ayarları').first().json.persona, messages: [{ role: 'user', content: 'Yorum yazan: ' + $json.author + '\\nYorum: ' + $json.text }] }) }}",
+        "options": {
+          "timeout": 120000
+        }
+      },
+      "id": "287a4507-b27f-5d96-9f1b-beb626d0a2ff",
+      "name": "Yanıt yaz (Claude)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1440,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const c = $('Yanıtlanacakları seç').item.json;\nconst text = ($json.content || []).map(x => x.text || '').join('');\nlet r;\ntry {\n  r = JSON.parse(text.slice(text.indexOf('{'), text.lastIndexOf('}') + 1));\n} catch (e) {\n  r = { skip: true, reason: 'Claude yanıtı JSON değildi' };\n}\nreturn { json: { ...c, skip: Boolean(r.skip) || !r.reply, reason: r.reason || '', reply: String(r.reply || '').slice(0, 500) } };"
+      },
+      "id": "413ef381-b562-506e-bb2a-e689c6209df5",
+      "name": "Yanıtı ayrıştır",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1680,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose"
+          },
+          "conditions": [
+            {
+              "id": "405f33b0-e131-529d-be7f-195b69f54371",
+              "leftValue": "={{ $('Yorum ayarları').first().json.auto_reply }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "3d8b4541-aa0b-521c-825f-1135a0d4b1d2",
+              "leftValue": "={{ $json.skip }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "4c633dec-c7f4-50ca-b0e5-afc56974cf5f",
+      "name": "Gönderilsin mi?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        1920,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://www.googleapis.com/youtube/v3/comments?part=snippet",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "youTubeOAuth2Api",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ snippet: { parentId: $json.commentId, textOriginal: $json.reply } }) }}",
+        "options": {}
+      },
+      "id": "574e2c91-5f05-5f76-b22f-4ec08f6d5925",
+      "name": "Yanıtı gönder",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2160,
+        -120
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e2fd84df-c6ae-5815-b53e-3d369e0631aa",
+              "name": "yorum",
+              "value": "={{ $json.text }}",
+              "type": "string"
+            },
+            {
+              "id": "a724d109-bbc2-5899-aefb-aad1cd9dd20f",
+              "name": "onerilen_yanit",
+              "value": "={{ $json.reply }}",
+              "type": "string"
+            },
+            {
+              "id": "f1210e47-8c32-5518-9fda-bd65890dcb62",
+              "name": "atlandi",
+              "value": "={{ $json.skip }}",
+              "type": "boolean"
+            },
+            {
+              "id": "e070dc50-f9a7-5231-85d1-7e7faeedf356",
+              "name": "neden",
+              "value": "={{ $json.reason }}",
+              "type": "string"
+            },
+            {
+              "id": "912cb6e4-cab7-5dcc-b919-e5bddfc5e161",
+              "name": "video",
+              "value": "=https://youtube.com/watch?v={{ $json.videoId }}&lc={{ $json.commentId }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "f3755b25-b999-5745-916a-b0e25ec59dc0",
+      "name": "Onay bekleyen yanıtlar",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2160,
+        120
+      ]
+    },
+    {
+      "parameters": {
+        "content": "### Sadece kendi kanalın\nYalnızca kendi videolarındaki yorumlara yanıt verir; başka kanallara yorum atmaz.",
+        "width": 520,
+        "height": 260,
+        "color": 3
+      },
+      "id": "7a85e22d-d755-5fee-9f7d-3d42f638756a",
+      "name": "Not: Sadece kendi kanalın",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        680,
+        -200
+      ]
+    }
+  ],
+  "connections": {
+    "Her 3 saatte bir": {
+      "main": [
+        [
+          {
+            "node": "Yorum ayarları",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Yorum ayarları": {
+      "main": [
+        [
+          {
+            "node": "Kanal kimliğini al",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Kanal kimliğini al": {
+      "main": [
+        [
+          {
+            "node": "Son yorumları çek",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Son yorumları çek": {
+      "main": [
+        [
+          {
+            "node": "Yanıtlanacakları seç",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Yanıtlanacakları seç": {
+      "main": [
+        [
+          {
+            "node": "Yanıt yaz (Claude)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Yanıt yaz (Claude)": {
+      "main": [
+        [
+          {
+            "node": "Yanıtı ayrıştır",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Yanıtı ayrıştır": {
+      "main": [
+        [
+          {
+            "node": "Gönderilsin mi?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gönderilsin mi?": {
+      "main": [
+        [
+          {
+            "node": "Yanıtı gönder",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Onay bekleyen yanıtlar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Europe/Istanbul"
+  },
+  "meta": {
+    "description": "Kanalın kendi videolarındaki yanıtlanmamış yeni yorumlara Claude ile kısa yanıt yazar. auto_reply kapalıyken yanıtları yalnızca listeler; açıkken YouTube'a gönderir. Spam ve riskli yorumları atlar."
+  },
+  "pinData": {},
+  "active": false
+}

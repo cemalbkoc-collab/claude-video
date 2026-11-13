@@ -55,7 +55,7 @@ Fikir → senaryo → montaj → küçük resim → yükleme → yorum → istat
 | Yorumlar | `scraping-youtube-comments` | Yorumları Apify ile toplayıp analiz etme |
 | İstatistik | `youtube-analytics` | Kanal ve video performansı (YouTube Data API anahtarı gerekir) |
 
-> Gelir (monetization) raporları ve yorumlara otomatik yanıt için güvenilir hazır skill bulunamadı; bunlar YouTube Analytics API / Data API ile ayrıca kurulur. Başka kanallara otomatik yorum veya sahte etkileşim YouTube kurallarına aykırıdır.
+> Uçtan uca otomasyon (üret → montaj → yükle → yorum → istatistik/gelir) n8n akışları olarak `automation/youtube-shorts/` altında; kurulum için oradaki README'ye bakın. Başka kanallara otomatik yorum veya sahte etkileşim YouTube kurallarına aykırıdır.
 
 ## 🌐 Web sitesi / frontend
 `frontend-ui-engineering`, `frontend-design-direction`, `frontend-patterns`, `make-interfaces-feel-better`,

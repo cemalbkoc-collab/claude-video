@@ -1,0 +1,423 @@
+{
+  "name": "YouTube kanal istatistiklerini raporla",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "days",
+              "daysInterval": 1,
+              "triggerAtHour": 9,
+              "triggerAtMinute": 0
+            }
+          ]
+        }
+      },
+      "id": "2e2ace8a-ca9a-5f66-8df5-2e6777038bb2",
+      "name": "Her gün 09:00",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        240,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2036a953-33ad-5a4a-b0fa-8a87823e0e46",
+              "name": "sheet_id",
+              "value": "BURAYA_GOOGLE_SHEETS_DOSYA_KIMLIGI",
+              "type": "string"
+            },
+            {
+              "id": "6e024a06-4339-5598-81c8-07be7b61159a",
+              "name": "sheet_name",
+              "value": "Gunluk",
+              "type": "string"
+            },
+            {
+              "id": "8431eeb5-3a5f-5749-bd59-8715ae9414a1",
+              "name": "days",
+              "value": 7,
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "0677d679-f83c-5ca6-812e-347c346b9a65",
+      "name": "Rapor ayarları",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        480,
+        0
+      ],
+      "notes": "sheet_id, Google Sheets adresindeki /d/ ile /edit arasındaki kısımdır."
+    },
+    {
+      "parameters": {
+        "jsCode": "// YouTube Analytics data settles about two days late, so the window ends two days ago.\nconst cfg = $input.first().json;\nconst day = n => { const d = new Date(); d.setUTCDate(d.getUTCDate() - n); return d.toISOString().slice(0, 10); };\nreturn [{ json: { ...cfg, startDate: day(Number(cfg.days) + 1), endDate: day(2) } }];"
+      },
+      "id": "2c754ace-92cd-5474-9673-91d0e6351bb4",
+      "name": "Tarih aralığı",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        720,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://youtubeanalytics.googleapis.com/v2/reports",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleOAuth2Api",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "ids",
+              "value": "channel==MINE"
+            },
+            {
+              "name": "startDate",
+              "value": "={{ $('Tarih aralığı').first().json.startDate }}"
+            },
+            {
+              "name": "endDate",
+              "value": "={{ $('Tarih aralığı').first().json.endDate }}"
+            },
+            {
+              "name": "metrics",
+              "value": "views,estimatedMinutesWatched,averageViewDuration,subscribersGained,subscribersLost,likes,comments,shares"
+            },
+            {
+              "name": "dimensions",
+              "value": "day"
+            },
+            {
+              "name": "sort",
+              "value": "day"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "5964b654-7bfe-57ff-b4d0-de3e0acadd91",
+      "name": "Günlük kanal metrikleri",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        960,
+        0
+      ],
+      "notes": "Google OAuth2 kimlik bilgisi; kapsamlar README'de."
+    },
+    {
+      "parameters": {
+        "url": "https://youtubeanalytics.googleapis.com/v2/reports",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleOAuth2Api",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "ids",
+              "value": "channel==MINE"
+            },
+            {
+              "name": "startDate",
+              "value": "={{ $('Tarih aralığı').first().json.startDate }}"
+            },
+            {
+              "name": "endDate",
+              "value": "={{ $('Tarih aralığı').first().json.endDate }}"
+            },
+            {
+              "name": "metrics",
+              "value": "estimatedRevenue,estimatedAdRevenue,cpm"
+            },
+            {
+              "name": "dimensions",
+              "value": "day"
+            },
+            {
+              "name": "sort",
+              "value": "day"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "678216a5-d049-5f7c-b768-88fe8c2b22de",
+      "name": "Gelir metrikleri",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1200,
+        0
+      ],
+      "onError": "continueRegularOutput",
+      "alwaysOutputData": true,
+      "executeOnce": true,
+      "notes": "Kanal YouTube İş Ortağı Programı'nda değilse hata verir; akış gelir olmadan devam eder."
+    },
+    {
+      "parameters": {
+        "url": "https://youtubeanalytics.googleapis.com/v2/reports",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleOAuth2Api",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "ids",
+              "value": "channel==MINE"
+            },
+            {
+              "name": "startDate",
+              "value": "={{ $('Tarih aralığı').first().json.startDate }}"
+            },
+            {
+              "name": "endDate",
+              "value": "={{ $('Tarih aralığı').first().json.endDate }}"
+            },
+            {
+              "name": "metrics",
+              "value": "views,estimatedMinutesWatched,averageViewPercentage"
+            },
+            {
+              "name": "dimensions",
+              "value": "video"
+            },
+            {
+              "name": "sort",
+              "value": "-views"
+            },
+            {
+              "name": "maxResults",
+              "value": "10"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "ce3b2032-5ea5-5258-b68b-ff8fd800d1b6",
+      "name": "En çok izlenen videolar",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1440,
+        0
+      ],
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "url": "https://www.googleapis.com/youtube/v3/videos",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleOAuth2Api",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "part",
+              "value": "snippet"
+            },
+            {
+              "name": "id",
+              "value": "={{ ($json.rows || []).map(r => r[0]).join(',') || 'none' }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "fbfa926d-721d-5ba1-aa32-13baaa3874ff",
+      "name": "Video başlıklarını al",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1680,
+        0
+      ],
+      "onError": "continueRegularOutput",
+      "alwaysOutputData": true,
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "jsCode": "// Merge daily core metrics with revenue (if the channel is monetized) into one row per\n// day for the sheet.\nconst toRows = r => (r && r.columnHeaders && r.rows)\n  ? r.rows.map(row => Object.fromEntries(r.columnHeaders.map((h, i) => [h.name, row[i]])))\n  : [];\nconst core = toRows($('Günlük kanal metrikleri').first().json);\nconst revenueResp = $('Gelir metrikleri').first().json;\nconst revenue = Object.fromEntries(toRows(revenueResp).map(r => [r.day, r]));\nconst monetized = Boolean(revenueResp && revenueResp.rows);\n\nconst rows = core.map(r => ({\n  tarih: r.day,\n  izlenme: r.views,\n  izlenme_dakika: r.estimatedMinutesWatched,\n  ort_izlenme_sn: r.averageViewDuration,\n  abone_net: (r.subscribersGained || 0) - (r.subscribersLost || 0),\n  begeni: r.likes,\n  yorum: r.comments,\n  paylasim: r.shares,\n  gelir_usd: monetized ? (revenue[r.day]?.estimatedRevenue ?? 0) : '',\n  cpm_usd: monetized ? (revenue[r.day]?.cpm ?? '') : '',\n}));\n\nreturn rows.map(r => ({ json: r }));"
+      },
+      "id": "6ddb3714-69eb-557a-8240-b35b1a0909ff",
+      "name": "Raporu hazırla",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1920,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $('Rapor ayarları').first().json.sheet_id }}"
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "name",
+          "value": "={{ $('Rapor ayarları').first().json.sheet_name }}"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [
+            "tarih"
+          ],
+          "schema": []
+        },
+        "options": {}
+      },
+      "id": "e386e332-538d-5fa2-82b7-c9e0d5e0ecdf",
+      "name": "Tabloya yaz",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        2160,
+        0
+      ],
+      "notes": "Aynı gün tekrar yazılırsa satır güncellenir (eşleşme sütunu: tarih)."
+    },
+    {
+      "parameters": {
+        "jsCode": "// Readable weekly summary for the execution log (or to forward to Telegram / e-mail).\nconst rows = $('Raporu hazırla').all().map(i => i.json);\nconst sum = k => rows.reduce((a, r) => a + (Number(r[k]) || 0), 0);\nconst monetized = rows.some(r => r.gelir_usd !== '');\nconst titlesResp = $('Video başlıklarını al').first().json;\nconst titles = Object.fromEntries((titlesResp.items || []).map(v => [v.id, v.snippet.title]));\nconst topResp = $('En çok izlenen videolar').first().json;\nconst top = (topResp.rows || []).slice(0, 5)\n  .map((r, i) => `${i + 1}. ${titles[r[0]] || r[0]}: ${r[1]} izlenme, %${Math.round(r[3] || 0)} izlenme oranı`);\nconst cfg = $('Tarih aralığı').first().json;\nconst ozet = [\n  `${cfg.startDate} – ${cfg.endDate}`,\n  `İzlenme: ${sum('izlenme')}  |  İzlenme süresi: ${Math.round(sum('izlenme_dakika') / 60)} saat  |  Net abone: ${sum('abone_net')}`,\n  monetized ? `Tahmini gelir: $${sum('gelir_usd').toFixed(2)}` : 'Gelir: kanal henüz para kazanmıyor veya gelir izni verilmedi',\n  'En çok izlenenler:', ...(top.length ? top : ['(veri yok)']),\n].join('\\n');\nreturn [{ json: { ozet } }];"
+      },
+      "id": "787672d9-4122-5626-bbae-bd76712ba7d4",
+      "name": "Haftalık özet",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2400,
+        0
+      ],
+      "executeOnce": true
+    }
+  ],
+  "connections": {
+    "Her gün 09:00": {
+      "main": [
+        [
+          {
+            "node": "Rapor ayarları",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Rapor ayarları": {
+      "main": [
+        [
+          {
+            "node": "Tarih aralığı",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tarih aralığı": {
+      "main": [
+        [
+          {
+            "node": "Günlük kanal metrikleri",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Günlük kanal metrikleri": {
+      "main": [
+        [
+          {
+            "node": "Gelir metrikleri",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gelir metrikleri": {
+      "main": [
+        [
+          {
+            "node": "En çok izlenen videolar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "En çok izlenen videolar": {
+      "main": [
+        [
+          {
+            "node": "Video başlıklarını al",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Video başlıklarını al": {
+      "main": [
+        [
+          {
+            "node": "Raporu hazırla",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Raporu hazırla": {
+      "main": [
+        [
+          {
+            "node": "Tabloya yaz",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tabloya yaz": {
+      "main": [
+        [
+          {
+            "node": "Haftalık özet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Europe/Istanbul"
+  },
+  "meta": {
+    "description": "Her sabah YouTube Analytics'ten son 7 günün izlenme, izlenme süresi, abone, etkileşim ve (varsa) gelir verilerini çekip Google Sheets'e günlük satır olarak yazar ve haftalık özet çıkarır."
+  },
+  "pinData": {},
+  "active": false
+}
