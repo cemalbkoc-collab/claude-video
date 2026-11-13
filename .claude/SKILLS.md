@@ -5,7 +5,7 @@ Her projede çalışsın istersen kişisel skill klasörüne kur:
 
 **Windows (PowerShell):**
 ```powershell
-git clone -b ccr-ca9e9ed2-paad3v https://github.com/cemalbkoc-collab/claude-video $HOME\claude-video
+git clone https://github.com/cemalbkoc-collab/claude-video $HOME\claude-video
 powershell -ExecutionPolicy Bypass -File $HOME\claude-video\.claude\install-skills.ps1
 # Güncellemek için:
 powershell -ExecutionPolicy Bypass -File $HOME\claude-video\.claude\install-skills.ps1 -Update
