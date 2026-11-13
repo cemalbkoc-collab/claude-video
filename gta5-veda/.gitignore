@@ -1,0 +1,6 @@
+# Footage cut from a third-party YouTube video: kept local, not committed
+assets/clips/
+# HyperFrames check/snapshot artifacts
+.hyperframes/
+node_modules/
+*.mp4

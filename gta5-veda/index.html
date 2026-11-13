@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+    <style>
+      * { margin:0; padding:0; box-sizing:border-box; }
+      html, body { width:1080px; height:1920px; overflow:hidden; background:#0B1026; }
+      #root { position:relative; width:1080px; height:1920px; overflow:hidden; }
+      #band { position:absolute; left:0; top:568px; width:1080px; height:608px; overflow:hidden; z-index:5; background:#000; }
+      #band video { position:absolute; left:0; top:0; width:1080px; height:608px; object-fit:cover; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="60" data-width="1080" data-height="1920">
+      <div id="y2013" data-composition-id="y2013" data-composition-src="compositions/y2013.html" data-start="0" data-duration="5" data-track-index="1" data-track-kind="graphics" data-width="1080" data-height="1920" style="z-index:1"></div>
+      <div id="online" data-composition-id="online" data-composition-src="compositions/online.html" data-start="5" data-duration="5" data-track-index="1" data-track-kind="graphics" data-width="1080" data-height="1920" style="z-index:1"></div>
+      <div id="y2014" data-composition-id="y2014" data-composition-src="compositions/y2014.html" data-start="10" data-duration="5" data-track-index="1" data-track-kind="graphics" data-width="1080" data-height="1920" style="z-index:1"></div>
+      <div id="y2015" data-composition-id="y2015" data-composition-src="compositions/y2015.html" data-start="15" data-duration="5" data-track-index="1" data-track-kind="graphics" data-width="1080" data-height="1920" style="z-index:1"></div>
+      <div id="yillar" data-composition-id="yillar" data-composition-src="compositions/yillar.html" data-start="20" data-duration="10" data-track-index="1" data-track-kind="graphics" data-width="1080" data-height="1920" style="z-index:1"></div>
+      <div id="y2022" data-composition-id="y2022" data-composition-src="compositions/y2022.html" data-start="30" data-duration="6" data-track-index="1" data-track-kind="graphics" data-width="1080" data-height="1920" style="z-index:1"></div>
+      <div id="y2023" data-composition-id="y2023" data-composition-src="compositions/y2023.html" data-start="36" data-duration="6" data-track-index="1" data-track-kind="graphics" data-width="1080" data-height="1920" style="z-index:1"></div>
+      <div id="y2026" data-composition-id="y2026" data-composition-src="compositions/y2026.html" data-start="42" data-duration="7" data-track-index="1" data-track-kind="graphics" data-width="1080" data-height="1920" style="z-index:1"></div>
+      <div id="tesekkur" data-composition-id="tesekkur" data-composition-src="compositions/tesekkur.html" data-start="49" data-duration="6" data-track-index="1" data-track-kind="graphics" data-width="1080" data-height="1920" style="z-index:1"></div>
+      <div id="veda" data-composition-id="veda" data-composition-src="compositions/veda.html" data-start="55" data-duration="5" data-track-index="1" data-track-kind="graphics" data-width="1080" data-height="1920" style="z-index:1"></div>
+      <div id="band" data-layout-allow-overflow>
+        <video id="v-c1" class="clip" src="assets/clips/c1.mp4" muted playsinline data-start="0.0" data-duration="5.0" data-track-index="2"></video>
+        <video id="v-c2" class="clip" src="assets/clips/c2.mp4" muted playsinline data-start="5.0" data-duration="5.0" data-track-index="2"></video>
+        <video id="v-c3" class="clip" src="assets/clips/c3.mp4" muted playsinline data-start="10.0" data-duration="5.0" data-track-index="2"></video>
+        <video id="v-c4" class="clip" src="assets/clips/c4.mp4" muted playsinline data-start="15.0" data-duration="5.0" data-track-index="2"></video>
+        <video id="v-m1" class="clip" src="assets/clips/m1.mp4" muted playsinline data-start="20.0" data-duration="1.667" data-track-index="2"></video>
+        <video id="v-m2" class="clip" src="assets/clips/m2.mp4" muted playsinline data-start="21.667" data-duration="1.667" data-track-index="2"></video>
+        <video id="v-m3" class="clip" src="assets/clips/m3.mp4" muted playsinline data-start="23.333" data-duration="1.667" data-track-index="2"></video>
+        <video id="v-m4" class="clip" src="assets/clips/m4.mp4" muted playsinline data-start="25.0" data-duration="1.667" data-track-index="2"></video>
+        <video id="v-m5" class="clip" src="assets/clips/m5.mp4" muted playsinline data-start="26.667" data-duration="1.667" data-track-index="2"></video>
+        <video id="v-m6" class="clip" src="assets/clips/m6.mp4" muted playsinline data-start="28.333" data-duration="1.667" data-track-index="2"></video>
+        <video id="v-c6" class="clip" src="assets/clips/c6.mp4" muted playsinline data-start="30.0" data-duration="6.0" data-track-index="2"></video>
+        <video id="v-c7" class="clip" src="assets/clips/c7.mp4" muted playsinline data-start="36.0" data-duration="6.0" data-track-index="2"></video>
+        <video id="v-c8" class="clip" src="assets/clips/c8.mp4" muted playsinline data-start="42.0" data-duration="7.0" data-track-index="2"></video>
+        <video id="v-c9" class="clip" src="assets/clips/c9.mp4" muted playsinline data-start="49.0" data-duration="6.0" data-track-index="2"></video>
+        <video id="v-c10" class="clip" src="assets/clips/c10.mp4" muted playsinline data-start="55.0" data-duration="5.0" data-track-index="2"></video>
+      </div>
+      <div id="progress" data-composition-id="progress" data-composition-src="compositions/progress.html" data-start="0" data-duration="60" data-track-index="3" data-track-kind="graphics" data-width="1080" data-height="1920" style="z-index:6"></div>
+    </div>
+    <script>
+      const tl = gsap.timeline({ paused: true });
+      tl.fromTo("#v-c1",{scale:1},{scale:1.07,duration:5.0,ease:"none"},0.0);
+      tl.fromTo("#v-c2",{scale:1},{scale:1.07,duration:5.0,ease:"none"},5.0);
+      tl.fromTo("#v-c3",{scale:1},{scale:1.07,duration:5.0,ease:"none"},10.0);
+      tl.fromTo("#v-c4",{scale:1},{scale:1.07,duration:5.0,ease:"none"},15.0);
+      tl.fromTo("#v-m1",{scale:1},{scale:1.07,duration:1.667,ease:"none"},20.0);
+      tl.fromTo("#v-m2",{scale:1},{scale:1.07,duration:1.667,ease:"none"},21.667);
+      tl.fromTo("#v-m3",{scale:1},{scale:1.07,duration:1.667,ease:"none"},23.333);
+      tl.fromTo("#v-m4",{scale:1},{scale:1.07,duration:1.667,ease:"none"},25.0);
+      tl.fromTo("#v-m5",{scale:1},{scale:1.07,duration:1.667,ease:"none"},26.667);
+      tl.fromTo("#v-m6",{scale:1},{scale:1.07,duration:1.667,ease:"none"},28.333);
+      tl.fromTo("#v-c6",{scale:1},{scale:1.07,duration:6.0,ease:"none"},30.0);
+      tl.fromTo("#v-c7",{scale:1},{scale:1.07,duration:6.0,ease:"none"},36.0);
+      tl.fromTo("#v-c8",{scale:1},{scale:1.07,duration:7.0,ease:"none"},42.0);
+      tl.fromTo("#v-c9",{scale:1},{scale:1.07,duration:6.0,ease:"none"},49.0);
+      tl.fromTo("#v-c10",{scale:1},{scale:1.07,duration:5.0,ease:"none"},55.0);
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>
