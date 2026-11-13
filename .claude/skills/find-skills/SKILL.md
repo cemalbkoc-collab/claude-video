@@ -139,3 +139,10 @@ I can still help you with this task directly! Would you like me to proceed?
 If this is something you do often, you could create your own skill:
 npx skills init my-xyz-skill
 ```
+
+## Local notes (claude-video skill pack)
+
+- **Cloud sessions behind an HTTPS proxy:** `npx skills find` uses Node's built-in fetch, which ignores `HTTPS_PROXY` and reports "No skills found". Run it as
+  `NODE_USE_ENV_PROXY=1 NODE_EXTRA_CA_CERTS=/root/.ccr/ca-bundle.crt npx -y skills find <query>`. The environment must allow `skills.sh` and `www.skills.sh`.
+- **Check this pack first:** the user's curated pack lives in `cemalbkoc-collab/claude-video` under `.claude/skills/` (index: `.claude/SKILLS.md`). Before recommending a skill, check whether it is already there.
+- **Making a find permanent:** instead of a one-off `npx skills add -g`, copy the skill folder into `.claude/skills/` of that repo (plus its license into `.claude/licenses/`), add it to `.claude/SKILLS.md`, push to `main`, and tell the user to run `install-skills.ps1 -Update` on Windows.
