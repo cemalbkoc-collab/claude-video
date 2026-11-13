@@ -95,7 +95,7 @@ Kick'te izleyiciler en hype anları zaten klipliyor; akış bunların en çok iz
 1. `streamers` listesindeki her yayıncının son 7 gündeki klipleri Kick'ten çekilir (anahtar gerekmez). Son 48 saatin klipleri iki kat puan alır, yani bugünün anları önde gelir.
 2. En yüksek puanlı, daha önce kullanılmamış, 8–60 sn arası, en az 30 izlenmeli klip seçilir. Son 8 saatte paylaşılan yayıncı atlanır; günün 3 videosu farklı yayıncılardan gelir.
 3. Claude başlık, açıklama, kanca, tepki yazısı yazar; üslup için trend Türk yayın/oyun Reels'leri örnek verilir.
-4. `make-clip.mjs --clip-url`: klibin tamamı alınır (en fazla 50 sn), sesin en yüksek olduğu saniyeye yakınlaştırma + bum + tepki yazısı, sona ağır çekim tekrar eklenir.
+4. `make-clip.mjs --clip-url`: klibin tamamı alınır (en fazla 50 sn); sesin en yüksek olduğu saniyeye 04'teki editlerin aynısı uygulanır (yakınlaştırma, sarsıntı, renk patlaması, bum, tepki yazısı, donma anı, ağır çekim tekrar).
 5. Açıklamaya ve ekrana yayıncının adı ve Kick linki yazılır, YouTube'a yüklenir.
 
 **Önemli:** Listeye yalnızca kesit paylaşımına **izin veren** yayıncıları yazın. İzinsiz yayın kesiti telif şikâyetiyle kaldırılır; üç şikâyet kanalı kapatır. İzin gelene kadar `privacy` = `private` kalsın.
@@ -120,7 +120,7 @@ Her çalıştırmada tek bir Short üretir; günde 3 çalıştırma = 3 farklı 
    - Önce YouTube'un *en çok tekrar izlenen* grafiği (heatmap): en sıcak bölüm, tepe değerin %60'ının üstünde kaldığı sürece genişletilir, 2 sn öncesinden başlar.
    - Grafik yoksa (yeni/küçük video) sadece ses indirilir ve sesin en yoğun olduğu 30 sn seçilir.
    - Süre **20–45 sn** arasında otomatik belirlenir; sadece o bölüm indirilir. İlk %5 (intro) atlanır.
-7. **Edit:** Dikey 1080x1920, bulanık arka plan + ortada oyun görüntüsü; hype anında **ani yakınlaştırma**, **bum** ses efekti ve büyük sarı **tepki yazısı**; sonda en heyecanlı 3 saniyenin **ağır çekim tekrarı**; ses seviyesi YouTube standardına (-14 LUFS) ayarlanır. Toplam ~26–51 sn.
+7. **Edit:** Dikey 1080x1920, bulanık arka plan + ortada oyun görüntüsü; hype anında **ani yakınlaştırma + ekran sarsıntısı**, anlık **renk patlaması**, **bum** sesi ve büyük sarı **tepki yazısı**; hemen ardından kayıt cızırtısıyla **donma anı** (siyah-beyaz, yavaş yakınlaşma, "DUR BİR DAKİKA" tarzı yazı); sonda en heyecanlı 3 saniyenin **ağır çekim tekrarı**. Ses efektleri ffmpeg ile üretilir, telifli ses kullanılmaz. Ses seviyesi YouTube standardına (-14 LUFS) ayarlanır. Klibe ~8 sn eklenir.
 8. **Yükleme:** Oyun kategorisi (20), `privacy` ayarıyla.
 
 Uygun video bulunamazsa o saat paylaşım yapılmaz (akış hatasız biter). Başlangıçta CC lisanslı Türkçe oyun videosu az olabilir; düzenli paylaşım için izin listesine birkaç kanal eklemeniz gerekir.

@@ -12,7 +12,7 @@
 //
 // Usage:
 //   node make-clip.mjs --id <videoId> --out <dir> --hook-b64 <b64> --credit-b64 <b64>
-//                      [--peak-text-b64 <b64>] [--end-text-b64 <b64>] [--edits 1]
+//                      [--peak-text-b64 <b64>] [--freeze-text-b64 <b64>] [--end-text-b64 <b64>] [--edits 1]
 //                      [--min 20] [--max 45] [--target 30]
 //   Kick stream clip (whole clip, edits timed to its loudest second): --clip-url <m3u8>
 //   Testing without network: --local <video.mp4> [--heatmap <heatmap.json>]
@@ -149,15 +149,18 @@ if (args.local) {
 // ---------------------------------------------------------------- 4. vertical render + edits
 // Layout: blurred full-frame background, original frame in the middle, hook on top,
 // credit at the bottom. Edits (on unless --edits 0), all keyed to the hype peak P:
-//   - snap zoom-in on the gameplay for ~1.3 s at P (meme punch-in)
-//   - synthesized bass "boom" at P
+//   - snap zoom-in on the gameplay for ~1.3 s at P (meme punch-in) with a camera shake
+//   - "deep-fried" colour flash and a synthesized bass "boom" at P
 //   - big yellow reaction text at P
+//   - freeze frame right after P: record-scratch sound, black & white, slow push-in and
+//     a caption ("DUR BİR DAKİKA" style)
 //   - slow-motion replay of P-1.5 s .. P+1.5 s at the end with a "TEKRAR" label
 const decode = b => Buffer.from(b || '', 'base64').toString('utf8').replace(/\r?\n/g, ' ').trim();
 const hook = decode(args['hook-b64']);
 const credit = decode(args['credit-b64']);
 const peakText = decode(args['peak-text-b64']);
 const endText = decode(args['end-text-b64']) || 'TEKRAR';
+const freezeText = decode(args['freeze-text-b64']) || 'DUR BİR DAKİKA';
 const EDITS = args.edits !== '0';
 
 function wrap(text, width) {
@@ -173,7 +176,7 @@ function wrap(text, width) {
 // drawtext reads every text from a file, so nothing from titles reaches the filter syntax.
 const textFile = (name, text) => { const f = path.join(OUT, name); fs.writeFileSync(f, text); return f; };
 const esc = p => p.replace(/\\/g, '/').replace(/:/g, '\\:').replace(/'/g, "\\'");
-const draw = (file, opts) => `drawtext=fontfile='${esc(FONT)}':textfile='${esc(file)}':${opts}`;
+const draw = (file, opts) => `drawtext=fontfile='${esc(FONT)}':textfile='${esc(file)}':text_align=C:${opts}`;
 
 const L = Math.round((end - start) * 100) / 100;
 const P = Math.min(Math.max((peak.at ?? (start + end) / 2) - start, 1.5), Math.max(L - 1.5, 1.5));
@@ -186,16 +189,23 @@ const g = [];
 g.push('[0:v]fps=30,split=2[bgsrc][fgsrc]');
 g.push('[bgsrc]scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,boxblur=24:2,eq=brightness=-0.12[bg]');
 g.push(EDITS
-  ? `[fgsrc]scale=1080:${fgH},zoompan=z='if(between(it,${P - 0.1},${P + 1.2}),1.3,1)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=1:s=1080x${fgH}:fps=30[fg]`
+  ? `[fgsrc]scale=1080:${fgH},zoompan=z='if(between(it,${P - 0.1},${P + 1.2}),1.3,1)'` +
+    `:x='iw/2-(iw/zoom/2)+if(between(it,${P},${P + 0.6}),24*sin(it*95),0)'` +
+    `:y='ih/2-(ih/zoom/2)+if(between(it,${P},${P + 0.6}),18*cos(it*80),0)'` +
+    `:d=1:s=1080x${fgH}:fps=30[fg]`
   : `[fgsrc]scale=1080:${fgH}[fg]`);
 const over = ['[bg][fg]overlay=(W-w)/2:(H-h)/2'];
 if (hook) over.push(draw(textFile('hook.txt', wrap(hook, 22)), 'fontsize=72:fontcolor=white:borderw=6:bordercolor=black:line_spacing=12:x=(w-text_w)/2:y=230'));
 if (credit) over.push(draw(textFile('credit.txt', credit), 'fontsize=36:fontcolor=white@0.9:borderw=3:bordercolor=black:x=(w-text_w)/2:y=h-260'));
+over.push('format=yuv420p');
+// Peak text and colour flash only go on the main pass; the freeze frame and the replay
+// are cut from the clean picture so the texts never pile up.
+const peakFx = [];
 if (EDITS && peakText) {
-  over.push(draw(textFile('peak.txt', wrap(peakText, 16)),
+  peakFx.push(draw(textFile('peak.txt', wrap(peakText, 16)),
     `fontsize=96:fontcolor=yellow:borderw=8:bordercolor=black:line_spacing=10:x=(w-text_w)/2:y=h*0.70:enable='between(t,${P},${P + 1.8})'`));
 }
-over.push('format=yuv420p');
+if (EDITS) peakFx.push(`eq=saturation=2.4:contrast=1.5:gamma=0.9:enable='between(t,${P},${P + 0.35})'`);
 
 const inputs = ['-i', src];
 let vOut;
@@ -207,24 +217,35 @@ if (!EDITS) {
 } else {
   const rs = Math.max(0, P - 1.5);
   const re = Math.min(L, P + 1.5);
-  g.push(over.join(',') + ',split=2[m1][m2]');
-  g.push(`[m1]trim=0:${L},setpts=PTS-STARTPTS[mv]`);
+  const F = Math.min(P + 0.4, L - 0.1);
+  const FREEZE_FRAMES = 48; // 1.6 s at 30 fps
+  g.push(over.join(',') + ',split=3[m1][m2][m3]');
+  g.push(`[m1]trim=0:${L},setpts=PTS-STARTPTS,${peakFx.concat('format=yuv420p').join(',')}[mv]`);
+  // Freeze frame: hold one frame, push in slowly, drain the colour, add the caption.
+  g.push(`[m3]trim=start=${F},setpts=PTS-STARTPTS,trim=end_frame=1,loop=loop=${FREEZE_FRAMES - 1}:size=1:start=0,` +
+    `zoompan=z='min(1+0.006*on,1.25)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=1:s=1080x1920:fps=30,` +
+    'hue=s=0,vignette=PI/4,' +
+    draw(textFile('freeze.txt', wrap(freezeText.toUpperCase(), 16)), 'fontsize=100:fontcolor=white:borderw=6:bordercolor=black:box=1:boxcolor=black@0.85:boxborderw=36:line_spacing=10:x=(w-text_w)/2:y=h*0.70') +
+    ',format=yuv420p[fv]');
   g.push(`[m2]trim=${rs}:${re},setpts=2*(PTS-STARTPTS),` +
     draw(textFile('replay.txt', endText.toUpperCase()), 'fontsize=92:fontcolor=white:borderw=8:bordercolor=red:x=(w-text_w)/2:y=h*0.80') +
     '[rv]');
-  // Synthesized boom: a decaying 55 Hz sine, no sound file needed.
+  // Synthesized sounds, no sound files needed: a decaying 55 Hz "boom" and a falling
+  // zip that reads as a record scratch.
   inputs.push('-f', 'lavfi', '-i', "aevalsrc='0.9*sin(2*PI*55*t)*exp(-5*t)':s=48000:d=0.8");
+  inputs.push('-f', 'lavfi', '-i', "aevalsrc='0.55*sin(2*PI*(1400*exp(-7*t))*t)*exp(-2.5*t)+0.15*sin(2*PI*90*t)*exp(-6*t)':s=48000:d=0.5");
   const ms = Math.round(P * 1000);
   g.push(`[1:a]adelay=${ms}|${ms},aformat=channel_layouts=stereo,apad[boom]`);
+  g.push(`[2:a]aformat=channel_layouts=stereo,apad,atrim=0:${FREEZE_FRAMES / 30},asetpts=PTS-STARTPTS[fa]`);
   if (hasAudio) {
     g.push('[0:a]aresample=48000,aformat=channel_layouts=stereo,loudnorm=I=-14:TP=-1.5:LRA=11[a0]');
   } else {
     inputs.push('-f', 'lavfi', '-t', String(L), '-i', 'anullsrc=r=48000:cl=stereo');
-    g.push('[2:a]anull[a0]');
+    g.push('[3:a]anull[a0]');
   }
   g.push(`[a0][boom]amix=inputs=2:duration=first:normalize=0,atrim=0:${L},asetpts=PTS-STARTPTS,asplit=2[am1][am2]`);
   g.push(`[am2]atrim=${rs}:${re},asetpts=PTS-STARTPTS,atempo=0.5[ra]`);
-  g.push('[mv][am1][rv][ra]concat=n=2:v=1:a=1[v][a]');
+  g.push('[mv][am1][fv][fa][rv][ra]concat=n=3:v=1:a=1[v][a]');
   vOut = '[v]';
   aOut = '[a]';
 }
