@@ -1,0 +1,194 @@
+<template>
+  <style>
+    @font-face { font-family:"OswaldTR"; font-weight:700; src:url("assets/fonts/oswald-latin-700-normal.woff2") format("woff2"); unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+    @font-face { font-family:"OswaldTR"; font-weight:700; src:url("assets/fonts/oswald-latin-ext-700-normal.woff2") format("woff2"); unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
+    #root { position:absolute; inset:0; pointer-events:none; color:#fff; }
+    #scrim-w { position:absolute; inset:0; }
+    #scrim { position:absolute; left:0; right:0; top:380px; height:1120px; opacity:0; background:linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.5) 28%, rgba(0,0,0,0.5) 70%, rgba(0,0,0,0) 100%); }
+    #root .grp { position:absolute; inset:0; }
+    #root .inner { position:absolute; left:72px; right:72px; top:600px; transform-origin:50% 40%; }
+    #root .kick { font:800 54px/1.1 Inter, sans-serif; letter-spacing:0.01em; text-shadow:0 3px 18px rgba(0,0,0,0.6), 0 1px 3px rgba(0,0,0,0.5); padding-bottom:6px; }
+    #root .bw { position:relative; }
+    #root .big { position:absolute; left:-8px; top:0; opacity:0; font-family:OswaldTR, Oswald, sans-serif; font-weight:700; line-height:0.9; letter-spacing:-0.01em; white-space:nowrap; transform-origin:0% 60%; text-shadow:0 6px 40px rgba(0,0,0,0.55), 0 2px 6px rgba(0,0,0,0.45); }
+    #root .sub { margin-top:18px; font:800 62px/1.12 Inter, sans-serif; letter-spacing:-0.01em; text-shadow:0 3px 18px rgba(0,0,0,0.65), 0 1px 3px rgba(0,0,0,0.5); }
+    #root .big2 { font-family:OswaldTR, Oswald, sans-serif; font-weight:700; font-size:170px; line-height:0.95; margin-top:0; }
+    #root .w { display:inline-block; }
+    #root .gta { margin-top:34px; font-family:OswaldTR, Oswald, sans-serif; font-weight:700; font-size:280px; line-height:0.9; color:#FF8A3D; transform-origin:0% 60%; text-shadow:0 6px 40px rgba(0,0,0,0.5); }
+    #root .cr { margin-top:36px; font:600 32px/1.2 Inter, sans-serif; text-shadow:0 2px 10px rgba(0,0,0,0.7); }
+    #g1 .big { font-size:340px; } #g2 .big { font-size:250px; } #g3 .big { font-size:340px; } #g4 .big { font-size:340px; } #g5 .big { font-size:340px; } #g6 .big { font-size:340px; } #g7 .big { font-size:340px; } #g8 .big { font-size:340px; } #g9 .big { font-size:320px; } #g10 .big { font-size:330px; } #g11 .big { font-size:170px; } #g12 .big { font-size:200px; }
+  </style>
+  <div id="root" data-composition-id="yazilar" data-width="1080" data-height="1920">
+    <div id="scrim-w" data-layout-ignore><div id="scrim"></div></div>
+    <div id="g1" class="clip grp" data-start="0.0" data-duration="4.6" data-track-index="1">
+      <div id="g1-in" class="inner">
+        <div id="g1-k" class="kick">17 Eylül</div>
+        <div id="g1-bw" class="bw" data-layout-allow-overlap style="height:312px"><span id="g1-b0" class="big">2013</span></div>
+        <div id="g1-s" class="sub"><span class="w">Los</span> <span class="w">Santos'a</span> <span class="w">ilk</span> <span class="w">adım</span> </div>
+        
+      </div>
+    </div>
+    <div id="g2" class="clip grp" data-start="7.4" data-duration="4.6" data-track-index="1">
+      <div id="g2-in" class="inner">
+        <div id="g2-k" class="kick">1 Ekim 2013 · GTA</div>
+        <div id="g2-bw" class="bw" data-layout-allow-overlap style="height:230px"><span id="g2-b0" class="big">ONLINE</span></div>
+        <div id="g2-s" class="sub"><span class="w">Kapılar</span> <span class="w">açıldı</span> </div>
+        
+      </div>
+    </div>
+    <div id="g3" class="clip grp" data-start="12.2" data-duration="2.7" data-track-index="1">
+      <div id="g3-in" class="inner">
+        <div id="g3-k" class="kick">Yeni nesil</div>
+        <div id="g3-bw" class="bw" data-layout-allow-overlap style="height:312px"><span id="g3-b0" class="big">2014</span></div>
+        <div id="g3-s" class="sub"><span class="w">PS4</span> <span class="w">·</span> <span class="w">Xbox</span> <span class="w">One</span> </div>
+        
+      </div>
+    </div>
+    <div id="g4" class="clip grp" data-start="15.0" data-duration="2.7" data-track-index="1">
+      <div id="g4-in" class="inner">
+        <div id="g4-k" class="kick">14 Nisan</div>
+        <div id="g4-bw" class="bw" data-layout-allow-overlap style="height:312px"><span id="g4-b0" class="big">2015</span></div>
+        <div id="g4-s" class="sub"><span class="w">PC'de</span> <span class="w">bir</span> <span class="w">kez</span> <span class="w">daha</span> </div>
+        
+      </div>
+    </div>
+    <div id="g5" class="clip grp" data-start="19.4" data-duration="9.9" data-track-index="1">
+      <div id="g5-in" class="inner">
+        <div id="g5-k" class="kick">Yıllar geçti</div>
+        <div id="g5-bw" class="bw" data-layout-allow-overlap style="height:312px"><span id="g5-b0" class="big">2016</span><span id="g5-b1" class="big">2017</span><span id="g5-b2" class="big">2018</span><span id="g5-b3" class="big">2019</span><span id="g5-b4" class="big">2020</span><span id="g5-b5" class="big">2021</span></div>
+        <div id="g5-s" class="sub"><span class="w">Her</span> <span class="w">gün</span> <span class="w">yeni</span> <span class="w">bir</span> <span class="w">hikâye</span> </div>
+        
+      </div>
+    </div>
+    <div id="g6" class="clip grp" data-start="29.4" data-duration="3.9" data-track-index="1">
+      <div id="g6-in" class="inner">
+        <div id="g6-k" class="kick">15 Mart</div>
+        <div id="g6-bw" class="bw" data-layout-allow-overlap style="height:312px"><span id="g6-b0" class="big">2022</span></div>
+        <div id="g6-s" class="sub"><span class="w">PS5</span> <span class="w">·</span> <span class="w">Xbox</span> <span class="w">Series</span> <span class="w">X|S</span> </div>
+        
+      </div>
+    </div>
+    <div id="g7" class="clip grp" data-start="33.4" data-duration="5.1" data-track-index="1">
+      <div id="g7-in" class="inner">
+        <div id="g7-k" class="kick">Aralık</div>
+        <div id="g7-bw" class="bw" data-layout-allow-overlap style="height:312px"><span id="g7-b0" class="big">2023</span></div>
+        <div id="g7-s" class="sub"><span class="w">Yeni</span> <span class="w">bir</span> <span class="w">şehrin</span> <span class="w">ilk</span> <span class="w">fragmanı</span> </div>
+        
+      </div>
+    </div>
+    <div id="g8" class="clip grp" data-start="38.6" data-duration="2.9" data-track-index="1">
+      <div id="g8-in" class="inner">
+        <div id="g8-k" class="kick">19 Kasım</div>
+        <div id="g8-bw" class="bw" data-layout-allow-overlap style="height:312px"><span id="g8-b0" class="big">2024</span><span id="g8-b1" class="big">2025</span><span id="g8-b2" class="big">2026</span></div>
+        <div id="g8-s" class="sub"></div>
+        
+      </div>
+    </div>
+    <div id="g9" class="clip grp" data-start="41.6" data-duration="3.3" data-track-index="1">
+      <div id="g9-in" class="inner">
+        <div id="g9-k" class="kick">GTA VI'ya</div>
+        <div id="g9-bw" class="bw" data-layout-allow-overlap style="height:294px"><span id="g9-b0" class="big" style="color:#FF8A3D">6 GÜN</span></div>
+        <div id="g9-s" class="sub"><span class="w">kaldı</span> </div>
+        
+      </div>
+    </div>
+    <div id="g10" class="clip grp" data-start="45.0" data-duration="5.9" data-track-index="1">
+      <div id="g10-in" class="inner">
+        <div id="g10-k" class="kick">2013 – 2026</div>
+        <div id="g10-bw" class="bw" data-layout-allow-overlap style="height:303px"><span id="g10-b0" class="big">13 YIL</span></div>
+        <div id="g10-s" class="sub"></div>
+        
+      </div>
+    </div>
+    <div id="g11" class="clip grp" data-start="51.0" data-duration="3.5" data-track-index="1">
+      <div id="g11-in" class="inner">
+        <div id="g11-k" class="kick"></div>
+        <div id="g11-bw" class="bw" data-layout-allow-overlap style="height:156px"><span id="g11-b0" class="big">Teşekkürler,</span></div>
+        <div id="g11-s" class="sub big2"><span class="w">Los</span> <span class="w">Santos</span> </div>
+        
+      </div>
+    </div>
+    <div id="g12" class="clip grp" data-start="54.8" data-duration="5.2" data-track-index="1">
+      <div id="g12-in" class="inner">
+        <div id="g12-k" class="kick"></div>
+        <div id="g12-bw" class="bw" data-layout-allow-overlap style="height:184px"><span id="g12-b0" class="big">Hoşça kal,</span></div>
+        <div id="g12-s" class="sub"></div>
+        <div id="g12-gta" class="gta">GTA V</div><div id="g12-cr" class="cr">Görüntüler: Ambient Gaming Scenes · YouTube</div>
+      </div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.set("#scrim",{opacity:1},0);
+    tl.to("#scrim",{opacity:0,duration:0.3,ease:"power2.in"},4.4);
+    tl.set("#g1-b0",{opacity:1,scale:1},0.0);
+    tl.fromTo("#g1-k",{clipPath:"inset(-20% 100% -40% 0)"},{clipPath:"inset(-20% 0% -40% 0)",duration:0.4,ease:"power3.out"},0.25);
+    tl.fromTo("#g1-s .w",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.16,ease:"power2.out",stagger:0.07},1.0);
+    tl.to("#g1-in",{x:-420,opacity:0,duration:0.2,ease:"power3.in"},4.4);
+    tl.to("#scrim",{opacity:1,duration:0.3,ease:"power2.out"},7.25);
+    tl.fromTo("#g2-b0",{opacity:0,scale:1.6},{opacity:1,scale:1,duration:0.38,ease:"expo.out"},7.4);
+    tl.fromTo("#g2-k",{clipPath:"inset(-20% 100% -40% 0)"},{clipPath:"inset(-20% 0% -40% 0)",duration:0.4,ease:"power3.out"},7.65);
+    tl.fromTo("#g2-s .w",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.16,ease:"power2.out",stagger:0.07},8.2);
+    tl.to("#g2-in",{opacity:0,filter:"blur(10px)",duration:0.2,ease:"power2.in"},11.8);
+    tl.fromTo("#g3-b0",{opacity:0,scale:1.6},{opacity:1,scale:1,duration:0.38,ease:"expo.out"},12.2);
+    tl.fromTo("#g3-k",{clipPath:"inset(-20% 100% -40% 0)"},{clipPath:"inset(-20% 0% -40% 0)",duration:0.4,ease:"power3.out"},12.45);
+    tl.fromTo("#g3-s .w",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.16,ease:"power2.out",stagger:0.07},12.8);
+    tl.to("#g3-in",{x:-420,opacity:0,duration:0.2,ease:"power3.in"},14.7);
+    tl.to("#scrim",{opacity:0,duration:0.3,ease:"power2.in"},17.5);
+    tl.fromTo("#g4-b0",{opacity:0,scale:1.6},{opacity:1,scale:1,duration:0.38,ease:"expo.out"},15.0);
+    tl.fromTo("#g4-k",{clipPath:"inset(-20% 100% -40% 0)"},{clipPath:"inset(-20% 0% -40% 0)",duration:0.4,ease:"power3.out"},15.25);
+    tl.fromTo("#g4-s .w",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.16,ease:"power2.out",stagger:0.07},15.6);
+    tl.to("#g4-in",{scale:1.5,opacity:0,duration:0.22,ease:"power3.in"},17.5);
+    tl.to("#scrim",{opacity:1,duration:0.3,ease:"power2.out"},19.25);
+    tl.fromTo("#g5-b0",{opacity:0,scale:1.6},{opacity:1,scale:1,duration:0.38,ease:"expo.out"},19.4);
+    tl.set("#g5-b0",{opacity:0},20.65);
+    tl.set("#g5-b1",{opacity:1},20.65);
+    tl.fromTo("#g5-b1",{scale:1.18},{scale:1,duration:0.3,ease:"expo.out",immediateRender:false},20.65);
+    tl.set("#g5-b1",{opacity:0},21.9);
+    tl.set("#g5-b2",{opacity:1},21.9);
+    tl.fromTo("#g5-b2",{scale:1.18},{scale:1,duration:0.3,ease:"expo.out",immediateRender:false},21.9);
+    tl.set("#g5-b2",{opacity:0},23.15);
+    tl.set("#g5-b3",{opacity:1},23.15);
+    tl.fromTo("#g5-b3",{scale:1.18},{scale:1,duration:0.3,ease:"expo.out",immediateRender:false},23.15);
+    tl.set("#g5-b3",{opacity:0},24.4);
+    tl.set("#g5-b4",{opacity:1},24.4);
+    tl.fromTo("#g5-b4",{scale:1.18},{scale:1,duration:0.3,ease:"expo.out",immediateRender:false},24.4);
+    tl.set("#g5-b4",{opacity:0},25.65);
+    tl.set("#g5-b5",{opacity:1},25.65);
+    tl.fromTo("#g5-b5",{scale:1.18},{scale:1,duration:0.3,ease:"expo.out",immediateRender:false},25.65);
+    tl.fromTo("#g5-k",{clipPath:"inset(-20% 100% -40% 0)"},{clipPath:"inset(-20% 0% -40% 0)",duration:0.4,ease:"power3.out"},19.65);
+    tl.fromTo("#g5-s .w",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.16,ease:"power2.out",stagger:0.07},26.9);
+    tl.to("#g5-in",{opacity:0,filter:"blur(10px)",duration:0.2,ease:"power2.in"},29.1);
+    tl.fromTo("#g6-b0",{opacity:0,scale:1.6},{opacity:1,scale:1,duration:0.38,ease:"expo.out"},29.4);
+    tl.fromTo("#g6-k",{clipPath:"inset(-20% 100% -40% 0)"},{clipPath:"inset(-20% 0% -40% 0)",duration:0.4,ease:"power3.out"},29.65);
+    tl.fromTo("#g6-s .w",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.16,ease:"power2.out",stagger:0.07},30.0);
+    tl.to("#g6-in",{scale:1.5,opacity:0,duration:0.22,ease:"power3.in"},33.1);
+    tl.fromTo("#g7-b0",{opacity:0,scale:1.6},{opacity:1,scale:1,duration:0.38,ease:"expo.out"},33.4);
+    tl.fromTo("#g7-k",{clipPath:"inset(-20% 100% -40% 0)"},{clipPath:"inset(-20% 0% -40% 0)",duration:0.4,ease:"power3.out"},33.65);
+    tl.fromTo("#g7-s .w",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.16,ease:"power2.out",stagger:0.07},34.2);
+    tl.to("#g7-in",{opacity:0,filter:"blur(10px)",duration:0.2,ease:"power2.in"},38.3);
+    tl.fromTo("#g8-b0",{opacity:0,scale:1.6},{opacity:1,scale:1,duration:0.38,ease:"expo.out"},38.6);
+    tl.set("#g8-b0",{opacity:0},39.05);
+    tl.set("#g8-b1",{opacity:1},39.05);
+    tl.fromTo("#g8-b1",{scale:1.18},{scale:1,duration:0.3,ease:"expo.out",immediateRender:false},39.05);
+    tl.set("#g8-b1",{opacity:0},39.5);
+    tl.set("#g8-b2",{opacity:1},39.5);
+    tl.fromTo("#g8-b2",{scale:1.18},{scale:1,duration:0.3,ease:"expo.out",immediateRender:false},39.5);
+    tl.fromTo("#g8-k",{clipPath:"inset(-20% 100% -40% 0)"},{clipPath:"inset(-20% 0% -40% 0)",duration:0.4,ease:"power3.out"},38.85);
+    tl.to("#g8-in",{x:-420,opacity:0,duration:0.2,ease:"power3.in"},41.3);
+    tl.fromTo("#g9-b0",{opacity:0,scale:1.6},{opacity:1,scale:1,duration:0.38,ease:"expo.out"},41.6);
+    tl.fromTo("#g9-k",{clipPath:"inset(-20% 100% -40% 0)"},{clipPath:"inset(-20% 0% -40% 0)",duration:0.4,ease:"power3.out"},41.85);
+    tl.fromTo("#g9-s .w",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.16,ease:"power2.out",stagger:0.07},42.3);
+    tl.to("#g9-in",{opacity:0,filter:"blur(10px)",duration:0.2,ease:"power2.in"},44.7);
+    tl.fromTo("#g10-b0",{opacity:0,scale:1.6},{opacity:1,scale:1,duration:0.38,ease:"expo.out"},45.0);
+    tl.fromTo("#g10-k",{clipPath:"inset(-20% 100% -40% 0)"},{clipPath:"inset(-20% 0% -40% 0)",duration:0.4,ease:"power3.out"},45.25);
+    tl.to("#g10-in",{x:-420,opacity:0,duration:0.2,ease:"power3.in"},50.7);
+    tl.fromTo("#g11-b0",{opacity:0,scale:1.6},{opacity:1,scale:1,duration:0.38,ease:"expo.out"},51.0);
+    tl.fromTo("#g11-s .w",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.16,ease:"power2.out",stagger:0.07},51.5);
+    tl.to("#g11-in",{opacity:0,filter:"blur(10px)",duration:0.2,ease:"power2.in"},54.3);
+    tl.fromTo("#g12-b0",{opacity:0,scale:1.6},{opacity:1,scale:1,duration:0.38,ease:"expo.out"},54.8);
+    tl.fromTo("#g12-gta",{opacity:0,scale:1.5},{opacity:1,scale:1,duration:0.45,ease:"expo.out"},56.0);
+    tl.fromTo("#g12-cr",{opacity:0},{opacity:0.85,duration:0.6},57.2);
+    tl.set({},{},59.95);
+    window.__timelines["yazilar"] = tl;
+  </script>
+</template>

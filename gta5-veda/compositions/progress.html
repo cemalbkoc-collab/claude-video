@@ -1,47 +1,51 @@
 <template>
   <style>
     #root { position:absolute; inset:0; pointer-events:none; }
-    #pg-track { position:absolute; left:72px; width:936px; top:1190px; height:4px; background:rgba(255,255,255,0.35); }
-    #pg-fill { position:absolute; left:72px; width:936px; top:1190px; height:4px; background:#FFFFFF; transform-origin:left center; }
-    #pg-dot { position:absolute; left:63px; top:1183px; width:18px; height:18px; border-radius:50%; background:#FF8A3D; box-shadow:0 0 0 3px rgba(0,0,0,0.25); }
+    #pg-wrap { position:absolute; left:0; top:0; width:1080px; height:1920px; }
+    #pg-y0, #pg-y1 { position:absolute; top:1250px; font:700 30px/1 Inter, sans-serif; color:#fff; text-shadow:0 2px 8px rgba(0,0,0,0.7); }
+    #pg-y0 { left:72px; } #pg-y1 { right:72px; }
+    #pg-track { position:absolute; left:72px; width:936px; top:1300px; height:5px; border-radius:3px; background:rgba(255,255,255,0.35); }
+    #pg-fill { position:absolute; left:72px; width:936px; top:1300px; height:5px; border-radius:3px; background:#fff; transform-origin:left center; }
+    #pg-dot { position:absolute; left:61px; top:1291px; width:22px; height:22px; border-radius:50%; background:#FF8A3D; box-shadow:0 0 0 4px rgba(0,0,0,0.25); }
   </style>
   <div id="root" data-composition-id="progress" data-width="1080" data-height="1920">
-    <div id="pg-track"></div>
-    <div id="pg-fill"></div>
-    <div id="pg-dot"></div>
+    <div id="pg-wrap">
+      <div id="pg-y0">2013</div><div id="pg-y1">2026</div>
+      <div id="pg-track"></div><div id="pg-fill"></div><div id="pg-dot"></div>
+    </div>
   </div>
   <script>
     const tl = gsap.timeline({ paused: true });
     tl.set("#pg-fill",{scaleX:0},0);
     tl.set("#pg-dot",{x:0},0);
-    tl.to("#pg-dot",{x:72.0,duration:0.3,ease:"power3.out"},10);
-    tl.to("#pg-fill",{scaleX:0.0769,duration:0.3,ease:"power3.out"},10);
+    tl.to("#pg-dot",{x:72.0,duration:0.3,ease:"power3.out"},12.2);
+    tl.to("#pg-fill",{scaleX:0.0769,duration:0.3,ease:"power3.out"},12.2);
     tl.to("#pg-dot",{x:144.0,duration:0.3,ease:"power3.out"},15);
     tl.to("#pg-fill",{scaleX:0.1538,duration:0.3,ease:"power3.out"},15);
-    tl.to("#pg-dot",{x:216.0,duration:0.3,ease:"power3.out"},20);
-    tl.to("#pg-fill",{scaleX:0.2308,duration:0.3,ease:"power3.out"},20);
-    tl.to("#pg-dot",{x:288.0,duration:0.3,ease:"power3.out"},21.667);
-    tl.to("#pg-fill",{scaleX:0.3077,duration:0.3,ease:"power3.out"},21.667);
-    tl.to("#pg-dot",{x:360.0,duration:0.3,ease:"power3.out"},23.333);
-    tl.to("#pg-fill",{scaleX:0.3846,duration:0.3,ease:"power3.out"},23.333);
-    tl.to("#pg-dot",{x:432.0,duration:0.3,ease:"power3.out"},25);
-    tl.to("#pg-fill",{scaleX:0.4615,duration:0.3,ease:"power3.out"},25);
-    tl.to("#pg-dot",{x:504.0,duration:0.3,ease:"power3.out"},26.667);
-    tl.to("#pg-fill",{scaleX:0.5385,duration:0.3,ease:"power3.out"},26.667);
-    tl.to("#pg-dot",{x:576.0,duration:0.3,ease:"power3.out"},28.333);
-    tl.to("#pg-fill",{scaleX:0.6154,duration:0.3,ease:"power3.out"},28.333);
-    tl.to("#pg-dot",{x:648.0,duration:0.3,ease:"power3.out"},30);
-    tl.to("#pg-fill",{scaleX:0.6923,duration:0.3,ease:"power3.out"},30);
-    tl.to("#pg-dot",{x:720.0,duration:0.3,ease:"power3.out"},36);
-    tl.to("#pg-fill",{scaleX:0.7692,duration:0.3,ease:"power3.out"},36);
-    tl.to("#pg-dot",{x:792.0,duration:0.3,ease:"power3.out"},42.0);
-    tl.to("#pg-fill",{scaleX:0.8462,duration:0.3,ease:"power3.out"},42.0);
-    tl.to("#pg-dot",{x:864.0,duration:0.3,ease:"power3.out"},42.45);
-    tl.to("#pg-fill",{scaleX:0.9231,duration:0.3,ease:"power3.out"},42.45);
-    tl.to("#pg-dot",{x:936.0,duration:0.3,ease:"power3.out"},42.9);
-    tl.to("#pg-fill",{scaleX:1.0000,duration:0.3,ease:"power3.out"},42.9);
-    tl.to("#pg-track,#pg-fill,#pg-dot",{opacity:0,duration:0.4},48.6);
-    tl.set({},{},59.9);
+    tl.to("#pg-dot",{x:216.0,duration:0.3,ease:"power3.out"},19.4);
+    tl.to("#pg-fill",{scaleX:0.2308,duration:0.3,ease:"power3.out"},19.4);
+    tl.to("#pg-dot",{x:288.0,duration:0.3,ease:"power3.out"},20.65);
+    tl.to("#pg-fill",{scaleX:0.3077,duration:0.3,ease:"power3.out"},20.65);
+    tl.to("#pg-dot",{x:360.0,duration:0.3,ease:"power3.out"},21.9);
+    tl.to("#pg-fill",{scaleX:0.3846,duration:0.3,ease:"power3.out"},21.9);
+    tl.to("#pg-dot",{x:432.0,duration:0.3,ease:"power3.out"},23.15);
+    tl.to("#pg-fill",{scaleX:0.4615,duration:0.3,ease:"power3.out"},23.15);
+    tl.to("#pg-dot",{x:504.0,duration:0.3,ease:"power3.out"},24.4);
+    tl.to("#pg-fill",{scaleX:0.5385,duration:0.3,ease:"power3.out"},24.4);
+    tl.to("#pg-dot",{x:576.0,duration:0.3,ease:"power3.out"},25.65);
+    tl.to("#pg-fill",{scaleX:0.6154,duration:0.3,ease:"power3.out"},25.65);
+    tl.to("#pg-dot",{x:648.0,duration:0.3,ease:"power3.out"},29.4);
+    tl.to("#pg-fill",{scaleX:0.6923,duration:0.3,ease:"power3.out"},29.4);
+    tl.to("#pg-dot",{x:720.0,duration:0.3,ease:"power3.out"},33.4);
+    tl.to("#pg-fill",{scaleX:0.7692,duration:0.3,ease:"power3.out"},33.4);
+    tl.to("#pg-dot",{x:792.0,duration:0.3,ease:"power3.out"},38.6);
+    tl.to("#pg-fill",{scaleX:0.8462,duration:0.3,ease:"power3.out"},38.6);
+    tl.to("#pg-dot",{x:864.0,duration:0.3,ease:"power3.out"},39.05);
+    tl.to("#pg-fill",{scaleX:0.9231,duration:0.3,ease:"power3.out"},39.05);
+    tl.to("#pg-dot",{x:936.0,duration:0.3,ease:"power3.out"},39.5);
+    tl.to("#pg-fill",{scaleX:1.0000,duration:0.3,ease:"power3.out"},39.5);
+    tl.to("#pg-wrap",{opacity:0,duration:0.4},44.6);
+    tl.set({},{},59.95);
     window.__timelines["progress"] = tl;
   </script>
 </template>
