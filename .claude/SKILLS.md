@@ -12,7 +12,7 @@ powershell -ExecutionPolicy Bypass -File $HOME\claude-video\.claude\install-skil
 ```
 
 **Mac / Linux:** `bash .claude/install-skills.sh` (→ `~/.claude/skills`)
-Kaynaklar: `agent-skills33` (Addy Osmani, MIT), `ECC` (MIT), `claude-video` (`watch`). Lisanslar `licenses/` altında.
+Kaynaklar: `agent-skills33` (Addy Osmani, MIT), `ECC` (MIT), `claude-video` (`watch`), HyperFrames (HeyGen, Apache-2.0). Lisanslar `licenses/` altında.
 
 ## 🎬 Video / montaj
 | Skill | Ne işe yarar |
@@ -25,6 +25,19 @@ Kaynaklar: `agent-skills33` (Addy Osmani, MIT), `ECC` (MIT), `claude-video` (`wa
 | `videodb` | Video indeksleme, arama, otomatik kesme (VideoDB API) |
 | `ui-demo` | Web uygulamasının Playwright ile demo videosu |
 | `content-engine` | YouTube/TikTok/X için senaryo ve içerik sistemleri |
+
+### HyperFrames (HTML → MP4, Node.js gerekir)
+| Skill | Ne işe yarar |
+|---|---|
+| `hyperframes` | Ana skill: HTML ile video yaz, animasyonla, render et (önce bu okunur) |
+| `hyperframes-cli` | `npx hyperframes init / preview / render / check` komutları |
+| `hyperframes-registry` | ~450 hazır blok: geçiş, başlık, overlay, kinetik yazı |
+| `media-use` | Müzik, efekt, görsel, logo, seslendirme bulma/üretme |
+| `style-sampling` | Kanıtlanmış video stilleriyle yeni bölüm (explainer vb.) |
+| `reverse-any-video` | Herhangi bir videoyu düzenlenebilir projeye dönüştür |
+| `remotion-to-hyperframes` | Remotion projesini HyperFrames'e taşı |
+| `slideshow` | Sunum modlu slayt gösterisi |
+| `figma` | Figma tasarımını videoya getir |
 
 ## 🌐 Web sitesi / frontend
 `frontend-ui-engineering`, `frontend-design-direction`, `frontend-patterns`, `make-interfaces-feel-better`,
