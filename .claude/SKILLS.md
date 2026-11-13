@@ -1,7 +1,17 @@
 # Skill paketi — site · oyun · montaj · otomasyon
 
 Bu repo bir oturuma eklendiğinde `.claude/skills/` altındaki tüm skill'ler otomatik yüklenir.
-Her projede çalışsın istersen: `bash .claude/install-skills.sh` (→ `~/.claude/skills`).
+Her projede çalışsın istersen kişisel skill klasörüne kur:
+
+**Windows (PowerShell):**
+```powershell
+git clone -b ccr-ca9e9ed2-paad3v https://github.com/cemalbkoc-collab/claude-video $HOME\claude-video
+powershell -ExecutionPolicy Bypass -File $HOME\claude-video\.claude\install-skills.ps1
+# Güncellemek için:
+powershell -ExecutionPolicy Bypass -File $HOME\claude-video\.claude\install-skills.ps1 -Update
+```
+
+**Mac / Linux:** `bash .claude/install-skills.sh` (→ `~/.claude/skills`)
 Kaynaklar: `agent-skills33` (Addy Osmani, MIT), `ECC` (MIT), `claude-video` (`watch`). Lisanslar `licenses/` altında.
 
 ## 🎬 Video / montaj
