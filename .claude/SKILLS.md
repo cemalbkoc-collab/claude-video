@@ -12,7 +12,7 @@ powershell -ExecutionPolicy Bypass -File $HOME\claude-video\.claude\install-skil
 ```
 
 **Mac / Linux:** `bash .claude/install-skills.sh` (→ `~/.claude/skills`)
-Kaynaklar: `agent-skills33` (Addy Osmani, MIT), `ECC` (MIT), `claude-video` (`watch`), HyperFrames (HeyGen, Apache-2.0). Lisanslar `licenses/` altında.
+Kaynaklar: `agent-skills33` (Addy Osmani, MIT), `ECC` (MIT), `claude-video` (`watch`), HyperFrames (HeyGen, Apache-2.0), `find-skills` (Vercel, MIT). Lisanslar `licenses/` altında.
 
 ## 🎬 Video / montaj
 | Skill | Ne işe yarar |
@@ -59,6 +59,12 @@ Oyun skill'leri zaten hesabında var (`mobile-browser-game`, `phaser-core`, `pha
 | `social-publisher`, `crosspost`, `x-api` | Sosyal medyada paylaşım otomasyonu |
 | `github-ops`, `ci-cd-and-automation`, `deployment-patterns`, `docker-patterns` | Repo, CI/CD, yayına alma |
 | `python-patterns` | Script / otomasyon kodu kalitesi |
+
+## 🔎 Araştırma ve geliştirme
+| Skill | Ne işe yarar |
+|---|---|
+| `find-skills` | İhtiyaç olduğunda skills.sh ekosisteminde yeni skill arar (`npx skills find <konu>`), kaliteyi kontrol edip önerir. Bulunanı kalıcı yapmak için bu pakete ekleriz. |
+| `search-first` | Kod yazmadan önce hazır araç/kütüphane/MCP arar |
 
 ## 🧭 Genel çalışma akışı
 `idea-refine` → `spec-driven-development` → `planning-and-task-breakdown` → `incremental-implementation`
