@@ -14,7 +14,11 @@
     #root .big2 { font-family:OswaldTR, Oswald, sans-serif; font-weight:700; font-size:170px; line-height:0.95; margin-top:0; }
     #root .w { display:inline-block; }
     #root .gta { margin-top:34px; font-family:OswaldTR, Oswald, sans-serif; font-weight:700; font-size:280px; line-height:0.9; color:#FF8A3D; transform-origin:0% 60%; text-shadow:0 6px 40px rgba(0,0,0,0.5); }
-    #root .cr { margin-top:36px; font:600 32px/1.2 Inter, sans-serif; text-shadow:0 2px 10px rgba(0,0,0,0.7); }
+    #root .ev { position:absolute; left:0; top:0; opacity:0; white-space:nowrap; color:#FFD7B5; }
+    #root .evw { position:relative; height:80px; }
+    #root .cta { margin-top:40px; font:800 64px/1.1 Inter, sans-serif; text-shadow:0 3px 18px rgba(0,0,0,0.7); }
+    #root .w2 { display:inline-block; }
+    #root .cr { margin-top:22px; font:600 28px/1.2 Inter, sans-serif; text-shadow:0 2px 10px rgba(0,0,0,0.7); }
     #g1 .big { font-size:340px; } #g2 .big { font-size:250px; } #g3 .big { font-size:340px; } #g4 .big { font-size:340px; } #g5 .big { font-size:340px; } #g6 .big { font-size:340px; } #g7 .big { font-size:340px; } #g8 .big { font-size:340px; } #g9 .big { font-size:320px; } #g10 .big { font-size:330px; } #g11 .big { font-size:170px; } #g12 .big { font-size:200px; }
   </style>
   <div id="root" data-composition-id="yazilar" data-width="1080" data-height="1920">
@@ -55,8 +59,8 @@
       <div id="g5-in" class="inner">
         <div id="g5-k" class="kick">Yıllar geçti</div>
         <div id="g5-bw" class="bw" data-layout-allow-overlap style="height:312px"><span id="g5-b0" class="big">2016</span><span id="g5-b1" class="big">2017</span><span id="g5-b2" class="big">2018</span><span id="g5-b3" class="big">2019</span><span id="g5-b4" class="big">2020</span><span id="g5-b5" class="big">2021</span></div>
-        <div id="g5-s" class="sub"><span class="w">Her</span> <span class="w">gün</span> <span class="w">yeni</span> <span class="w">bir</span> <span class="w">hikâye</span> </div>
-        
+        <div id="g5-s" class="sub"></div>
+        <div id="g5-ev" class="sub evw" data-layout-allow-overlap><span id="g5-e0" class="ev">Finance and Felony</span><span id="g5-e1" class="ev">Doomsday Heist</span><span id="g5-e2" class="ev">After Hours</span><span id="g5-e3" class="ev">Diamond Casino</span><span id="g5-e4" class="ev">Cayo Perico</span><span id="g5-e5" class="ev">The Contract</span></div>
       </div>
     </div>
     <div id="g6" class="clip grp" data-start="29.4" data-duration="3.9" data-track-index="1">
@@ -112,7 +116,7 @@
         <div id="g12-k" class="kick"></div>
         <div id="g12-bw" class="bw" data-layout-allow-overlap style="height:184px"><span id="g12-b0" class="big">Hoşça kal,</span></div>
         <div id="g12-s" class="sub"></div>
-        <div id="g12-gta" class="gta">GTA V</div><div id="g12-cr" class="cr">Görüntüler: Ambient Gaming Scenes · YouTube</div>
+        <div id="g12-gta" class="gta">GTA V</div><div id="g12-cta" class="cta"><span class="w2">Sen</span> <span class="w2">kaç</span> <span class="w2">yıl</span> <span class="w2">oynadın?</span> </div><div id="g12-cr" class="cr">Görüntüler: Ambient Gaming Scenes · YouTube</div>
       </div>
     </div>
   </div>
@@ -138,6 +142,23 @@
     tl.fromTo("#g4-k",{clipPath:"inset(-20% 100% -40% 0)"},{clipPath:"inset(-20% 0% -40% 0)",duration:0.4,ease:"power3.out"},15.25);
     tl.fromTo("#g4-s .w",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.16,ease:"power2.out",stagger:0.07},15.6);
     tl.to("#g4-in",{scale:1.5,opacity:0,duration:0.22,ease:"power3.in"},17.5);
+    tl.set("#g5-e0",{opacity:1},19.4);
+    tl.fromTo("#g5-e0",{y:24},{y:0,duration:0.3,ease:"expo.out",immediateRender:false},19.4);
+    tl.set("#g5-e1",{opacity:1},20.65);
+    tl.fromTo("#g5-e1",{y:24},{y:0,duration:0.3,ease:"expo.out",immediateRender:false},20.65);
+    tl.set("#g5-e0",{opacity:0},20.65);
+    tl.set("#g5-e2",{opacity:1},21.9);
+    tl.fromTo("#g5-e2",{y:24},{y:0,duration:0.3,ease:"expo.out",immediateRender:false},21.9);
+    tl.set("#g5-e1",{opacity:0},21.9);
+    tl.set("#g5-e3",{opacity:1},23.15);
+    tl.fromTo("#g5-e3",{y:24},{y:0,duration:0.3,ease:"expo.out",immediateRender:false},23.15);
+    tl.set("#g5-e2",{opacity:0},23.15);
+    tl.set("#g5-e4",{opacity:1},24.4);
+    tl.fromTo("#g5-e4",{y:24},{y:0,duration:0.3,ease:"expo.out",immediateRender:false},24.4);
+    tl.set("#g5-e3",{opacity:0},24.4);
+    tl.set("#g5-e5",{opacity:1},25.65);
+    tl.fromTo("#g5-e5",{y:24},{y:0,duration:0.3,ease:"expo.out",immediateRender:false},25.65);
+    tl.set("#g5-e4",{opacity:0},25.65);
     tl.to("#scrim",{opacity:1,duration:0.3,ease:"power2.out"},19.25);
     tl.fromTo("#g5-b0",{opacity:0,scale:1.6},{opacity:1,scale:1,duration:0.38,ease:"expo.out"},19.4);
     tl.set("#g5-b0",{opacity:0},20.65);
@@ -156,7 +177,6 @@
     tl.set("#g5-b5",{opacity:1},25.65);
     tl.fromTo("#g5-b5",{scale:1.18},{scale:1,duration:0.3,ease:"expo.out",immediateRender:false},25.65);
     tl.fromTo("#g5-k",{clipPath:"inset(-20% 100% -40% 0)"},{clipPath:"inset(-20% 0% -40% 0)",duration:0.4,ease:"power3.out"},19.65);
-    tl.fromTo("#g5-s .w",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.16,ease:"power2.out",stagger:0.07},26.9);
     tl.to("#g5-in",{opacity:0,filter:"blur(10px)",duration:0.2,ease:"power2.in"},29.1);
     tl.fromTo("#g6-b0",{opacity:0,scale:1.6},{opacity:1,scale:1,duration:0.38,ease:"expo.out"},29.4);
     tl.fromTo("#g6-k",{clipPath:"inset(-20% 100% -40% 0)"},{clipPath:"inset(-20% 0% -40% 0)",duration:0.4,ease:"power3.out"},29.65);
@@ -187,7 +207,8 @@
     tl.to("#g11-in",{opacity:0,filter:"blur(10px)",duration:0.2,ease:"power2.in"},54.3);
     tl.fromTo("#g12-b0",{opacity:0,scale:1.6},{opacity:1,scale:1,duration:0.38,ease:"expo.out"},54.8);
     tl.fromTo("#g12-gta",{opacity:0,scale:1.5},{opacity:1,scale:1,duration:0.45,ease:"expo.out"},56.0);
-    tl.fromTo("#g12-cr",{opacity:0},{opacity:0.85,duration:0.6},57.2);
+    tl.fromTo("#g12-cta .w2",{opacity:0,filter:"blur(8px)"},{opacity:1,filter:"blur(0px)",duration:0.18,stagger:0.08},57.0);
+    tl.fromTo("#g12-cr",{opacity:0},{opacity:0.8,duration:0.5},57.4);
     tl.set({},{},59.95);
     window.__timelines["yazilar"] = tl;
   </script>
