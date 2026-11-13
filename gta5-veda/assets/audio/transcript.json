@@ -1,0 +1,410 @@
+[
+  {
+    "text": "Eyvül",
+    "start": 0.07,
+    "end": 0.48,
+    "id": "w0"
+  },
+  {
+    "text": "2013.",
+    "start": 0.49,
+    "end": 1.95,
+    "id": "w1"
+  },
+  {
+    "text": "Bir",
+    "start": 1.95,
+    "end": 2.18,
+    "id": "w2"
+  },
+  {
+    "text": "şehre",
+    "start": 2.18,
+    "end": 2.51,
+    "id": "w3"
+  },
+  {
+    "text": "ilk",
+    "start": 2.65,
+    "end": 2.77,
+    "id": "w4"
+  },
+  {
+    "text": "kez",
+    "start": 2.87,
+    "end": 3.01,
+    "id": "w5"
+  },
+  {
+    "text": "adım",
+    "start": 3.01,
+    "end": 3.31,
+    "id": "w6"
+  },
+  {
+    "text": "attık.",
+    "start": 3.31,
+    "end": 4.06,
+    "id": "w7"
+  },
+  {
+    "text": "Birkaç",
+    "start": 4.13,
+    "end": 4.51,
+    "id": "w8"
+  },
+  {
+    "text": "hafta",
+    "start": 4.51,
+    "end": 4.88,
+    "id": "w9"
+  },
+  {
+    "text": "sonra",
+    "start": 4.88,
+    "end": 5.26,
+    "id": "w10"
+  },
+  {
+    "text": "arkadaşlarımız",
+    "start": 5.26,
+    "end": 6.32,
+    "id": "w11"
+  },
+  {
+    "text": "da",
+    "start": 6.32,
+    "end": 6.47,
+    "id": "w12"
+  },
+  {
+    "text": "geldi.",
+    "start": 6.47,
+    "end": 6.9,
+    "id": "w13"
+  },
+  {
+    "text": "Aynı",
+    "start": 6.97,
+    "end": 7.26,
+    "id": "w14"
+  },
+  {
+    "text": "sokaklar,",
+    "start": 7.26,
+    "end": 8.2,
+    "id": "w15"
+  },
+  {
+    "text": "aynı",
+    "start": 8.2,
+    "end": 8.37,
+    "id": "w16"
+  },
+  {
+    "text": "kaos.",
+    "start": 8.8,
+    "end": 9.41,
+    "id": "w17"
+  },
+  {
+    "text": "Konsollar",
+    "start": 9.55,
+    "end": 10.19,
+    "id": "w18"
+  },
+  {
+    "text": "değişti,",
+    "start": 10.19,
+    "end": 10.92,
+    "id": "w19"
+  },
+  {
+    "text": "ekranlar",
+    "start": 10.92,
+    "end": 11.72,
+    "id": "w20"
+  },
+  {
+    "text": "büyüdü",
+    "start": 11.72,
+    "end": 12.24,
+    "id": "w21"
+  },
+  {
+    "text": "ama",
+    "start": 12.35,
+    "end": 12.58,
+    "id": "w22"
+  },
+  {
+    "text": "dönüp",
+    "start": 12.58,
+    "end": 12.98,
+    "id": "w23"
+  },
+  {
+    "text": "geldiğimiz",
+    "start": 12.98,
+    "end": 13.78,
+    "id": "w24"
+  },
+  {
+    "text": "yer",
+    "start": 13.78,
+    "end": 14.02,
+    "id": "w25"
+  },
+  {
+    "text": "hep",
+    "start": 14.02,
+    "end": 14.26,
+    "id": "w26"
+  },
+  {
+    "text": "aynıydı.",
+    "start": 14.26,
+    "end": 15.08,
+    "id": "w27"
+  },
+  {
+    "text": "Yıllar",
+    "start": 15.15,
+    "end": 15.5,
+    "id": "w28"
+  },
+  {
+    "text": "birbirine",
+    "start": 15.5,
+    "end": 16.13,
+    "id": "w29"
+  },
+  {
+    "text": "karıştı.",
+    "start": 16.13,
+    "end": 16.84,
+    "id": "w30"
+  },
+  {
+    "text": "Soygunlar,",
+    "start": 16.91,
+    "end": 17.68,
+    "id": "w31"
+  },
+  {
+    "text": "kovalamacalar,",
+    "start": 17.68,
+    "end": 18.84,
+    "id": "w32"
+  },
+  {
+    "text": "gün",
+    "start": 18.84,
+    "end": 19.07,
+    "id": "w33"
+  },
+  {
+    "text": "batımında",
+    "start": 19.07,
+    "end": 19.76,
+    "id": "w34"
+  },
+  {
+    "text": "bitmeyen",
+    "start": 19.76,
+    "end": 20.37,
+    "id": "w35"
+  },
+  {
+    "text": "sürüşler.",
+    "start": 20.37,
+    "end": 21.3,
+    "id": "w36"
+  },
+  {
+    "text": "Yeni",
+    "start": 21.37,
+    "end": 21.63,
+    "id": "w37"
+  },
+  {
+    "text": "nesil",
+    "start": 21.63,
+    "end": 22.04,
+    "id": "w38"
+  },
+  {
+    "text": "geldi,",
+    "start": 22.08,
+    "end": 22.65,
+    "id": "w39"
+  },
+  {
+    "text": "şehir",
+    "start": 22.65,
+    "end": 23.07,
+    "id": "w40"
+  },
+  {
+    "text": "yine",
+    "start": 23.2,
+    "end": 23.41,
+    "id": "w41"
+  },
+  {
+    "text": "buradaydı.",
+    "start": 23.41,
+    "end": 24.5,
+    "id": "w42"
+  },
+  {
+    "text": "Sonra",
+    "start": 24.57,
+    "end": 24.9,
+    "id": "w43"
+  },
+  {
+    "text": "bir",
+    "start": 24.9,
+    "end": 24.98,
+    "id": "w44"
+  },
+  {
+    "text": "gün",
+    "start": 25.19,
+    "end": 25.38,
+    "id": "w45"
+  },
+  {
+    "text": "yeni",
+    "start": 25.38,
+    "end": 25.7,
+    "id": "w46"
+  },
+  {
+    "text": "bir",
+    "start": 25.7,
+    "end": 25.94,
+    "id": "w47"
+  },
+  {
+    "text": "şehrin",
+    "start": 25.94,
+    "end": 26.39,
+    "id": "w48"
+  },
+  {
+    "text": "ilk",
+    "start": 26.4,
+    "end": 26.63,
+    "id": "w49"
+  },
+  {
+    "text": "görüntüleri",
+    "start": 26.63,
+    "end": 27.47,
+    "id": "w50"
+  },
+  {
+    "text": "düştü.",
+    "start": 27.47,
+    "end": 28.17,
+    "id": "w51"
+  },
+  {
+    "text": "Şimdi",
+    "start": 28.25,
+    "end": 28.58,
+    "id": "w52"
+  },
+  {
+    "text": "sayılı",
+    "start": 28.58,
+    "end": 29.06,
+    "id": "w53"
+  },
+  {
+    "text": "günler",
+    "start": 29.06,
+    "end": 29.54,
+    "id": "w54"
+  },
+  {
+    "text": "kaldı.",
+    "start": 29.54,
+    "end": 30.22,
+    "id": "w55"
+  },
+  {
+    "text": "13",
+    "start": 30.29,
+    "end": 30.95,
+    "id": "w56"
+  },
+  {
+    "text": "yıl.",
+    "start": 30.95,
+    "end": 31.32,
+    "id": "w57"
+  },
+  {
+    "text": "Bir",
+    "start": 31.39,
+    "end": 31.57,
+    "id": "w58"
+  },
+  {
+    "text": "oyundan",
+    "start": 31.57,
+    "end": 32.13,
+    "id": "w59"
+  },
+  {
+    "text": "çok",
+    "start": 32.13,
+    "end": 32.38,
+    "id": "w60"
+  },
+  {
+    "text": "daha",
+    "start": 32.38,
+    "end": 32.71,
+    "id": "w61"
+  },
+  {
+    "text": "fazlasıydı.",
+    "start": 32.71,
+    "end": 33.82,
+    "id": "w62"
+  },
+  {
+    "text": "Teşekkürler",
+    "start": 33.89,
+    "end": 34.64,
+    "id": "w63"
+  },
+  {
+    "text": "Los",
+    "start": 34.64,
+    "end": 34.87,
+    "id": "w64"
+  },
+  {
+    "text": "Santos.",
+    "start": 34.87,
+    "end": 35.32,
+    "id": "w65"
+  },
+  {
+    "text": "Hoşça",
+    "start": 35.65,
+    "end": 36.06,
+    "id": "w66"
+  },
+  {
+    "text": "kal.",
+    "start": 36.27,
+    "end": 36.58,
+    "id": "w67"
+  }
+]
