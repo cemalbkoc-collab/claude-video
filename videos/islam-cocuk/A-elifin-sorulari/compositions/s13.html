@@ -1,0 +1,31 @@
+<template>
+  <style>
+    @font-face { font-family: "Amiri"; src: url("assets/fonts/amiri-arabic-700.woff2") format("woff2"); font-weight: 700; }
+    #root { position: absolute; inset: 0; overflow: hidden; font-family: "Nunito", sans-serif; }
+    #s13-cam { position: absolute; inset: 0; }
+    .actor { position: absolute; }
+    #s13-fade { position: absolute; inset: 0; background: #FFF8EC; }
+    .cap { position: absolute; left: 0; right: 0; bottom: 70px; text-align: center; font-weight: 900; font-size: 76px; color: #fff;
+      -webkit-text-stroke: 11px #2B3A55; paint-order: stroke fill; }
+    .title { position: absolute; left: 0; right: 0; top: 330px; text-align: center; font-weight: 900; font-size: 150px; color: #fff;
+      -webkit-text-stroke: 16px #2B6E3F; paint-order: stroke fill; line-height: 1; }
+    .arabic { position: absolute; left: 0; right: 0; text-align: center; font-family: "Amiri", serif; font-weight: 700; color: #1E6B52;
+      direction: rtl; text-shadow: 0 4px 0 #fff; }
+    .chip { position: absolute; padding: 12px 30px; border-radius: 40px; background: #fff; color: #2B3A55; font-weight: 900; font-size: 46px;
+      white-space: nowrap; box-shadow: 0 6px 0 rgba(0,0,0,0.15); }
+  </style>
+  <div id="root" data-composition-id="s13" data-width="1920" data-height="1080">
+    <div id="s13-cam"><svg viewBox="0 0 1920 1080" style="position:absolute;inset:0;width:100%;height:100%"><defs><linearGradient id="skyg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F8D49A"/><stop offset="1" stop-color="#FFF1D6"/></linearGradient></defs><rect width="1920" height="1080" fill="url(#skyg)"/><rect y="760" width="1920" height="320" fill="#EFE9DA"/><rect x="0" y="560" width="140" height="200" fill="#E4D8BE"/><rect x="170" y="560" width="140" height="200" fill="#E4D8BE"/><rect x="340" y="560" width="140" height="200" fill="#E4D8BE"/><rect x="510" y="560" width="140" height="200" fill="#E4D8BE"/><rect x="680" y="560" width="140" height="200" fill="#E4D8BE"/><rect x="850" y="560" width="140" height="200" fill="#E4D8BE"/><rect x="1020" y="560" width="140" height="200" fill="#E4D8BE"/><rect x="1190" y="560" width="140" height="200" fill="#E4D8BE"/><rect x="1360" y="560" width="140" height="200" fill="#E4D8BE"/><rect x="1530" y="560" width="140" height="200" fill="#E4D8BE"/><rect x="1700" y="560" width="140" height="200" fill="#E4D8BE"/><rect x="1870" y="560" width="140" height="200" fill="#E4D8BE"/></svg>
+    <svg id="s13-kaaba" class="actor" viewBox="-1000 -1000 2000 1200" style="left:-190px;top:-190px;width:2300px;height:1380px;overflow:visible"><g id="s13-kaaba-g" transform="scale(1 1)"><ellipse cx="0" cy="-30" rx="420" ry="90" fill="#EFE9DA"/><rect x="-130" y="-330" width="260" height="300" fill="#151515"/><rect x="-130" y="-270" width="260" height="26" fill="#D4AF37"/><rect x="-60" y="-140" width="44" height="110" fill="#B8952B"/><circle class="pilgrim" cx="300.0" cy="-30.0" r="14" fill="#fff" stroke="#ddd" stroke-width="3"/><circle class="pilgrim" cx="277.2" cy="-5.5" r="14" fill="#fff" stroke="#ddd" stroke-width="3"/><circle class="pilgrim" cx="212.1" cy="15.3" r="14" fill="#fff" stroke="#ddd" stroke-width="3"/><circle class="pilgrim" cx="114.8" cy="29.1" r="14" fill="#fff" stroke="#ddd" stroke-width="3"/><circle class="pilgrim" cx="0.0" cy="34.0" r="14" fill="#fff" stroke="#ddd" stroke-width="3"/><circle class="pilgrim" cx="-114.8" cy="29.1" r="14" fill="#fff" stroke="#ddd" stroke-width="3"/><circle class="pilgrim" cx="-212.1" cy="15.3" r="14" fill="#fff" stroke="#ddd" stroke-width="3"/><circle class="pilgrim" cx="-277.2" cy="-5.5" r="14" fill="#fff" stroke="#ddd" stroke-width="3"/><circle class="pilgrim" cx="-300.0" cy="-30.0" r="14" fill="#fff" stroke="#ddd" stroke-width="3"/><circle class="pilgrim" cx="-277.2" cy="-54.5" r="14" fill="#fff" stroke="#ddd" stroke-width="3"/><circle class="pilgrim" cx="-212.2" cy="-75.2" r="14" fill="#fff" stroke="#ddd" stroke-width="3"/><circle class="pilgrim" cx="-114.8" cy="-89.1" r="14" fill="#fff" stroke="#ddd" stroke-width="3"/><circle class="pilgrim" cx="-0.0" cy="-94.0" r="14" fill="#fff" stroke="#ddd" stroke-width="3"/><circle class="pilgrim" cx="114.8" cy="-89.1" r="14" fill="#fff" stroke="#ddd" stroke-width="3"/><circle class="pilgrim" cx="212.1" cy="-75.3" r="14" fill="#fff" stroke="#ddd" stroke-width="3"/><circle class="pilgrim" cx="277.1" cy="-54.5" r="14" fill="#fff" stroke="#ddd" stroke-width="3"/></g></svg><div id="s13-t0" class="clip cap" style="" data-start="0.45" data-duration="11.01" data-track-index="5">5 · Hac</div></div>
+    <div id="s13-fade"></div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+        tl.fromTo("#s13-fade", { opacity: 1 }, { opacity: 0, duration: 0.45, ease: "power2.out" }, 0);
+    tl.fromTo("#s13-cam", { scale: 1.0, transformOrigin: "960px 600px" }, { scale: 1.06, duration: 11.46, ease: "sine.inOut" }, 0);
+    tl.fromTo("#s13-kaaba", { opacity: 0 }, { opacity: 1, duration: 0.6 }, 0.2);
+    tl.fromTo("#s13-t0", { y: 30, opacity: 0, scale: 0.9 }, { y: 0, opacity: 1, scale: 1, duration: 0.45, ease: "back.out(2)" }, 0.45);
+    tl.fromTo("#s13-kaaba .pilgrim", { opacity: 0 }, { opacity: 1, duration: 0.3, stagger: 0.12 }, 0.6);
+    window.__timelines["s13"] = tl;
+  </script>
+</template>

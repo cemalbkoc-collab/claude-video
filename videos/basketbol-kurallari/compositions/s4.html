@@ -1,0 +1,29 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; }
+
+    .kicker { position: absolute; left: 130px; top: 300px; font-family: "Inter", sans-serif; font-weight: 900; font-size: 40px;
+      letter-spacing: 0.14em; color: var(--orange); text-transform: uppercase; }
+    .title { position: absolute; left: 126px; right: 160px; top: 352px; font-family: "League Gothic", sans-serif; font-size: 120px;
+      line-height: 0.92; color: var(--ink); text-transform: uppercase; letter-spacing: 0.005em; }
+    .line { position: absolute; left: 130px; right: 160px; font-family: "Inter", sans-serif; font-weight: 700; font-size: 42px;
+      line-height: 1.18; color: var(--ink); }
+    .line b { color: var(--orange); font-weight: 900; }
+    .note { position: absolute; left: 130px; right: 160px; top: 612px; font-family: "Inter", sans-serif; font-weight: 700;
+      font-size: 30px; color: var(--muted); }
+
+  </style>
+  <div id="root" data-composition-id="s4" data-width="1080" data-height="1920">
+    <div id="s4-kicker" class="kicker clip" data-start="0.04" data-duration="4.84" data-track-index="1">Kural 4 · Çift top</div>
+    <div id="s4-title" class="title clip" data-start="0.09" data-duration="4.79" data-track-index="2">Bıraktın mı, bitti</div>
+    <div id="s4-l0" class="line clip" style="top:492px" data-start="0.53" data-duration="4.35" data-track-index="3">Sürmeyi kesip topu tuttuysan<br><b>tekrar süremezsin.</b></div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#s4-kicker", { x: -40, opacity: 0 }, { x: 0, opacity: 1, duration: 0.31, ease: "expo.out" }, 0.04);
+    tl.fromTo("#s4-title", { y: 70, opacity: 0, scale: 0.94 }, { y: 0, opacity: 1, scale: 1, duration: 0.44, ease: "expo.out" }, 0.09);
+    tl.fromTo("#s4-l0", { y: 26, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "power4.out" }, 0.53);
+    tl.to("#s4-kicker, #s4-title, #s4-l0, #s4-note", { y: -30, opacity: 0, duration: 0.11, ease: "power3.in" }, 4.76);
+    window.__timelines["s4"] = tl;
+  </script>
+</template>

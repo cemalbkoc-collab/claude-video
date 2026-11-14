@@ -1,0 +1,30 @@
+<template>
+  <style>
+    @font-face { font-family: "Amiri"; src: url("assets/fonts/amiri-arabic-700.woff2") format("woff2"); font-weight: 700; }
+    #root { position: absolute; inset: 0; overflow: hidden; font-family: "Nunito", sans-serif; }
+    #s10-cam { position: absolute; inset: 0; }
+    .actor { position: absolute; }
+    #s10-fade { position: absolute; inset: 0; background: #FFF8EC; }
+    .cap { position: absolute; left: 0; right: 0; bottom: 70px; text-align: center; font-weight: 900; font-size: 76px; color: #fff;
+      -webkit-text-stroke: 11px #2B3A55; paint-order: stroke fill; }
+    .title { position: absolute; left: 0; right: 0; top: 330px; text-align: center; font-weight: 900; font-size: 150px; color: #fff;
+      -webkit-text-stroke: 16px #2B6E3F; paint-order: stroke fill; line-height: 1; }
+    .arabic { position: absolute; left: 0; right: 0; text-align: center; font-family: "Amiri", serif; font-weight: 700; color: #1E6B52;
+      direction: rtl; text-shadow: 0 4px 0 #fff; }
+    .chip { position: absolute; padding: 12px 30px; border-radius: 40px; background: #fff; color: #2B3A55; font-weight: 900; font-size: 46px;
+      white-space: nowrap; box-shadow: 0 6px 0 rgba(0,0,0,0.15); }
+  </style>
+  <div id="root" data-composition-id="s10" data-width="1920" data-height="1080">
+    <div id="s10-cam"><svg viewBox="0 0 1920 1080" style="position:absolute;inset:0;width:100%;height:100%"><rect width="1920" height="1080" fill="#F3EBDD"/><rect y="760" width="1920" height="320" fill="#B23A48"/><path d="M0 800 h1920" stroke="#D4AF37" stroke-width="3"/><path d="M0 870 h1920" stroke="#D4AF37" stroke-width="3"/><path d="M0 940 h1920" stroke="#D4AF37" stroke-width="3"/><path d="M0 1010 h1920" stroke="#D4AF37" stroke-width="3"/><path d="M820 760 L820 380 Q960 230 1100 380 L1100 760 Z" fill="#5B8FA3"/><path d="M860 760 L860 410 Q960 300 1060 410 L1060 760 Z" fill="#3E6E82"/><path d="M210 760 L210 330 Q300 230 390 330 L390 760" fill="none" stroke="#E2D6BE" stroke-width="20"/><path d="M1530 760 L1530 330 Q1620 230 1710 330 L1710 760" fill="none" stroke="#E2D6BE" stroke-width="20"/><g fill="#FFF8E1"><circle cx="760" cy="180" r="10"/><circle cx="960" cy="140" r="14"/><circle cx="1160" cy="180" r="10"/></g></svg>
+    <svg id="s10-row1" class="actor" viewBox="-1000 -1000 2000 1200" style="left:-190px;top:-150px;width:2300px;height:1380px;overflow:visible"><g id="s10-row1-g" transform="scale(1 1)"><g transform="translate(-560 0)"><rect x="-55" y="-200" width="110" height="200" rx="40" fill="#5E8FB8"/><circle cx="0" cy="-240" r="46" fill="#3B2A20"/></g><g transform="translate(-420 0)"><rect x="-55" y="-200" width="110" height="200" rx="40" fill="#2F6B3F"/><circle cx="0" cy="-240" r="46" fill="#F4F4F2"/></g><g transform="translate(-280 0)"><rect x="-55" y="-200" width="110" height="200" rx="40" fill="#7FB2D9"/><circle cx="0" cy="-240" r="46" fill="#C9A7E0"/></g><g transform="translate(-140 0)"><rect x="-55" y="-200" width="110" height="200" rx="40" fill="#E9C46A"/><circle cx="0" cy="-240" r="46" fill="#2B1B10"/></g><g transform="translate(0 0)"><rect x="-55" y="-200" width="110" height="200" rx="40" fill="#B5543A"/><circle cx="0" cy="-240" r="46" fill="#3B2A20"/></g><g transform="translate(140 0)"><rect x="-55" y="-200" width="110" height="200" rx="40" fill="#5E8FB8"/><circle cx="0" cy="-240" r="46" fill="#2B1B10"/></g><g transform="translate(280 0)"><rect x="-55" y="-200" width="110" height="200" rx="40" fill="#2A9D8F"/><circle cx="0" cy="-240" r="46" fill="#F4F4F2"/></g><g transform="translate(420 0)"><rect x="-55" y="-200" width="110" height="200" rx="40" fill="#F2B632"/><circle cx="0" cy="-240" r="46" fill="#7B4A2A"/></g><g transform="translate(560 0)"><rect x="-55" y="-200" width="110" height="200" rx="40" fill="#7FB2D9"/><circle cx="0" cy="-240" r="46" fill="#3B2A20"/></g></g></svg><div id="s10-t0" class="clip cap" style="" data-start="5.63" data-duration="3.44" data-track-index="5">Allah'ın huzurunda hepimiz eşitiz</div></div>
+    <div id="s10-fade"></div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+        tl.fromTo("#s10-fade", { opacity: 1 }, { opacity: 0, duration: 0.45, ease: "power2.out" }, 0);
+    tl.fromTo("#s10-cam", { scale: 1.0, transformOrigin: "960px 500px" }, { scale: 1.08, duration: 9.07, ease: "sine.inOut" }, 0);
+    tl.fromTo("#s10-row1", { opacity: 0 }, { opacity: 1, duration: 0.6 }, 0.2);
+    tl.fromTo("#s10-t0", { y: 30, opacity: 0, scale: 0.9 }, { y: 0, opacity: 1, scale: 1, duration: 0.45, ease: "back.out(2)" }, 5.63);
+    window.__timelines["s10"] = tl;
+  </script>
+</template>

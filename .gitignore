@@ -18,3 +18,17 @@ htmlcov/
 # planning docs (local only)
 docs/superpowers/
 /V[0-9]*_*.md
+
+# youtube-uploader skill: OAuth token and credentials stay local
+.claude/skills/youtube-uploader/scripts/.youtube-token.json
+.claude/skills/youtube-uploader/scripts/.env
+
+# youtube-shorts automation: rendered videos and local assets
+/automation/youtube-shorts/data/
+
+# HyperFrames check/snapshot artifacts
+.hyperframes/
+
+# HyperFrames render scratch folders
+videos/**/work-*/
+videos/**/.*.hf-transaction-*/

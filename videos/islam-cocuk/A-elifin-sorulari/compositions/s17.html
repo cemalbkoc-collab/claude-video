@@ -1,0 +1,50 @@
+<template>
+  <style>
+    @font-face { font-family: "Amiri"; src: url("assets/fonts/amiri-arabic-700.woff2") format("woff2"); font-weight: 700; }
+    #root { position: absolute; inset: 0; overflow: hidden; font-family: "Nunito", sans-serif; }
+    #s17-cam { position: absolute; inset: 0; }
+    .actor { position: absolute; }
+    #s17-fade { position: absolute; inset: 0; background: #FFF8EC; }
+    .cap { position: absolute; left: 0; right: 0; bottom: 70px; text-align: center; font-weight: 900; font-size: 76px; color: #fff;
+      -webkit-text-stroke: 11px #2B3A55; paint-order: stroke fill; }
+    .title { position: absolute; left: 0; right: 0; top: 330px; text-align: center; font-weight: 900; font-size: 150px; color: #fff;
+      -webkit-text-stroke: 16px #2B6E3F; paint-order: stroke fill; line-height: 1; }
+    .arabic { position: absolute; left: 0; right: 0; text-align: center; font-family: "Amiri", serif; font-weight: 700; color: #1E6B52;
+      direction: rtl; text-shadow: 0 4px 0 #fff; }
+    .chip { position: absolute; padding: 12px 30px; border-radius: 40px; background: #fff; color: #2B3A55; font-weight: 900; font-size: 46px;
+      white-space: nowrap; box-shadow: 0 6px 0 rgba(0,0,0,0.15); }
+  </style>
+  <div id="root" data-composition-id="s17" data-width="1920" data-height="1080">
+    <div id="s17-cam"><svg viewBox="0 0 1920 1080" style="position:absolute;inset:0;width:100%;height:100%"><defs><linearGradient id="skyg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8FD3F5"/><stop offset="1" stop-color="#DDF3FF"/></linearGradient></defs><rect width="1920" height="1080" fill="url(#skyg)"/><circle cx="1640" cy="190" r="70" fill="#FFD23F"/><g class="cloud" transform="translate(420 180) scale(1)" opacity="1"><ellipse cx="0" cy="20" rx="130" ry="44" fill="#fff"/><circle cx="-40" cy="-4" r="46" fill="#fff"/><circle cx="30" cy="-14" r="58" fill="#fff"/></g><g class="cloud" transform="translate(1200 130) scale(0.8)" opacity="1"><ellipse cx="0" cy="20" rx="130" ry="44" fill="#fff"/><circle cx="-40" cy="-4" r="46" fill="#fff"/><circle cx="30" cy="-14" r="58" fill="#fff"/></g><path d="M0 820 C 400 770, 900 850, 1300 810 C 1600 780, 1800 820, 1920 800 L1920 1080 L0 1080 Z" fill="#7CC36B"/><g transform="translate(220 820)"><rect x="-14" y="-160" width="28" height="160" fill="#7A4B2A"/><circle cx="0" cy="-200" r="90" fill="#4CAF50"/></g><g transform="translate(1700 820)"><rect x="-14" y="-160" width="28" height="160" fill="#7A4B2A"/><circle cx="0" cy="-200" r="90" fill="#4CAF50"/></g><circle cx="120" cy="940" r="10" fill="#E63946"/><circle cx="260" cy="1000" r="10" fill="#F4A100"/><circle cx="400" cy="970" r="10" fill="#fff"/><circle cx="540" cy="940" r="10" fill="#C77DFF"/><circle cx="680" cy="1000" r="10" fill="#E63946"/><circle cx="820" cy="970" r="10" fill="#F4A100"/><circle cx="960" cy="940" r="10" fill="#fff"/><circle cx="1100" cy="1000" r="10" fill="#C77DFF"/><circle cx="1240" cy="970" r="10" fill="#E63946"/><circle cx="1380" cy="940" r="10" fill="#F4A100"/><circle cx="1520" cy="1000" r="10" fill="#fff"/><circle cx="1660" cy="970" r="10" fill="#C77DFF"/><circle cx="1800" cy="940" r="10" fill="#E63946"/></svg>
+    <svg id="s17-bowl" class="actor" viewBox="-1000 -1000 2000 1200" style="left:-120px;top:-140px;width:2200px;height:1320px;overflow:visible"><g id="s17-bowl-g" transform="scale(1 1)"><ellipse cx="0" cy="-20" rx="60" ry="22" fill="#3BA7E0"/><ellipse cx="0" cy="-30" rx="48" ry="10" fill="#9ED8F7"/></g></svg><svg id="s17-elif" class="actor" viewBox="-1000 -1000 2000 1200" style="left:-190px;top:10px;width:1900px;height:1140px;overflow:visible"><g id="s17-elif-g" transform="scale(1 1)">
+  <g class="legs"><rect x="-34" y="-96" width="24" height="86" rx="10" fill="#F6CFA8"/><rect x="10" y="-96" width="24" height="86" rx="10" fill="#F6CFA8"/>
+    <ellipse cx="-22" cy="-6" rx="24" ry="12" fill="#7A4B2A"/><ellipse cx="22" cy="-6" rx="24" ry="12" fill="#7A4B2A"/></g>
+  <path d="M-62 -120 L62 -120 L76 -60 L-76 -60 Z" fill="#2A9D8F"/>
+  <rect x="-58" y="-232" width="116" height="122" rx="40" fill="#F2B632"/>
+  <path d="M-16 -232 L0 -200 L16 -232 Z" fill="#fff"/>
+  <g class="arm-l" transform="rotate(10 -54 -214)"><rect x="-70" y="-220" width="30" height="104" rx="15" fill="#F2B632"/><circle cx="-55" cy="-112" r="15" fill="#F6CFA8"/></g>
+  <g class="arm-r" data-rest="8" transform="rotate(8 54 -214)"><rect x="40" y="-220" width="30" height="104" rx="15" fill="#F2B632"/><circle cx="55" cy="-112" r="15" fill="#F6CFA8"/></g>
+  <g class="head" transform="translate(0 -296)">
+    <path d="M-78 10 Q-84 -86 0 -88 Q84 -86 78 10 Q70 50 54 54 L-54 54 Q-70 50 -78 10 Z" fill="#7B4A2A"/>
+    <ellipse cx="0" cy="0" rx="62" ry="66" fill="#F6CFA8"/>
+    <path d="M-64 -16 Q-40 -76 10 -66 Q50 -60 64 -20 Q40 -46 -6 -44 Q-40 -42 -64 -16 Z" fill="#7B4A2A"/>
+    <rect x="34" y="-58" width="26" height="12" rx="6" fill="#2EC4B6" transform="rotate(-20 47 -52)"/>
+    <g class="eyes"><ellipse cx="-22" cy="4" rx="7" ry="9" fill="#3A2A20"/><ellipse cx="22" cy="4" rx="7" ry="9" fill="#3A2A20"/><circle cx="-19" cy="1" r="2.5" fill="#fff"/><circle cx="25" cy="1" r="2.5" fill="#fff"/></g><path class="mouth-c" d="M-14 34 Q0 46 14 34" stroke="#3A2A20" stroke-width="4" fill="none" stroke-linecap="round"/><ellipse class="mouth-o" cx="0" cy="38" rx="11" ry="9" fill="#7A2E2E" opacity="0"/><circle cx="-36" cy="24" r="8" fill="#F29C8F" opacity="0.55"/><circle cx="36" cy="24" r="8" fill="#F29C8F" opacity="0.55"/>
+  </g></g></svg><svg id="s17-cat" class="actor" viewBox="-1000 -1000 2000 1200" style="left:-50px;top:-240px;width:2400px;height:1440px;overflow:visible"><g id="s17-cat-g" transform="scale(1 1)"><ellipse cx="0" cy="-40" rx="70" ry="38" fill="#F4A261"/><circle cx="60" cy="-80" r="34" fill="#F4A261"/>
+  <path d="M40 -104 l8 -28 l16 22 z M72 -108 l14 -24 l8 28 z" fill="#F4A261"/><circle cx="52" cy="-82" r="5" fill="#222"/><circle cx="74" cy="-82" r="5" fill="#222"/>
+  <path d="M-64 -44 q-40 -30 -16 -70" stroke="#F4A261" stroke-width="14" fill="none" stroke-linecap="round"/>
+  <rect x="-50" y="-14" width="16" height="14" rx="6" fill="#E08A4A"/><rect x="30" y="-14" width="16" height="14" rx="6" fill="#E08A4A"/></g></svg><div id="s17-t0" class="clip cap" style="" data-start="0.6" data-duration="3.97" data-track-index="5">Merhamet</div></div>
+    <div id="s17-fade"></div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+        tl.fromTo("#s17-fade", { opacity: 1 }, { opacity: 0, duration: 0.45, ease: "power2.out" }, 0);
+    tl.fromTo("#s17-cam", { scale: 1.0, transformOrigin: "960px 600px" }, { scale: 1.06, duration: 4.57, ease: "sine.inOut" }, 0);
+    tl.fromTo("#s17-bowl", { scale: 0.3, opacity: 0, transformOrigin: "50% 83%" }, { scale: 1, opacity: 1, duration: 0.5, ease: "back.out(2.2)" }, 1.0);
+    tl.fromTo("#s17-elif .eyes", { scaleY: 1, transformOrigin: "50% 50%" }, { scaleY: 0.1, duration: 0.07, yoyo: true, repeat: 1 }, 1.9);
+    tl.fromTo("#s17-elif-g", { y: 0 }, { y: -6, duration: 0.8, yoyo: true, repeat: 3, ease: "sine.inOut" }, 0.40);
+    tl.fromTo("#s17-cat", { x: 500, opacity: 0 }, { x: 0, opacity: 1, duration: 0.8, ease: "power3.out" }, 0.3);
+    tl.fromTo("#s17-t0", { y: 30, opacity: 0, scale: 0.9 }, { y: 0, opacity: 1, scale: 1, duration: 0.45, ease: "back.out(2)" }, 0.6);
+    window.__timelines["s17"] = tl;
+  </script>
+</template>

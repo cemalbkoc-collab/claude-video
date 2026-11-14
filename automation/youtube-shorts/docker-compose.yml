@@ -1,0 +1,26 @@
+services:
+  n8n:
+    build: .
+    restart: unless-stopped
+    ports:
+      - "5678:5678"
+    environment:
+      - GENERIC_TIMEZONE=Europe/Istanbul
+      - TZ=Europe/Istanbul
+      # n8n 2.x disables Execute Command by default; the render step needs it.
+      - NODES_EXCLUDE=[]
+      # Read/Write Files may only touch the run folders.
+      - N8N_RESTRICT_FILE_ACCESS_TO=/data/shorts
+      - ASSETS_DIR=/data/assets
+      - FONTS_DIR=/opt/fonts
+      # Optional: Netscape cookies.txt if YouTube asks yt-dlp to sign in (server IPs).
+      # - YTDLP_COOKIES=/data/assets/cookies.txt
+      - WEBHOOK_URL=${WEBHOOK_URL:-http://localhost:5678/}
+    volumes:
+      - n8n_data:/home/node/.n8n
+      - ./data/shorts:/data/shorts
+      - ./data/assets:/data/assets:ro
+      - ./scripts:/data/scripts:ro
+
+volumes:
+  n8n_data:

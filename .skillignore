@@ -31,3 +31,9 @@ V2_CONCERNS.md
 
 # Dev-only script shipped inside the skill tree but not needed at runtime
 skills/watch/scripts/build-skill.sh
+
+# n8n automation (not part of the skill)
+automation/
+
+# rendered videos (not part of the skill)
+videos/

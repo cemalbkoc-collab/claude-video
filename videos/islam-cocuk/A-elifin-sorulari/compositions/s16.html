@@ -1,0 +1,55 @@
+<template>
+  <style>
+    @font-face { font-family: "Amiri"; src: url("assets/fonts/amiri-arabic-700.woff2") format("woff2"); font-weight: 700; }
+    #root { position: absolute; inset: 0; overflow: hidden; font-family: "Nunito", sans-serif; }
+    #s16-cam { position: absolute; inset: 0; }
+    .actor { position: absolute; }
+    #s16-fade { position: absolute; inset: 0; background: #FFF8EC; }
+    .cap { position: absolute; left: 0; right: 0; bottom: 70px; text-align: center; font-weight: 900; font-size: 76px; color: #fff;
+      -webkit-text-stroke: 11px #2B3A55; paint-order: stroke fill; }
+    .title { position: absolute; left: 0; right: 0; top: 330px; text-align: center; font-weight: 900; font-size: 150px; color: #fff;
+      -webkit-text-stroke: 16px #2B6E3F; paint-order: stroke fill; line-height: 1; }
+    .arabic { position: absolute; left: 0; right: 0; text-align: center; font-family: "Amiri", serif; font-weight: 700; color: #1E6B52;
+      direction: rtl; text-shadow: 0 4px 0 #fff; }
+    .chip { position: absolute; padding: 12px 30px; border-radius: 40px; background: #fff; color: #2B3A55; font-weight: 900; font-size: 46px;
+      white-space: nowrap; box-shadow: 0 6px 0 rgba(0,0,0,0.15); }
+  </style>
+  <div id="root" data-composition-id="s16" data-width="1920" data-height="1080">
+    <div id="s16-cam"><svg viewBox="0 0 1920 1080" style="position:absolute;inset:0;width:100%;height:100%"><rect width="1920" height="1080" fill="#F7E7CE"/><rect y="820" width="1920" height="260" fill="#B98656"/><rect y="806" width="1920" height="14" fill="#00000014"/><path d="M80 0 v820" stroke="#ffffff22" stroke-width="40"/><path d="M320 0 v820" stroke="#ffffff22" stroke-width="40"/><path d="M560 0 v820" stroke="#ffffff22" stroke-width="40"/><path d="M800 0 v820" stroke="#ffffff22" stroke-width="40"/><path d="M1040 0 v820" stroke="#ffffff22" stroke-width="40"/><path d="M1280 0 v820" stroke="#ffffff22" stroke-width="40"/><path d="M1520 0 v820" stroke="#ffffff22" stroke-width="40"/><path d="M1760 0 v820" stroke="#ffffff22" stroke-width="40"/><rect x="1300" y="260" width="460" height="22" fill="#9A5F2E"/><rect x="200" y="160" width="360" height="300" rx="16" fill="#BDE6FB" stroke="#fff" stroke-width="18"/><circle cx="460" cy="260" r="40" fill="#FFD23F"/></svg>
+    <svg id="s16-glass" class="actor" viewBox="-1000 -1000 2000 1200" style="left:-1080px;top:-670px;width:3200px;height:1920px;overflow:visible"><g id="s16-glass-g" transform="scale(1 1)"><path d="M-30 0 l10 -30 l14 8 l8 -22 l18 10 z" fill="#BDE6FB" stroke="#7CC6F2" stroke-width="3"/>
+  <path d="M30 -4 l14 -20 l10 16 z" fill="#BDE6FB" stroke="#7CC6F2" stroke-width="3"/><path d="M-50 -2 l-12 -14 l20 -2 z" fill="#BDE6FB" stroke="#7CC6F2" stroke-width="3"/></g></svg><svg id="s16-elif" class="actor" viewBox="-1000 -1000 2000 1200" style="left:-240px;top:-80px;width:2000px;height:1200px;overflow:visible"><g id="s16-elif-g" transform="scale(1 1)">
+  <g class="legs"><rect x="-34" y="-96" width="24" height="86" rx="10" fill="#F6CFA8"/><rect x="10" y="-96" width="24" height="86" rx="10" fill="#F6CFA8"/>
+    <ellipse cx="-22" cy="-6" rx="24" ry="12" fill="#7A4B2A"/><ellipse cx="22" cy="-6" rx="24" ry="12" fill="#7A4B2A"/></g>
+  <path d="M-62 -120 L62 -120 L76 -60 L-76 -60 Z" fill="#2A9D8F"/>
+  <rect x="-58" y="-232" width="116" height="122" rx="40" fill="#F2B632"/>
+  <path d="M-16 -232 L0 -200 L16 -232 Z" fill="#fff"/>
+  <g class="arm-l" transform="rotate(10 -54 -214)"><rect x="-70" y="-220" width="30" height="104" rx="15" fill="#F2B632"/><circle cx="-55" cy="-112" r="15" fill="#F6CFA8"/></g>
+  <g class="arm-r" data-rest="8" transform="rotate(8 54 -214)"><rect x="40" y="-220" width="30" height="104" rx="15" fill="#F2B632"/><circle cx="55" cy="-112" r="15" fill="#F6CFA8"/></g>
+  <g class="head" transform="translate(0 -296)">
+    <path d="M-78 10 Q-84 -86 0 -88 Q84 -86 78 10 Q70 50 54 54 L-54 54 Q-70 50 -78 10 Z" fill="#7B4A2A"/>
+    <ellipse cx="0" cy="0" rx="62" ry="66" fill="#F6CFA8"/>
+    <path d="M-64 -16 Q-40 -76 10 -66 Q50 -60 64 -20 Q40 -46 -6 -44 Q-40 -42 -64 -16 Z" fill="#7B4A2A"/>
+    <rect x="34" y="-58" width="26" height="12" rx="6" fill="#2EC4B6" transform="rotate(-20 47 -52)"/>
+    <g class="eyes"><ellipse cx="-22" cy="4" rx="7" ry="9" fill="#3A2A20"/><ellipse cx="22" cy="4" rx="7" ry="9" fill="#3A2A20"/><circle cx="-19" cy="1" r="2.5" fill="#fff"/><circle cx="25" cy="1" r="2.5" fill="#fff"/></g><path class="mouth-c" d="M-14 34 Q0 46 14 34" stroke="#3A2A20" stroke-width="4" fill="none" stroke-linecap="round"/><ellipse class="mouth-o" cx="0" cy="38" rx="11" ry="9" fill="#7A2E2E" opacity="0"/><circle cx="-36" cy="24" r="8" fill="#F29C8F" opacity="0.55"/><circle cx="36" cy="24" r="8" fill="#F29C8F" opacity="0.55"/>
+  </g></g></svg><svg id="s16-anne" class="actor" viewBox="-1000 -1000 2000 1200" style="left:160px;top:-80px;width:2000px;height:1200px;overflow:visible"><g id="s16-anne-g" transform="scale(1 1)">
+  <path d="M-70 -260 Q-90 -40 -96 0 L96 0 Q90 -40 70 -260 Z" fill="#7FB2D9"/>
+  <g class="arm-l" transform="rotate(8 -60 -250)"><rect x="-78" y="-256" width="32" height="130" rx="16" fill="#7FB2D9"/><circle cx="-62" cy="-122" r="16" fill="#F6CFA8"/></g>
+  <g class="arm-r" data-rest="6" transform="rotate(6 60 -250)"><rect x="46" y="-256" width="32" height="130" rx="16" fill="#7FB2D9"/><circle cx="62" cy="-122" r="16" fill="#F6CFA8"/></g>
+  <g class="head" transform="translate(0 -330)">
+    <path d="M-80 10 Q-86 -90 0 -92 Q86 -90 80 10 Q76 70 0 76 Q-76 70 -80 10 Z" fill="#C9A7E0"/>
+    <ellipse cx="0" cy="4" rx="54" ry="60" fill="#F6CFA8"/>
+    <g class="eyes"><ellipse cx="-22" cy="8" rx="7" ry="9" fill="#3A2A20"/><ellipse cx="22" cy="8" rx="7" ry="9" fill="#3A2A20"/><circle cx="-19" cy="5" r="2.5" fill="#fff"/><circle cx="25" cy="5" r="2.5" fill="#fff"/></g><path class="mouth-c" d="M-14 38 Q0 50 14 38" stroke="#3A2A20" stroke-width="4" fill="none" stroke-linecap="round"/><ellipse class="mouth-o" cx="0" cy="42" rx="11" ry="9" fill="#7A2E2E" opacity="0"/><circle cx="-36" cy="28" r="8" fill="#F29C8F" opacity="0.55"/><circle cx="36" cy="28" r="8" fill="#F29C8F" opacity="0.55"/>
+  </g></g></svg><div id="s16-t0" class="clip cap" style="" data-start="0.5" data-duration="1.99" data-track-index="5">Doğru sözlü olmak</div></div>
+    <div id="s16-fade"></div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+        tl.fromTo("#s16-fade", { opacity: 1 }, { opacity: 0, duration: 0.45, ease: "power2.out" }, 0);
+    tl.fromTo("#s16-cam", { scale: 1.0, transformOrigin: "960px 600px" }, { scale: 1.06, duration: 2.49, ease: "sine.inOut" }, 0);
+    tl.fromTo("#s16-glass", { scale: 0.3, opacity: 0, transformOrigin: "50% 83%" }, { scale: 1, opacity: 1, duration: 0.5, ease: "back.out(2.2)" }, 0.3);
+    tl.fromTo("#s16-elif-g", { y: 0 }, { y: -6, duration: 0.8, yoyo: true, repeat: 1, ease: "sine.inOut" }, 0.40);
+    tl.fromTo("#s16-anne-g", { y: 0 }, { y: -6, duration: 0.8, yoyo: true, repeat: 1, ease: "sine.inOut" }, 0.70);
+    tl.fromTo("#s16-t0", { y: 30, opacity: 0, scale: 0.9 }, { y: 0, opacity: 1, scale: 1, duration: 0.45, ease: "back.out(2)" }, 0.5);
+    window.__timelines["s16"] = tl;
+  </script>
+</template>

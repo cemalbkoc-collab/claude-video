@@ -1,0 +1,627 @@
+{
+  "name": "YouTube Shorts üret ve yükle",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "days",
+              "daysInterval": 1,
+              "triggerAtHour": 18,
+              "triggerAtMinute": 0
+            }
+          ]
+        }
+      },
+      "id": "9d0824f5-d5e2-561e-84fe-10c7909684d3",
+      "name": "Her gün 18:00",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        240,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7baa81ab-e401-53df-ba3f-bfeb1af5e7fa",
+              "name": "topic",
+              "value": "BURAYA KANAL KONUSUNU YAZIN (ör. Türkçe tarih hikâyeleri)",
+              "type": "string"
+            },
+            {
+              "id": "59d71859-3dea-583b-abce-af28c707f0e3",
+              "name": "language",
+              "value": "Türkçe",
+              "type": "string"
+            },
+            {
+              "id": "1c00a310-67bc-5796-9f57-e2a53b36b3a0",
+              "name": "tone",
+              "value": "Merak uyandıran, sade, hızlı tempolu",
+              "type": "string"
+            },
+            {
+              "id": "c2f7a078-8da8-5ca7-b97a-3a3ca04ea8d6",
+              "name": "target_seconds",
+              "value": 45,
+              "type": "number"
+            },
+            {
+              "id": "90b43263-5b01-5d12-bc05-1e4e699e3952",
+              "name": "scene_count",
+              "value": 6,
+              "type": "number"
+            },
+            {
+              "id": "561f5cb0-ecf3-519e-a3f0-1bf0e43a510f",
+              "name": "caption_words",
+              "value": 3,
+              "type": "number"
+            },
+            {
+              "id": "b201a97c-7109-5261-aa5d-8dd1ee0aab0f",
+              "name": "voice_id",
+              "value": "BURAYA_ELEVENLABS_VOICE_ID",
+              "type": "string"
+            },
+            {
+              "id": "47b6d0d8-9687-5403-8353-c1908ff3e296",
+              "name": "privacy",
+              "value": "private",
+              "type": "string"
+            },
+            {
+              "id": "c2cd55c6-1623-54ad-9292-3ceac43e4ccb",
+              "name": "category_id",
+              "value": "27",
+              "type": "string"
+            },
+            {
+              "id": "d1bbdd2a-e9e1-5170-8d05-776667f0faa2",
+              "name": "region_code",
+              "value": "TR",
+              "type": "string"
+            },
+            {
+              "id": "cc6fb11a-588d-5123-aaa7-23f738e5d121",
+              "name": "output_dir",
+              "value": "/data/shorts",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "66b49dc3-f246-5101-baa0-e80d55824632",
+      "name": "Kanal ayarları",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        480,
+        0
+      ],
+      "notes": "Kanalın bütün ayarları burada. privacy 'private' ile başlayın; birkaç videoyu kontrol ettikten sonra 'public' yapın."
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.apify.com/v2/acts/streamers~youtube-scraper/run-sync-get-dataset-items?timeout=180",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ searchQueries: [$json.topic], maxResults: 0, maxResultsShorts: 15, maxResultStreams: 0, sortingOrder: 'views', dateFilter: 'week' }) }}",
+        "options": {
+          "timeout": 200000
+        }
+      },
+      "id": "20d25605-b1c4-5128-a263-e36174c68ab6",
+      "name": "Trend videoları çek (Apify)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        720,
+        0
+      ],
+      "onError": "continueRegularOutput",
+      "alwaysOutputData": true,
+      "notes": "Apify kimlik bilgisi: Header Auth, Name = Authorization, Value = Bearer <APIFY_TOKEN>. Hata verirse akış trend verisi olmadan devam eder."
+    },
+    {
+      "parameters": {
+        "jsCode": "// Turn the Apify search results into a short list Claude can learn from.\n// If Apify failed or returned nothing, the script still gets written without it.\nconst rows = $input.all()\n  .map(i => i.json)\n  .filter(v => v && v.title)\n  .sort((a, b) => (b.viewCount || 0) - (a.viewCount || 0))\n  .slice(0, 15)\n  .map(v => `- ${v.title} (${v.viewCount ?? '?'} izlenme)`);\nreturn [{ json: { trends: rows.length ? rows.join('\\n') : '(trend verisi alınamadı)' } }];"
+      },
+      "id": "1b39c7fc-72d1-52ed-9053-9faeb03b4fac",
+      "name": "Trendleri özetle",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        960,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.anthropic.com/v1/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "anthropic-version",
+              "value": "2023-06-01"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ model: 'claude-sonnet-5-5', max_tokens: 2000, system: 'Sen yüzsüz bir YouTube Shorts kanalı için senaryo yazarısın. Yalnızca geçerli JSON döndür, başka hiçbir şey yazma. ' + 'Şema: {\"title\": string (en fazla 80 karakter, merak uyandıran ama yanıltmayan), \"description\": string (2-3 cümle, sonunda 3-5 hashtag), ' + '\"tags\": string[] (8-12 etiket), \"narration\": string (seslendirilecek metin, ' + $('Kanal ayarları').first().json.target_seconds + ' saniyelik konuşma, yaklaşık ' + Math.round($('Kanal ayarları').first().json.target_seconds * 2.4) + ' kelime; ilk cümle güçlü bir kanca), ' + '\"scenes\": [{\"prompt\": string}] (tam olarak ' + $('Kanal ayarları').first().json.scene_count + ' sahne; her biri anlatının o bölümünü gösteren, İngilizce, dikey 9:16, sinematik, yazı içermeyen görsel istemi)}. ' + 'Doğruluğundan emin olmadığın iddiaları yazma. Telif hakkıyla korunan karakter, marka veya gerçek kişi görseli isteme.', messages: [{ role: 'user', content: 'Kanal konusu: ' + $('Kanal ayarları').first().json.topic + '\\nDil: ' + $('Kanal ayarları').first().json.language + '\\nKanal tonu: ' + $('Kanal ayarları').first().json.tone + '\\nSon bir haftada bu konuda en çok izlenen videolar (aynısını kopyalama, neyin ilgi çektiğini anla):\\n' + $json.trends + '\\n\\nBugün için tek bir Short yaz. Daha önce çok işlenmiş bir açıyı tekrar etme.' }] }) }}",
+        "options": {
+          "timeout": 120000
+        }
+      },
+      "id": "e89688e4-a504-57c5-9f8a-3269bef9065a",
+      "name": "Senaryo yaz (Claude)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1200,
+        0
+      ],
+      "notes": "Anthropic kimlik bilgisi: Header Auth, Name = x-api-key, Value = <ANTHROPIC_API_KEY>."
+    },
+    {
+      "parameters": {
+        "jsCode": "// Claude returns the script as JSON text. Pull the JSON object out (tolerating code\n// fences), check the fields the rest of the workflow relies on, and plan the files.\nconst cfg = $('Kanal ayarları').first().json;\nconst text = ($input.first().json.content || []).map(c => c.text || '').join('');\nconst start = text.indexOf('{');\nconst end = text.lastIndexOf('}');\nif (start < 0 || end <= start) throw new Error('Claude yanıtında JSON yok: ' + text.slice(0, 300));\nconst s = JSON.parse(text.slice(start, end + 1));\n\nfor (const key of ['title', 'description', 'narration', 'scenes']) {\n  if (!s[key] || (Array.isArray(s[key]) && s[key].length === 0)) throw new Error('Senaryoda eksik alan: ' + key);\n}\n\nconst runId = new Date().toISOString().replace(/[-:]/g, '').replace(/\\..*/, '').replace('T', '-');\nconst runDir = `${cfg.output_dir}/${runId}`;\nconst scenes = s.scenes.slice(0, Number(cfg.scene_count) || 6).map((sc, i) => ({\n  index: i + 1,\n  prompt: typeof sc === 'string' ? sc : sc.prompt,\n  file: `${runDir}/scene_${String(i + 1).padStart(2, '0')}.jpg`,\n}));\n\nlet title = String(s.title).trim();\nif (!/#shorts/i.test(title) && title.length <= 90) title += ' #Shorts';\nconst tags = (Array.isArray(s.tags) ? s.tags : String(s.tags || '').split(','))\n  .map(t => String(t).replace(/[<>,]/g, '').trim())\n  .filter(Boolean)\n  .slice(0, 15);\n\nreturn [{ json: {\n  runId,\n  runDir,\n  title: title.slice(0, 100),\n  description: String(s.description).trim() + '\\n\\n#Shorts',\n  tags: tags.join(','),\n  narration: String(s.narration).trim(),\n  scenes,\n} }];"
+      },
+      "id": "b1bace39-8da1-535c-9e1e-d2990ea6108f",
+      "name": "Senaryoyu ayrıştır",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1440,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// One item per scene so the image nodes below run once per scene.\nreturn $input.first().json.scenes.map(scene => ({ json: scene }));"
+      },
+      "id": "03c58758-c6e2-57db-88e5-1c23af10805e",
+      "name": "Sahneleri listele",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1680,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://fal.run/fal-ai/flux/schnell",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ prompt: $json.prompt + ', vertical 9:16 composition, cinematic lighting, highly detailed, no text, no watermark', image_size: 'portrait_16_9', num_images: 1, output_format: 'jpeg', enable_safety_checker: true }) }}",
+        "options": {
+          "timeout": 120000
+        }
+      },
+      "id": "5f9f1919-20b6-5684-bd1f-68e7f45630ff",
+      "name": "Sahne görseli üret (fal.ai)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1920,
+        0
+      ],
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "notes": "fal.ai kimlik bilgisi: Header Auth, Name = Authorization, Value = Key <FAL_KEY>."
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.images[0].url }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "id": "4663bcf5-3ddd-5568-b320-9a84821be849",
+      "name": "Görseli indir",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2160,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "={{ $('Sahneleri listele').item.json.file }}",
+        "dataPropertyName": "data",
+        "options": {}
+      },
+      "id": "7c351b9b-dad4-5c99-b81c-bd6976492d2e",
+      "name": "Görseli kaydet",
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        2400,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.elevenlabs.io/v1/text-to-speech/{{ $('Kanal ayarları').first().json.voice_id }}/with-timestamps?output_format=mp3_44100_128",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ text: $('Senaryoyu ayrıştır').first().json.narration, model_id: 'eleven_multilingual_v2', voice_settings: { stability: 0.45, similarity_boost: 0.8 } }) }}",
+        "options": {
+          "timeout": 180000
+        }
+      },
+      "id": "df508b19-4dcf-599b-81fe-274649db789a",
+      "name": "Seslendir (ElevenLabs)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2640,
+        0
+      ],
+      "executeOnce": true,
+      "notes": "ElevenLabs kimlik bilgisi: Header Auth, Name = xi-api-key, Value = <ELEVENLABS_API_KEY>. Sahne sayısı kadar değil, bir kez çalışır."
+    },
+    {
+      "parameters": {
+        "jsCode": "// ElevenLabs returns the voice as base64 plus per-character timings. Save the audio,\n// and turn the timings into word-level ASS subtitles (2-3 words per line, big and\n// centred, the usual Shorts caption style).\nconst s = $('Senaryoyu ayrıştır').first().json;\nconst cfg = $('Kanal ayarları').first().json;\nconst tts = $input.first().json;\nconst al = tts.alignment || tts.normalized_alignment;\nif (!tts.audio_base64 || !al) throw new Error('ElevenLabs yanıtında ses veya zamanlama yok');\n\nconst words = [];\nlet cur = null;\nfor (let i = 0; i < al.characters.length; i++) {\n  const ch = al.characters[i];\n  if (/\\s/.test(ch)) { if (cur) { words.push(cur); cur = null; } continue; }\n  if (!cur) cur = { text: '', start: al.character_start_times_seconds[i], end: 0 };\n  cur.text += ch;\n  cur.end = al.character_end_times_seconds[i];\n}\nif (cur) words.push(cur);\n\nconst maxWords = Number(cfg.caption_words) || 3;\nconst lines = [];\nlet group = [];\nfor (const w of words) {\n  group.push(w);\n  const len = group.map(g => g.text).join(' ').length;\n  if (group.length >= maxWords || len > 18 || /[.!?…,;:]$/.test(w.text)) { lines.push(group); group = []; }\n}\nif (group.length) lines.push(group);\n\nconst ts = t => {\n  const cs = Math.max(0, Math.round(t * 100));\n  const h = Math.floor(cs / 360000), m = Math.floor(cs / 6000) % 60, sec = Math.floor(cs / 100) % 60, c = cs % 100;\n  return `${h}:${String(m).padStart(2, '0')}:${String(sec).padStart(2, '0')}.${String(c).padStart(2, '0')}`;\n};\nconst esc = t => t.replace(/[{}\\\\]/g, '');\n\nconst header = [\n  '[Script Info]', 'ScriptType: v4.00+', 'PlayResX: 1080', 'PlayResY: 1920', 'WrapStyle: 0', '',\n  '[V4+ Styles]',\n  'Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding',\n  'Style: Caption,DejaVu Sans,88,&H00FFFFFF,&H00FFFFFF,&H00000000,&H64000000,-1,0,0,0,100,100,0,0,1,7,2,2,80,80,560,1',\n  '', '[Events]',\n  'Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text',\n];\nconst events = lines.map((g, i) => {\n  const start = g[0].start;\n  const next = lines[i + 1];\n  const end = next ? Math.min(next[0].start, g[g.length - 1].end + 0.4) : g[g.length - 1].end + 0.4;\n  return `Dialogue: 0,${ts(start)},${ts(end)},Caption,,0,0,0,,${esc(g.map(w => w.text).join(' '))}`;\n});\nconst ass = header.concat(events).join('\\n') + '\\n';\n\n// Binary data as base64 objects; n8n stores them like any other file.\nconst voice = { data: tts.audio_base64, mimeType: 'audio/mpeg', fileName: 'voice.mp3', fileExtension: 'mp3' };\nconst subs = { data: Buffer.from(ass, 'utf8').toString('base64'), mimeType: 'text/plain', fileName: 'subs.ass', fileExtension: 'ass' };\nreturn [\n  { json: { path: `${s.runDir}/voice.mp3` }, binary: { data: voice } },\n  { json: { path: `${s.runDir}/subs.ass`, captionLines: events.length }, binary: { data: subs } },\n];"
+      },
+      "id": "792fec05-2cb5-5347-bb7b-7acef6a3558f",
+      "name": "Ses ve altyazıyı hazırla",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2880,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "={{ $json.path }}",
+        "dataPropertyName": "data",
+        "options": {}
+      },
+      "id": "8ecbc027-225c-5799-9015-ca33fbf497e6",
+      "name": "Ses ve altyazıyı kaydet",
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        3120,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "executeOnce": true,
+        "command": "=sh /data/scripts/render-short.sh {{ $('Senaryoyu ayrıştır').first().json.runDir }}"
+      },
+      "id": "b080da82-dc11-5c4f-9a08-2ff3a9bcd81c",
+      "name": "Videoyu birleştir (ffmpeg)",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        3360,
+        0
+      ],
+      "notes": "Sahneleri yavaş zoom ile birleştirir, sesi ve altyazıyı ekler. /data/assets/music.mp3 varsa düşük sesle arka plan müziği olarak katar."
+    },
+    {
+      "parameters": {
+        "fileSelector": "={{ $('Senaryoyu ayrıştır').first().json.runDir }}/final.mp4",
+        "options": {
+          "dataPropertyName": "data"
+        }
+      },
+      "id": "03cef595-ce50-5cf0-bd3c-8dc9867632ac",
+      "name": "Videoyu oku",
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        3600,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "video",
+        "operation": "upload",
+        "title": "={{ $('Senaryoyu ayrıştır').first().json.title }}",
+        "regionCode": "={{ $('Kanal ayarları').first().json.region_code }}",
+        "categoryId": "={{ $('Kanal ayarları').first().json.category_id }}",
+        "binaryProperty": "data",
+        "options": {
+          "description": "={{ $('Senaryoyu ayrıştır').first().json.description }}",
+          "tags": "={{ $('Senaryoyu ayrıştır').first().json.tags }}",
+          "privacyStatus": "={{ $('Kanal ayarları').first().json.privacy }}",
+          "selfDeclaredMadeForKids": false,
+          "notifySubscribers": true
+        }
+      },
+      "id": "d9a99b11-33b2-518b-96ca-a5916342d6bc",
+      "name": "YouTube'a yükle",
+      "type": "n8n-nodes-base.youTube",
+      "typeVersion": 1,
+      "position": [
+        3840,
+        0
+      ],
+      "notes": "YouTube OAuth2 kimlik bilgisi gerekir. Yapay zekâ ile üretilmiş gerçekçi içerikte YouTube Studio'daki 'değiştirilmiş veya sentetik içerik' beyanını işaretleyin."
+    },
+    {
+      "parameters": {
+        "jsCode": "const s = $('Senaryoyu ayrıştır').first().json;\nreturn [{ json: {\n  videoId: $input.first().json.id,\n  url: `https://youtube.com/shorts/${$input.first().json.id}`,\n  title: s.title,\n  privacy: $('Kanal ayarları').first().json.privacy,\n  runDir: s.runDir,\n} }];"
+      },
+      "id": "65d6b13f-dec3-5625-81a6-7adda025f7e4",
+      "name": "Sonucu özetle",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4080,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "content": "### 1. Fikir ve senaryo\nTrendler Apify'dan, senaryo Claude'dan.",
+        "width": 1060,
+        "height": 300,
+        "color": 7
+      },
+      "id": "a3c68f90-20cf-5e47-9bac-4f26bce2b7db",
+      "name": "Not: 1. Fikir ve senaryo",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        400,
+        -140
+      ]
+    },
+    {
+      "parameters": {
+        "content": "### 2. Görsel ve ses\nHer sahne için bir görsel, tek seferde seslendirme ve altyazı.",
+        "width": 1520,
+        "height": 300,
+        "color": 4
+      },
+      "id": "fb5c0cfb-c0f3-5eb5-ae8a-c5f6e632294f",
+      "name": "Not: 2. Görsel ve ses",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1600,
+        -140
+      ]
+    },
+    {
+      "parameters": {
+        "content": "### 3. Montaj ve yükleme\nffmpeg ile birleştir, YouTube'a yükle.",
+        "width": 1000,
+        "height": 300,
+        "color": 5
+      },
+      "id": "0170e6ca-2949-54a8-a4cd-cc9dc40f6270",
+      "name": "Not: 3. Montaj ve yükleme",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        3280,
+        -140
+      ]
+    }
+  ],
+  "connections": {
+    "Her gün 18:00": {
+      "main": [
+        [
+          {
+            "node": "Kanal ayarları",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Kanal ayarları": {
+      "main": [
+        [
+          {
+            "node": "Trend videoları çek (Apify)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Trend videoları çek (Apify)": {
+      "main": [
+        [
+          {
+            "node": "Trendleri özetle",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Trendleri özetle": {
+      "main": [
+        [
+          {
+            "node": "Senaryo yaz (Claude)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Senaryo yaz (Claude)": {
+      "main": [
+        [
+          {
+            "node": "Senaryoyu ayrıştır",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Senaryoyu ayrıştır": {
+      "main": [
+        [
+          {
+            "node": "Sahneleri listele",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sahneleri listele": {
+      "main": [
+        [
+          {
+            "node": "Sahne görseli üret (fal.ai)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sahne görseli üret (fal.ai)": {
+      "main": [
+        [
+          {
+            "node": "Görseli indir",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Görseli indir": {
+      "main": [
+        [
+          {
+            "node": "Görseli kaydet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Görseli kaydet": {
+      "main": [
+        [
+          {
+            "node": "Seslendir (ElevenLabs)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Seslendir (ElevenLabs)": {
+      "main": [
+        [
+          {
+            "node": "Ses ve altyazıyı hazırla",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ses ve altyazıyı hazırla": {
+      "main": [
+        [
+          {
+            "node": "Ses ve altyazıyı kaydet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ses ve altyazıyı kaydet": {
+      "main": [
+        [
+          {
+            "node": "Videoyu birleştir (ffmpeg)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Videoyu birleştir (ffmpeg)": {
+      "main": [
+        [
+          {
+            "node": "Videoyu oku",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Videoyu oku": {
+      "main": [
+        [
+          {
+            "node": "YouTube'a yükle",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "YouTube'a yükle": {
+      "main": [
+        [
+          {
+            "node": "Sonucu özetle",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Europe/Istanbul"
+  },
+  "meta": {
+    "description": "Her gün trendlere bakıp Claude ile Shorts senaryosu yazar, fal.ai ile sahne görselleri ve ElevenLabs ile seslendirme üretir, ffmpeg ile altyazılı dikey video yapar ve YouTube'a yükler. Yüzsüz Shorts kanalı için."
+  },
+  "pinData": {},
+  "active": false
+}

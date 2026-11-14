@@ -1,0 +1,2 @@
+youtube-uploader — from https://github.com/aviz85/claude-skills-library
+License: MIT (declared in the repository README; the repository has no LICENSE file).

@@ -12,7 +12,7 @@ powershell -ExecutionPolicy Bypass -File $HOME\claude-video\.claude\install-skil
 ```
 
 **Mac / Linux:** `bash .claude/install-skills.sh` (→ `~/.claude/skills`)
-Kaynaklar: `agent-skills33` (Addy Osmani, MIT), `ECC` (MIT), `claude-video` (`watch`), HyperFrames (HeyGen, Apache-2.0), `find-skills` (Vercel, MIT). Lisanslar `licenses/` altında.
+Kaynaklar: `agent-skills33` (Addy Osmani, MIT), `ECC` (MIT), `claude-video` (`watch`), HyperFrames (HeyGen, Apache-2.0), `find-skills` (Vercel, MIT). YouTube paketi: Higgsfield, Apify, Corey Haines, kostja94, OpenClaudia, skill-stack, apidojo, video-agent-skills, auto-editor, claude-skills-library (MIT / Apache-2.0 / Unlicense). Lisanslar `licenses/` altında.
 
 ## 🎬 Video / montaj
 | Skill | Ne işe yarar |
@@ -38,6 +38,24 @@ Kaynaklar: `agent-skills33` (Addy Osmani, MIT), `ECC` (MIT), `claude-video` (`wa
 | `remotion-to-hyperframes` | Remotion projesini HyperFrames'e taşı |
 | `slideshow` | Sunum modlu slayt gösterisi |
 | `figma` | Figma tasarımını videoya getir |
+
+## 📺 YouTube kanalı otomasyonu
+Fikir → senaryo → montaj → küçük resim → yükleme → yorum → istatistik zinciri. Mevcut `content-engine`, `video-editing`, `hyperframes`, `social-publisher` ile birlikte kullanılır.
+
+| Aşama | Skill | Ne işe yarar |
+|---|---|---|
+| Araştırma / trend | `apify-ultimate-scraper` | Apify ile YouTube, TikTok, Google Trends, Reddit vb. veri ve trend toplama (Apify bağlantısı gerekir) |
+| Senaryo | `youtube-scriptwriting` | Fikirden kontrol noktalı YouTube senaryosu: kanca, yapı, izlenme süresi |
+| Montaj | `auto-editor` | Sessizlik ve ölü anları otomatik kesme (`auto-editor` CLI) |
+| Montaj | `broll` | Kendi B-roll arşivini ffprobe/ffmpeg ile tarayıp aranabilir kütüphane yapma |
+| Küçük resim | `higgsfield-youtube-thumbnail` | Tıklanma odaklı thumbnail üretimi (Higgsfield; CLI kurulumu `curl … \| sh` içerir) |
+| SEO | `youtube-seo` | Başlık, açıklama, etiket, bölüm ve kanal optimizasyonu |
+| Yükleme | `youtube-uploader` | YouTube Data API ile video yükleme (Google OAuth istemci kimliği gerekir; token yerelde kalır) |
+| Sosyal paylaşım | `social-content` | Videoyu X, LinkedIn, Instagram, TikTok için gönderiye çevirme |
+| Yorumlar | `scraping-youtube-comments` | Yorumları Apify ile toplayıp analiz etme |
+| İstatistik | `youtube-analytics` | Kanal ve video performansı (YouTube Data API anahtarı gerekir) |
+
+> Uçtan uca otomasyon (üret → montaj → yükle → yorum → istatistik/gelir) n8n akışları olarak `automation/youtube-shorts/` altında; kurulum için oradaki README'ye bakın. Başka kanallara otomatik yorum veya sahte etkileşim YouTube kurallarına aykırıdır.
 
 ## 🌐 Web sitesi / frontend
 `frontend-ui-engineering`, `frontend-design-direction`, `frontend-patterns`, `make-interfaces-feel-better`,
