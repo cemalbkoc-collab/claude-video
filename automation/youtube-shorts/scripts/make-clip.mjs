@@ -13,6 +13,8 @@
 // Usage:
 //   node make-clip.mjs --id <videoId> --out <dir> --hook-b64 <b64> --credit-b64 <b64>
 //                      [--peak-text-b64 <b64>] [--freeze-text-b64 <b64>] [--end-text-b64 <b64>] [--edits 1]
+//                      [--layout split|crop|fit] [--cam x,y,w,h] [--content x,y,w,h] [--focus-x 0.5]
+//                      [--start s] [--end s] [--peak-at s]
 //                      [--min 20] [--max 45] [--target 30]
 //   Kick stream clip (whole clip, edits timed to its loudest second): --clip-url <m3u8>
 //   Testing without network: --local <video.mp4> [--heatmap <heatmap.json>]
@@ -70,7 +72,7 @@ if (WHOLE_CLIP) {
   if (!duration || duration < 6) fail(`klip çok kısa (${duration}s)`);
   MIN = Math.min(MIN, duration);
   TARGET = Math.min(duration, MAX);
-} else if (!duration || duration < MIN + 5) fail(`video çok kısa (${duration}s)`);
+} else if (!duration || (duration < MIN + 5 && args.start === undefined && args.end === undefined)) fail(`video çok kısa (${duration}s)`);
 
 // Skip the opening: intros and "most replayed" spikes at 0:00 are rarely the highlight.
 const skipHead = WHOLE_CLIP ? 0 : Math.min(20, duration * 0.05);
@@ -131,6 +133,14 @@ if (usable.length >= 5) {
   for (let i = bestAt; i < bestAt + len && i < energy.length; i++) if (energy[i] > energy[loud]) loud = i;
   peak = { at: loud + 0.5, value: Number((best / len).toFixed(6)) };
 }
+// Explicit timing (e.g. Claude picked the joke from the transcript) wins over detection.
+if (args.start !== undefined || args.end !== undefined) {
+  start = Math.max(0, Number(args.start ?? start));
+  end = Math.min(duration, Number(args.end ?? end));
+  if (!(end - start >= 3)) fail(`geçersiz kesit aralığı ${start}-${end}`);
+  method = 'manual';
+}
+if (args['peak-at'] !== undefined) peak = { at: Number(args['peak-at']), value: null };
 start = Math.round(start * 10) / 10;
 end = Math.round(end * 10) / 10;
 
@@ -138,7 +148,7 @@ end = Math.round(end * 10) / 10;
 let src;
 if (args.local) {
   src = path.join(OUT, 'src.mp4');
-  run('ffmpeg', ['-hide_banner', '-loglevel', 'error', '-y', '-ss', String(start), '-to', String(end), '-i', args.local, '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '18', '-c:a', 'aac', src]);
+  run('ffmpeg', ['-hide_banner', '-loglevel', 'error', '-y', '-ss', String(start), '-to', String(end), '-i', args.local, '-c:v', 'libx264', '-preset', 'fast', '-crf', '14', '-c:a', 'aac', src]);
 } else {
   run(YTDLP, [...YTDLP_BASE, '-f', 'bv*[height<=1080][ext=mp4]+ba[ext=m4a]/bv*[height<=1080]+ba/b',
     '--download-sections', `*${start}-${end}`, '--force-keyframes-at-cuts',
@@ -147,9 +157,14 @@ if (args.local) {
 }
 
 // ---------------------------------------------------------------- 4. vertical render + edits
-// Layout: blurred full-frame background, original frame in the middle, hook on top,
-// credit at the bottom. Edits (on unless --edits 0), all keyed to the hype peak P:
-//   - snap zoom-in on the gameplay for ~1.3 s at P (meme punch-in) with a camera shake
+// Layouts (--layout):
+//   split  streamer layout: webcam on top (--cam x,y,w,h as fractions of the frame),
+//          gameplay/screen below, cropped around --focus-x. Used when a webcam is known.
+//   crop   full-screen 9:16 crop around --focus-x (default when no webcam).
+//   fit    whole 16:9 frame in the middle over a blurred copy of itself.
+// Upscaling uses lanczos plus a light sharpen, so the picture stays crisp.
+// Edits (on unless --edits 0), all keyed to the hype peak P:
+//   - snap zoom-in for ~1.3 s at P (meme punch-in; onto the face in split) with a shake
 //   - "deep-fried" colour flash and a synthesized bass "boom" at P
 //   - big yellow reaction text at P
 //   - freeze frame right after P: record-scratch sound, black & white, slow push-in and
@@ -185,18 +200,61 @@ const [vw, vh] = run('ffprobe', ['-v', 'error', '-select_streams', 'v:0', '-show
 const fgH = Math.round((1080 * vh) / vw / 2) * 2;
 const hasAudio = run('ffprobe', ['-v', 'error', '-select_streams', 'a', '-show_entries', 'stream=index', '-of', 'csv=p=0', src]).trim() !== '';
 
+const fracs = v => String(v || '').split(',').map(Number);
+const cam = fracs(args.cam);
+const hasCam = cam.length === 4 && cam.every(n => Number.isFinite(n) && n >= 0 && n <= 1) && cam[2] > 0.05 && cam[3] > 0.05;
+const LAYOUT = args.layout || (hasCam ? 'split' : 'crop');
+if (LAYOUT === 'split' && !hasCam) fail('split düzeni için --cam x,y,w,h gerekli');
+const focusX = Math.min(Math.max(Number(args['focus-x'] ?? 0.5), 0), 1);
+// --content x,y,w,h: the part of the frame with the game/screen (drops browser bars,
+// taskbars, chat overlays). Defaults to the whole frame.
+const content = fracs(args.content);
+const hasContent = content.length === 4 && content.every(n => Number.isFinite(n) && n >= 0 && n <= 1) && content[2] > 0.2 && content[3] > 0.2;
+const [ax, ay, aw, ah] = hasContent ? content : [0, 0, 1, 1];
+const even = n => Math.max(2, Math.round(n / 2) * 2);
+const SHARP = 'unsharp=5:5:0.6:5:5:0.0';
+
 const g = [];
-g.push('[0:v]fps=30,split=2[bgsrc][fgsrc]');
-g.push('[bgsrc]scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,boxblur=24:2,eq=brightness=-0.12[bg]');
+let zoomCenterY = 'ih/2';
+if (LAYOUT === 'split') {
+  const [cx, cy, cw, ch] = [cam[0] * vw, cam[1] * vh, cam[2] * vw, cam[3] * vh].map(even);
+  // The webcam panel takes the top, at most 42% of the height.
+  const camH = Math.min(even((1080 * ch) / cw), even(1920 * 0.42));
+  const gameH = 1920 - camH;
+  const [bx, by, bw, bh] = [ax * vw, ay * vh, aw * vw, ah * vh].map(even);
+  const cropW = Math.min(even((bh * 1080) / gameH), bw);
+  const cropH = Math.min(even((cropW * gameH) / 1080), bh);
+  const cropX = Math.min(Math.max(even(focusX * vw - cropW / 2), bx), bx + bw - cropW);
+  const cropY = by + even((bh - cropH) / 2);
+  g.push('[0:v]fps=30,split=2[camsrc][gamesrc]');
+  g.push(`[camsrc]crop=${cw}:${ch}:${cx}:${cy},scale=1080:${camH}:force_original_aspect_ratio=increase:flags=lanczos,crop=1080:${camH},${SHARP}[cam]`);
+  g.push(`[gamesrc]crop=${cropW}:${cropH}:${cropX}:${cropY},scale=1080:${gameH}:force_original_aspect_ratio=increase:flags=lanczos,crop=1080:${gameH},${SHARP}[game]`);
+  g.push('[cam][game]vstack=inputs=2[comp]');
+  zoomCenterY = String(camH / 2);
+} else if (LAYOUT === 'crop') {
+  const [bx, by, bw, bh] = [ax * vw, ay * vh, aw * vw, ah * vh].map(even);
+  const cropW = Math.min(even((bh * 9) / 16), bw);
+  const cropH = Math.min(even((cropW * 16) / 9), bh);
+  const cropX = Math.min(Math.max(even(focusX * vw - cropW / 2), bx), bx + bw - cropW);
+  const cropY = by + even((bh - cropH) / 2);
+  g.push(`[0:v]fps=30,crop=${cropW}:${cropH}:${cropX}:${cropY},scale=1080:1920:flags=lanczos,${SHARP}[comp]`);
+} else {
+  g.push('[0:v]fps=30,split=2[bgsrc][fgsrc]');
+  g.push('[bgsrc]scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,boxblur=24:2,eq=brightness=-0.12[bg]');
+  g.push(`[fgsrc]scale=1080:${fgH}:flags=lanczos,${SHARP}[fg]`);
+  g.push('[bg][fg]overlay=(W-w)/2:(H-h)/2[comp]');
+}
+// Punch-in and shake on the finished picture; in split it zooms onto the streamer's face.
 g.push(EDITS
-  ? `[fgsrc]scale=1080:${fgH},zoompan=z='if(between(it,${P - 0.1},${P + 1.2}),1.3,1)'` +
+  ? `[comp]zoompan=z='if(between(it,${P - 0.1},${P + 1.2}),1.35,1)'` +
     `:x='iw/2-(iw/zoom/2)+if(between(it,${P},${P + 0.6}),24*sin(it*95),0)'` +
-    `:y='ih/2-(ih/zoom/2)+if(between(it,${P},${P + 0.6}),18*cos(it*80),0)'` +
-    `:d=1:s=1080x${fgH}:fps=30[fg]`
-  : `[fgsrc]scale=1080:${fgH}[fg]`);
-const over = ['[bg][fg]overlay=(W-w)/2:(H-h)/2'];
-if (hook) over.push(draw(textFile('hook.txt', wrap(hook, 22)), 'fontsize=72:fontcolor=white:borderw=6:bordercolor=black:line_spacing=12:x=(w-text_w)/2:y=230'));
-if (credit) over.push(draw(textFile('credit.txt', credit), 'fontsize=36:fontcolor=white@0.9:borderw=3:bordercolor=black:x=(w-text_w)/2:y=h-260'));
+    `:y='max(0,min(ih-ih/zoom,${zoomCenterY}-(ih/zoom/2)))+if(between(it,${P},${P + 0.6}),18*cos(it*80),0)'` +
+    ':d=1:s=1080x1920:fps=30[framed]'
+  : '[comp]null[framed]');
+const over = ['[framed]null'];
+const hookY = LAYOUT === 'split' ? `${Number(zoomCenterY) * 2}-text_h/2` : '230';
+if (hook) over.push(draw(textFile('hook.txt', wrap(hook, 22)), `fontsize=70:fontcolor=white:borderw=7:bordercolor=black:line_spacing=12:x=(w-text_w)/2:y=${hookY}`));
+if (credit) over.push(draw(textFile('credit.txt', credit), 'fontsize=32:fontcolor=white@0.9:borderw=3:bordercolor=black:x=(w-text_w)/2:y=h-110'));
 over.push('format=yuv420p');
 // Peak text and colour flash only go on the main pass; the freeze frame and the replay
 // are cut from the clean picture so the texts never pile up.
@@ -253,7 +311,7 @@ if (!EDITS) {
 const file = path.join(OUT, 'final.mp4');
 run('ffmpeg', ['-hide_banner', '-loglevel', 'error', '-y', ...inputs, '-filter_complex', g.join(';'),
   '-map', vOut, ...(aOut ? ['-map', aOut, '-c:a', 'aac', '-b:a', '160k'] : []),
-  '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '20', '-movflags', '+faststart', file]);
+  '-c:v', 'libx264', '-preset', 'medium', '-crf', '18', '-profile:v', 'high', '-movflags', '+faststart', file]);
 
 const total = ffprobeDuration(file);
-console.log(JSON.stringify({ file, start, end, duration: Math.round(total * 10) / 10, method, peak, edits: EDITS, peakInClip: P }));
+console.log(JSON.stringify({ file, start, end, duration: Math.round(total * 10) / 10, method, peak, edits: EDITS, peakInClip: P, layout: LAYOUT }));
