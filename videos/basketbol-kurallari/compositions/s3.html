@@ -1,0 +1,31 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; }
+
+    .kicker { position: absolute; left: 130px; top: 300px; font-family: "Inter", sans-serif; font-weight: 900; font-size: 40px;
+      letter-spacing: 0.14em; color: var(--orange); text-transform: uppercase; }
+    .title { position: absolute; left: 126px; right: 160px; top: 352px; font-family: "League Gothic", sans-serif; font-size: 120px;
+      line-height: 0.92; color: var(--ink); text-transform: uppercase; letter-spacing: 0.005em; }
+    .line { position: absolute; left: 130px; right: 160px; font-family: "Inter", sans-serif; font-weight: 700; font-size: 42px;
+      line-height: 1.18; color: var(--ink); }
+    .line b { color: var(--orange); font-weight: 900; }
+    .note { position: absolute; left: 130px; right: 160px; top: 612px; font-family: "Inter", sans-serif; font-weight: 700;
+      font-size: 30px; color: var(--muted); }
+
+  </style>
+  <div id="root" data-composition-id="s3" data-width="1080" data-height="1920">
+    <div id="s3-kicker" class="kicker clip" data-start="0.05" data-duration="6.45" data-track-index="1">Kural 3 · Top sürme</div>
+    <div id="s3-title" class="title clip" data-start="0.1" data-duration="6.4" data-track-index="2">Sürerek ilerle</div>
+    <div id="s3-l0" class="line clip" style="top:492px" data-start="0.6" data-duration="5.9" data-track-index="3">Topla yürürken <b>top sür.</b></div>
+    <div id="s3-l1" class="line clip" style="top:546px" data-start="3.0" data-duration="3.5" data-track-index="4">Tutunca en fazla <b>2 adım</b>.<br>Fazlası <b>adım hatası</b>.</div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#s3-kicker", { x: -40, opacity: 0 }, { x: 0, opacity: 1, duration: 0.35, ease: "expo.out" }, 0.05);
+    tl.fromTo("#s3-title", { y: 70, opacity: 0, scale: 0.94 }, { y: 0, opacity: 1, scale: 1, duration: 0.5, ease: "expo.out" }, 0.1);
+    tl.fromTo("#s3-l0", { y: 26, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power4.out" }, 0.6);
+    tl.fromTo("#s3-l1", { y: 26, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power4.out" }, 3.0);
+    tl.to("#s3-kicker, #s3-title, #s3-l0, #s3-l1, #s3-note", { y: -30, opacity: 0, duration: 0.2, ease: "power3.in" }, 6.28);
+    window.__timelines["s3"] = tl;
+  </script>
+</template>

@@ -1,0 +1,26 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; }
+
+    #outro-title { position: absolute; left: 130px; right: 160px; top: 520px; text-align: center; font-family: "League Gothic", sans-serif;
+      font-size: 150px; line-height: 0.95; color: var(--ink); }
+    #outro-title b { color: var(--orange); font-weight: 400; }
+    #outro-sub { position: absolute; left: 150px; right: 190px; top: 920px; text-align: center; font-family: "Inter", sans-serif;
+      font-weight: 700; font-size: 40px; color: var(--muted); }
+
+  </style>
+  <div id="root" data-composition-id="outro" data-width="1080" data-height="1920">
+
+    <div id="outro-title" class="clip" data-start="0.1" data-duration="3.4" data-track-index="1">EN ÇOK SAYI<br>ATAN <b>KAZANIR</b></div>
+    <div id="outro-sub" class="clip" data-start="0.9" data-duration="2.6" data-track-index="2">Kaydet, maçta lazım olur</div>
+
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+
+    tl.fromTo("#outro-title", { scale: 1.25, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.45, ease: "expo.out" }, 0.1);
+    tl.fromTo("#outro-sub", { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power4.out" }, 0.9);
+
+    window.__timelines["outro"] = tl;
+  </script>
+</template>

@@ -25,3 +25,6 @@ docs/superpowers/
 
 # youtube-shorts automation: rendered videos and local assets
 /automation/youtube-shorts/data/
+
+# HyperFrames check/snapshot artifacts
+.hyperframes/
