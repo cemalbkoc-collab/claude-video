@@ -11,15 +11,15 @@
   </style>
   <div id="root" data-composition-id="outro" data-width="1080" data-height="1920">
 
-    <div id="outro-title" class="clip" data-start="0.1" data-duration="3.4" data-track-index="1">EN ÇOK SAYI<br>ATAN <b>KAZANIR</b></div>
-    <div id="outro-sub" class="clip" data-start="0.9" data-duration="2.6" data-track-index="2">Kaydet, maçta lazım olur</div>
+    <div id="outro-title" class="clip" data-start="0.09" data-duration="3.19" data-track-index="1">EN ÇOK SAYI<br>ATAN <b>KAZANIR</b></div>
+    <div id="outro-sub" class="clip" data-start="0.84" data-duration="2.44" data-track-index="2">Kaydet, maçta lazım olur</div>
 
   </div>
   <script>
     const tl = gsap.timeline({ paused: true });
 
-    tl.fromTo("#outro-title", { scale: 1.25, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.45, ease: "expo.out" }, 0.1);
-    tl.fromTo("#outro-sub", { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power4.out" }, 0.9);
+    tl.fromTo("#outro-title", { scale: 1.25, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.42, ease: "expo.out" }, 0.09);
+    tl.fromTo("#outro-sub", { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.37, ease: "power4.out" }, 0.84);
 
     window.__timelines["outro"] = tl;
   </script>
