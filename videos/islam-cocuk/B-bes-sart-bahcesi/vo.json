@@ -1,0 +1,158 @@
+[
+ {
+  "row": "1",
+  "text": "Bir tohum, kocaman bir ağaç olabilir mi? Gel, birlikte görelim.",
+  "file": "assets/vo/b00.wav",
+  "dur": 4.92
+ },
+ {
+  "row": "2",
+  "text": "Bu bahçede bir ağaç büyüyecek. Adı: Müslümanlık Ağacı.",
+  "file": "assets/vo/b01.wav",
+  "dur": 4.47
+ },
+ {
+  "row": "3",
+  "text": "Her ağacın kökü vardır. Bu ağacın kökü imandır. İman, kalbimizle inanmaktır. Allah'a inanırız. Meleklere, kitaplara, peygamberlere, ahiret gününe ve kadere inanırız.",
+  "file": "assets/vo/b02.wav",
+  "dur": 13.78
+ },
+ {
+  "row": "4",
+  "text": "Güneşi, ayı, yıldızları; çiçekleri, kuşları ve bizi Allah yarattı.",
+  "file": "assets/vo/b03.wav",
+  "dur": 4.67
+ },
+ {
+  "row": "5",
+  "text": "Allah bize Kur'an-ı Kerim'i gönderdi. Son peygamber Hazreti Muhammed, Kur'an'ı insanlara öğretti.",
+  "file": "assets/vo/b04.wav",
+  "dur": 6.77
+ },
+ {
+  "row": "6",
+  "text": "Kök güçlenince, gövde yükselir. Şimdi bu ağacın beş dalını tanıyalım. Bunlar İslam'ın beş şartı.",
+  "file": "assets/vo/b05.wav",
+  "dur": 7.36
+ },
+ {
+  "row": "7",
+  "text": "Birinci dal: Kelime-i şehadet. \"Allah'tan başka ilah yoktur, Hazreti Muhammed O'nun elçisidir\" deriz.",
+  "file": "assets/vo/b06.wav",
+  "dur": 7.65
+ },
+ {
+  "row": "8",
+  "text": "İkinci dal: Namaz. Günde beş vakit: sabah, öğle, ikindi, akşam, yatsı.",
+  "file": "assets/vo/b07.wav",
+  "dur": 6.51
+ },
+ {
+  "row": "8b",
+  "text": "Sabah güneş doğarken, öğle güneş tepedeyken, ikindi gölgeler uzarken, akşam güneş batarken, yatsı da gece olunca. Her vakit, Allah'ı anmak için bir buluşma.",
+  "file": "assets/vo/b08.wav",
+  "dur": 11.37
+ },
+ {
+  "row": "8c",
+  "text": "Namazdan önce abdest alırız: ellerimizi yıkarız, ağzımıza ve burnumuza su veririz, yüzümüzü, kollarımızı yıkarız, başımızı meshederiz ve ayaklarımızı yıkarız. Tertemiz oluruz!",
+  "file": "assets/vo/b09.wav",
+  "dur": 12.18
+ },
+ {
+  "row": "9",
+  "text": "Üçüncü dal: Oruç. Ramazan ayında büyükler sabahtan akşama kadar yemez, içmez. Akşam iftar sofrasında hep birlikte orucumuzu açarız.",
+  "file": "assets/vo/b10.wav",
+  "dur": 10.48
+ },
+ {
+  "row": "9b",
+  "text": "Oruç bize sabretmeyi ve aç olanları anlamayı öğretir. Ramazan bitince Ramazan Bayramı gelir. Büyüklerimizi ziyaret eder, bayramlaşırız. Çocuklar oruçla sorumlu değildir; ama büyüyünce onlar da tutar.",
+  "file": "assets/vo/b11.wav",
+  "dur": 15.01
+ },
+ {
+  "row": "10",
+  "text": "Dördüncü dal: Zekât. İmkânı olanlar, mallarının bir kısmını ihtiyacı olanlara verir.",
+  "file": "assets/vo/b12.wav",
+  "dur": 6.97
+ },
+ {
+  "row": "10b",
+  "text": "Zekât vermek, \"Bu malı bana Allah verdi, ben de paylaşıyorum\" demektir. Paylaştıkça kalbimiz de büyür. Sen de oyuncaklarını ve yiyeceğini arkadaşlarınla paylaşabilirsin.",
+  "file": "assets/vo/b13.wav",
+  "dur": 12.08
+ },
+ {
+  "row": "11",
+  "text": "Beşinci dal: Hac. Gücü yetenler, ömründe bir kez Mekke'deki Kâbe'yi ziyaret eder.",
+  "file": "assets/vo/b14.wav",
+  "dur": 5.89
+ },
+ {
+  "row": "11b",
+  "text": "Hacda dünyanın dört bir yanından gelen insanlar aynı beyaz giysileri giyer. Kim olursa olsun, herkes kardeştir.",
+  "file": "assets/vo/b15.wav",
+  "dur": 8.0
+ },
+ {
+  "row": "12",
+  "text": "Şehadet, namaz, oruç, zekât, hac. Beş dal, bir ağaç!",
+  "file": "assets/vo/b16.wav",
+  "dur": 5.35
+ },
+ {
+  "row": "12b",
+  "text": "Hadi birlikte tekrar edelim. Bir: şehadet. İki: namaz. Üç: oruç. Dört: zekât. Beş: hac. Harikasın!",
+  "file": "assets/vo/b17.wav",
+  "dur": 10.98
+ },
+ {
+  "row": "13",
+  "text": "Peki bu ağacın meyveleri ne? Meyveleri güzel ahlaktır!",
+  "file": "assets/vo/b18.wav",
+  "dur": 4.3
+ },
+ {
+  "row": "14",
+  "text": "Doğru söylemek.",
+  "file": "assets/vo/b19.wav",
+  "dur": 1.31
+ },
+ {
+  "row": "15",
+  "text": "Bütün canlılara merhamet etmek.",
+  "file": "assets/vo/b20.wav",
+  "dur": 2.5
+ },
+ {
+  "row": "16",
+  "text": "Selamlaşmak: \"Esselâmü aleyküm!\"",
+  "file": "assets/vo/b21.wav",
+  "dur": 2.48
+ },
+ {
+  "row": "17",
+  "text": "Paylaşmak ve yardım etmek.",
+  "file": "assets/vo/b22.wav",
+  "dur": 1.9
+ },
+ {
+  "row": "18",
+  "text": "Büyüklere saygı, küçüklere sevgi.",
+  "file": "assets/vo/b23.wav",
+  "dur": 2.55
+ },
+ {
+  "row": "19",
+  "text": "Güzel ahlak, ağacın gölgesi gibidir: herkesi serinletir, herkese iyi gelir.",
+  "file": "assets/vo/b24.wav",
+  "dur": 5.8
+ },
+ {
+  "row": "20",
+  "text": "Senin kalbinde de böyle bir ağaç büyüsün. Bugün hangi meyveyi toplayacaksın?",
+  "file": "assets/vo/b25.wav",
+  "dur": 5.53
+ }
+]
