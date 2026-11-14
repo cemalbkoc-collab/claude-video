@@ -1,0 +1,488 @@
+{
+ "A": [
+  {
+   "row": "1",
+   "visual": "Şafak, Elif'in odası, pencereden ışık; uzaktan ezan",
+   "speaker": "ANLATICI",
+   "text": "Güneş daha yeni doğarken, uzaklardan çok güzel bir ses duyuldu."
+  },
+  {
+   "row": "2",
+   "visual": "Elif yatağında doğrulup pencereye bakıyor",
+   "speaker": "ELİF",
+   "text": "Dede! Bu güzel ses ne?"
+  },
+  {
+   "row": "3",
+   "visual": "Dede kapıda gülümsüyor",
+   "speaker": "DEDE",
+   "text": "O ezan, kuzum. Ezan bize namaz vaktinin geldiğini haber verir."
+  },
+  {
+   "row": "4",
+   "visual": "Elif merakla",
+   "speaker": "ELİF",
+   "text": "Namaz mı? Dede, biz neden namaz kılıyoruz?"
+  },
+  {
+   "row": "5",
+   "visual": "Dede pencereyi açıyor; gökyüzü, güneş, ağaçlar, kuşlar",
+   "speaker": "DEDE",
+   "text": "Bak Elif. Şu güneşi, şu ağaçları, kuşları kim yarattı? Hepsini Allah yarattı. Seni de, beni de, annemizi, babamızı da. Allah bizi çok sever. Biz de O'nu severiz. İşte biz Müslümanlar, Allah'a teşekkür etmek ve O'nu anmak için namaz kılarız."
+  },
+  {
+   "row": "6",
+   "visual": "Başlık kartı: \"Elif'in Soruları\"",
+   "speaker": "ANLATICI",
+   "text": "Elif'in Soruları!"
+  },
+  {
+   "row": "7",
+   "visual": "Kahvaltı sofrası; Dede rafta duran Kur'an'ı gösteriyor (Kur'an kapalı, rahlede)",
+   "speaker": "ELİF",
+   "text": "Dede, Allah bize ne yapmamızı istediğini nasıl bildirdi?"
+  },
+  {
+   "row": "8",
+   "visual": "Kur'an'ın kapağındaki hat yakın plan, altın ışık",
+   "speaker": "DEDE",
+   "text": "Allah, peygamberler gönderdi. Son peygamber, Peygamberimiz Hazreti Muhammed'dir. Allah'ın sözleri ona geldi ve Kur'an-ı Kerim oldu. Kur'an, bize iyiliği ve doğruyu öğreten kitabımızdır."
+  },
+  {
+   "row": "9",
+   "visual": "Elif besmele çekip ekmeğini alıyor",
+   "speaker": "ANLATICI",
+   "text": "Elif her işe başlarken \"Bismillah\" der. Yani \"Allah'ın adıyla\" başlar."
+  },
+  {
+   "row": "10",
+   "visual": "Dede elinde beş parmağını açıyor; her parmakta bir simge belirecek",
+   "speaker": "DEDE",
+   "text": "Elif, İslam'ın beş şartı vardır. Tıpkı elimizin beş parmağı gibi. Hadi birlikte sayalım!"
+  },
+  {
+   "row": "11",
+   "visual": "Başparmak: hat ile \"Lâ ilâhe illallah\"",
+   "speaker": "DEDE",
+   "text": "Bir: Kelime-i şehadet. Allah'tan başka ilah olmadığına, Hazreti Muhammed'in O'nun kulu ve elçisi olduğuna inanır ve bunu söyleriz."
+  },
+  {
+   "row": "12",
+   "visual": "Öğle; mahalle camisi, şadırvanda abdest alan dede, yanında Elif",
+   "speaker": "DEDE",
+   "text": "İki: Namaz. Günde beş vakit namaz kılarız: sabah, öğle, ikindi, akşam ve yatsı. Namazdan önce abdest alırız; ellerimizi, yüzümüzü, kollarımızı, ayaklarımızı yıkarız."
+  },
+  {
+   "row": "12b",
+   "visual": "Elif dedesini izleyerek ellerini yıkıyor",
+   "speaker": "ELİF",
+   "text": "Dede, ben de abdest almayı öğrenebilir miyim?"
+  },
+  {
+   "row": "12b",
+   "visual": "Elif dedesini izleyerek ellerini yıkıyor",
+   "speaker": "DEDE",
+   "text": "Tabii! Önce \"Bismillah\" deriz, sonra ellerimizi bileklere kadar üç kere yıkarız. Ağzımıza ve burnumuza su veririz, yüzümüzü yıkarız. Kollarımızı dirseklere kadar yıkar, ıslak elimizle başımızı meshederiz. En son da ayaklarımızı yıkarız."
+  },
+  {
+   "row": "12c",
+   "visual": "Cami içi; halı, ışık; Elif dedesinin yanında küçük seccadesinde",
+   "speaker": "ANLATICI",
+   "text": "Camide herkes yan yana durur. Zengin, fakir, büyük, küçük... Allah'ın huzurunda hepimiz eşitiz."
+  },
+  {
+   "row": "13",
+   "visual": "Akşam, iftar sofrası, aile toplanmış, saat güneşin batışını gösteriyor",
+   "speaker": "DEDE",
+   "text": "Üç: Oruç. Ramazan ayında, büyükler sabahtan akşama kadar bir şey yiyip içmez. Akşam ezanıyla birlikte iftar ederiz. Oruç, aç olanları anlamamızı sağlar."
+  },
+  {
+   "row": "14",
+   "visual": "Elif kendi tabağından komşu çocuğa da yemek ayırıyor",
+   "speaker": "ELİF",
+   "text": "Ben de büyüyünce oruç tutacağım!"
+  },
+  {
+   "row": "14",
+   "visual": "Elif kendi tabağından komşu çocuğa da yemek ayırıyor",
+   "speaker": "DEDE",
+   "text": "Çocuklar oruçla sorumlu değil ama istersen yarım gün deneyebilirsin. Ramazan'ın sonunda da Ramazan Bayramı gelir; büyüklerin elini öper, bayramlaşırız."
+  },
+  {
+   "row": "15",
+   "visual": "Dede ve Elif ihtiyaç sahibi bir komşuya erzak kolisi götürüyor",
+   "speaker": "DEDE",
+   "text": "Dört: Zekât. İmkânı olan Müslümanlar, her yıl mallarının bir kısmını ihtiyacı olanlarla paylaşır. Paylaşınca bereket artar."
+  },
+  {
+   "row": "16",
+   "visual": "Dede'nin evindeki duvarda Kâbe fotoğrafı; sonra Kâbe ve beyaz giysili hacılar (uzaktan)",
+   "speaker": "DEDE",
+   "text": "Beş: Hac. Gücü yeten Müslümanlar, ömründe bir kez Mekke'deki Kâbe'yi ziyaret eder. Dünyanın her yerinden insanlar orada bir araya gelir."
+  },
+  {
+   "row": "17",
+   "visual": "Elif parmaklarını sayıyor; beş simge yan yana parlıyor",
+   "speaker": "ELİF",
+   "text": "Şehadet, namaz, oruç, zekât, hac! Beş şart!"
+  },
+  {
+   "row": "17b",
+   "visual": "Ekranda beş parmak tek tek yanıyor (ekrandaki çocuğa dönük)",
+   "speaker": "ANLATICI",
+   "text": "Hadi sen de parmaklarınla say! Bir: şehadet. İki: namaz. Üç: oruç. Dört: zekât. Beş: hac. Aferin sana!"
+  },
+  {
+   "row": "18",
+   "visual": "Akşam, mahallede komşuya selam veren Elif",
+   "speaker": "ANLATICI",
+   "text": "Ama Müslüman olmak sadece bunlar değil. Güzel ahlak da çok önemli."
+  },
+  {
+   "row": "19",
+   "visual": "Elif komşu teyzeye selam veriyor",
+   "speaker": "ELİF",
+   "text": "Esselâmü aleyküm!"
+  },
+  {
+   "row": "19",
+   "visual": "Elif komşu teyzeye selam veriyor",
+   "speaker": "ANLATICI",
+   "text": "Ve aleyküm selam, Elif!"
+  },
+  {
+   "row": "20",
+   "visual": "Elif kırdığı bardağı annesine söylüyor",
+   "speaker": "ANLATICI",
+   "text": "Doğru sözlü olmak..."
+  },
+  {
+   "row": "21",
+   "visual": "Elif bahçede bir kediye su veriyor",
+   "speaker": "ANLATICI",
+   "text": "...hayvanlara ve bütün canlılara merhamet etmek..."
+  },
+  {
+   "row": "22",
+   "visual": "Elif kardeşine oyuncağını veriyor",
+   "speaker": "ANLATICI",
+   "text": "...paylaşmak ve büyüklerimize saygı göstermek. Peygamberimiz de en güzel ahlakı bize örnek olarak yaşadı."
+  },
+  {
+   "row": "23",
+   "visual": "Gece, Elif yatağında; dede yanında",
+   "speaker": "ELİF",
+   "text": "Dede, bugün çok şey öğrendim. Allah'ı seviyorum."
+  },
+  {
+   "row": "24",
+   "visual": "Dede gülümsüyor, ışık kısılıyor",
+   "speaker": "DEDE",
+   "text": "Allah da seni çok seviyor, kuzum. İyi geceler."
+  },
+  {
+   "row": "25",
+   "visual": "Kapanış kartı",
+   "speaker": "ANLATICI",
+   "text": "Sen de bugün Elif gibi birine selam verir misin? Bir sonraki soruda görüşmek üzere!"
+  }
+ ],
+ "B": [
+  {
+   "row": "1",
+   "visual": "Boş toprak, gökyüzü; bir tohum düşer",
+   "speaker": "ANLATICI",
+   "text": "Bir tohum, kocaman bir ağaç olabilir mi? Gel, birlikte görelim."
+  },
+  {
+   "row": "2",
+   "visual": "Tohum toprağa gömülür; yağmur",
+   "speaker": "ANLATICI",
+   "text": "Bu bahçede bir ağaç büyüyecek. Adı: Müslümanlık Ağacı."
+  },
+  {
+   "row": "3",
+   "visual": "Kökler aşağı uzar, köklerde ışık",
+   "speaker": "ANLATICI",
+   "text": "Her ağacın kökü vardır. Bu ağacın kökü imandır. İman, kalbimizle inanmaktır. Allah'a inanırız. Meleklere, kitaplara, peygamberlere, ahiret gününe ve kadere inanırız."
+  },
+  {
+   "row": "4",
+   "visual": "Gökte güneş, ay, yıldızlar beliriyor",
+   "speaker": "ANLATICI",
+   "text": "Güneşi, ayı, yıldızları; çiçekleri, kuşları ve bizi Allah yarattı."
+  },
+  {
+   "row": "5",
+   "visual": "Kitap simgesi köklerin yanında",
+   "speaker": "ANLATICI",
+   "text": "Allah bize Kur'an-ı Kerim'i gönderdi. Son peygamber Hazreti Muhammed, Kur'an'ı insanlara öğretti."
+  },
+  {
+   "row": "6",
+   "visual": "Gövde yükselir",
+   "speaker": "ANLATICI",
+   "text": "Kök güçlenince, gövde yükselir. Şimdi bu ağacın beş dalını tanıyalım. Bunlar İslam'ın beş şartı."
+  },
+  {
+   "row": "7",
+   "visual": "Dal 1 çıkar: hat yaprağı",
+   "speaker": "ANLATICI",
+   "text": "Birinci dal: Kelime-i şehadet. \"Allah'tan başka ilah yoktur, Hazreti Muhammed O'nun elçisidir\" deriz."
+  },
+  {
+   "row": "8",
+   "visual": "Dal 2 çıkar: beş yaprak, güneşin gün boyu konumları",
+   "speaker": "ANLATICI",
+   "text": "İkinci dal: Namaz. Günde beş vakit: sabah, öğle, ikindi, akşam, yatsı."
+  },
+  {
+   "row": "8b",
+   "visual": "Güneş gökyüzünde gezinirken her konumda bir yaprak parlıyor",
+   "speaker": "ANLATICI",
+   "text": "Sabah güneş doğarken, öğle güneş tepedeyken, ikindi gölgeler uzarken, akşam güneş batarken, yatsı da gece olunca. Her vakit, Allah'ı anmak için bir buluşma."
+  },
+  {
+   "row": "8c",
+   "visual": "Su damlaları ve abdest sırası simgelerle",
+   "speaker": "ANLATICI",
+   "text": "Namazdan önce abdest alırız: ellerimizi yıkarız, ağzımıza ve burnumuza su veririz, yüzümüzü, kollarımızı yıkarız, başımızı meshederiz ve ayaklarımızı yıkarız. Tertemiz oluruz!"
+  },
+  {
+   "row": "9",
+   "visual": "Dal 3: hilal ve hurma",
+   "speaker": "ANLATICI",
+   "text": "Üçüncü dal: Oruç. Ramazan ayında büyükler sabahtan akşama kadar yemez, içmez. Akşam iftar sofrasında hep birlikte orucumuzu açarız."
+  },
+  {
+   "row": "9b",
+   "visual": "Hilal büyüyüp dolunay olur, sonra bayram süsleri",
+   "speaker": "ANLATICI",
+   "text": "Oruç bize sabretmeyi ve aç olanları anlamayı öğretir. Ramazan bitince Ramazan Bayramı gelir. Büyüklerimizi ziyaret eder, bayramlaşırız. Çocuklar oruçla sorumlu değildir; ama büyüyünce onlar da tutar."
+  },
+  {
+   "row": "10",
+   "visual": "Dal 4: elden ele geçen bir kalp",
+   "speaker": "ANLATICI",
+   "text": "Dördüncü dal: Zekât. İmkânı olanlar, mallarının bir kısmını ihtiyacı olanlara verir."
+  },
+  {
+   "row": "10b",
+   "visual": "Kalp elden ele geçerken büyüyor",
+   "speaker": "ANLATICI",
+   "text": "Zekât vermek, \"Bu malı bana Allah verdi, ben de paylaşıyorum\" demektir. Paylaştıkça kalbimiz de büyür. Sen de oyuncaklarını ve yiyeceğini arkadaşlarınla paylaşabilirsin."
+  },
+  {
+   "row": "11",
+   "visual": "Dal 5: Kâbe simgesi",
+   "speaker": "ANLATICI",
+   "text": "Beşinci dal: Hac. Gücü yetenler, ömründe bir kez Mekke'deki Kâbe'yi ziyaret eder."
+  },
+  {
+   "row": "11b",
+   "visual": "Kâbe'nin etrafında farklı renklerde küçük noktalar halka oluşturuyor",
+   "speaker": "ANLATICI",
+   "text": "Hacda dünyanın dört bir yanından gelen insanlar aynı beyaz giysileri giyer. Kim olursa olsun, herkes kardeştir."
+  },
+  {
+   "row": "12",
+   "visual": "Ağaç tam; beş dal sırayla parlar",
+   "speaker": "ANLATICI",
+   "text": "Şehadet, namaz, oruç, zekât, hac. Beş dal, bir ağaç!"
+  },
+  {
+   "row": "12b",
+   "visual": "Dallar sırayla tekrar parlar, ekranda sayılar",
+   "speaker": "ANLATICI",
+   "text": "Hadi birlikte tekrar edelim. Bir: şehadet. İki: namaz. Üç: oruç. Dört: zekât. Beş: hac. Harikasın!"
+  },
+  {
+   "row": "13",
+   "visual": "Meyveler belirir, her meyvede bir kelime",
+   "speaker": "ANLATICI",
+   "text": "Peki bu ağacın meyveleri ne? Meyveleri güzel ahlaktır!"
+  },
+  {
+   "row": "14",
+   "visual": "Meyve: Doğruluk",
+   "speaker": "ANLATICI",
+   "text": "Doğru söylemek."
+  },
+  {
+   "row": "15",
+   "visual": "Meyve: Merhamet",
+   "speaker": "ANLATICI",
+   "text": "Bütün canlılara merhamet etmek."
+  },
+  {
+   "row": "16",
+   "visual": "Meyve: Selam",
+   "speaker": "ANLATICI",
+   "text": "Selamlaşmak: \"Esselâmü aleyküm!\""
+  },
+  {
+   "row": "17",
+   "visual": "Meyve: Paylaşmak",
+   "speaker": "ANLATICI",
+   "text": "Paylaşmak ve yardım etmek."
+  },
+  {
+   "row": "18",
+   "visual": "Meyve: Saygı",
+   "speaker": "ANLATICI",
+   "text": "Büyüklere saygı, küçüklere sevgi."
+  },
+  {
+   "row": "19",
+   "visual": "Ağacın gölgesinde oynayan çocuk silüetleri",
+   "speaker": "ANLATICI",
+   "text": "Güzel ahlak, ağacın gölgesi gibidir: herkesi serinletir, herkese iyi gelir."
+  },
+  {
+   "row": "20",
+   "visual": "Kapanış",
+   "speaker": "ANLATICI",
+   "text": "Senin kalbinde de böyle bir ağaç büyüsün. Bugün hangi meyveyi toplayacaksın?"
+  }
+ ],
+ "C": [
+  {
+   "row": "1",
+   "visual": "Bulutun içinde gülümseyen Damla",
+   "speaker": "DAMLA",
+   "text": "Merhaba! Ben Damla! Bugün seni çok güzel bir yolculuğa çıkarıyorum."
+  },
+  {
+   "row": "2",
+   "visual": "Damla buluttan süzülüp düşüyor, aşağıda bir şehir ve minareler",
+   "speaker": "DAMLA",
+   "text": "Beni yağmurla birlikte yeryüzüne Allah gönderdi. Gökyüzünü, yağmuru, denizleri, bütün canlıları Allah yarattı."
+  },
+  {
+   "row": "3",
+   "visual": "Başlık kartı",
+   "speaker": "DAMLA",
+   "text": "Damlanın Yolculuğu!"
+  },
+  {
+   "row": "4",
+   "visual": "Damla bir caminin şadırvanına düşüyor; çocuklar abdest alıyor",
+   "speaker": "DAMLA",
+   "text": "Hop! Bir caminin şadırvanına düştüm. Bak, insanlar abdest alıyor. Elleri, yüzü, kolları, ayakları... Abdest, namaza hazırlanmaktır."
+  },
+  {
+   "row": "5",
+   "visual": "Minareden ezan; cami içinde saf tutan insanlar (arkadan, uzaktan)",
+   "speaker": "DAMLA",
+   "text": "Ezan okundu. Müslümanlar günde beş vakit namaz kılar: sabah, öğle, ikindi, akşam ve yatsı. Namaz, İslam'ın beş şartından biridir."
+  },
+  {
+   "row": "5b",
+   "visual": "Cami içi, yan yana duran insanlar; Damla pencere camında",
+   "speaker": "DAMLA",
+   "text": "Camide herkes omuz omuza durur. Büyük küçük, zengin fakir fark etmez. Namaz, Allah'a teşekkür etmenin ve O'nu anmanın en güzel yoludur."
+  },
+  {
+   "row": "5c",
+   "visual": "Damla abdest adımlarını gösteren küçük simgelerin üzerinden kayıyor",
+   "speaker": "DAMLA",
+   "text": "Abdesti birlikte hatırlayalım mı? Ellerimizi yıkarız, ağzımıza ve burnumuza su veririz, yüzümüzü yıkarız, kollarımızı yıkarız, başımızı meshederiz, ayaklarımızı yıkarız. Ben de bu işte çok yardımcı oluyorum!"
+  },
+  {
+   "row": "6",
+   "visual": "Damla buharlaşıp yukarı çıkıyor, minarelerin üstünden geçiyor",
+   "speaker": "DAMLA",
+   "text": "Bir de şunu söyleyeyim: İslam'ın beş şartı var. Yolculuğumda hepsini göreceksin!"
+  },
+  {
+   "row": "7",
+   "visual": "Gökyüzünde Arapça \"Lâ ilâhe illallah\" hattı bulutlardan oluşuyor",
+   "speaker": "DAMLA",
+   "text": "Birincisi kelime-i şehadet: Allah'tan başka ilah yoktur, Hazreti Muhammed O'nun kulu ve elçisidir. Peygamberimiz bize Kur'an'ı öğretti."
+  },
+  {
+   "row": "8",
+   "visual": "Damla bir evin mutfağında, sürahiden bardağa dökülüyor; iftar sofrası",
+   "speaker": "DAMLA",
+   "text": "Şimdi bir iftar sofrasındayım! Ramazan ayında büyükler sabahtan akşama kadar oruç tutar. Akşam ezanı okununca..."
+  },
+  {
+   "row": "9",
+   "visual": "Bir çocuk bardağı alıp \"Bismillah\" diyor",
+   "speaker": "DAMLA",
+   "text": "...ilk yudumu içerler. Oruç, sabretmeyi ve aç olanları anlamayı öğretir."
+  },
+  {
+   "row": "9b",
+   "visual": "Çocuk \"Bismillah\" deyip suyu içiyor; masada hurma",
+   "speaker": "DAMLA",
+   "text": "Bak, küçük Ali \"Bismillah\" dedi. Bismillah, \"Allah'ın adıyla\" demek. Her işe güzel bir başlangıç! Çocuklar oruçla sorumlu değil ama büyükleriyle birlikte iftar sofrasına oturmak çok güzel."
+  },
+  {
+   "row": "10",
+   "visual": "Damla yine yağmur olup bir köye düşüyor; boş bir kuyu",
+   "speaker": "DAMLA",
+   "text": "Şimdi uzak bir köydeyim. Burada kuyu kurumuş, insanlar suya ihtiyaç duyuyor."
+  },
+  {
+   "row": "11",
+   "visual": "İnsanlar yardım getiriyor, yeni çeşme yapılıyor",
+   "speaker": "DAMLA",
+   "text": "Ama bak! İmkânı olan Müslümanlar zekât verdi. Zekât, malının bir kısmını ihtiyacı olanlarla paylaşmaktır. Şimdi köyün suyu var!"
+  },
+  {
+   "row": "12",
+   "visual": "Damla bir bulutla çok uzaklara, çöl ve Mekke'ye gidiyor",
+   "speaker": "DAMLA",
+   "text": "Ve şimdi en uzun yolculuğum: Mekke'ye gidiyorum!"
+  },
+  {
+   "row": "13",
+   "visual": "Kâbe ve etrafında beyaz giysili insanlar (uzaktan)",
+   "speaker": "DAMLA",
+   "text": "İşte Kâbe! Gücü yeten Müslümanlar, ömründe bir kez hac için buraya gelir. Dünyanın her yerinden insanlar burada kardeş gibi bir araya gelir."
+  },
+  {
+   "row": "14",
+   "visual": "Damla Zemzem suyuna karışıyor",
+   "speaker": "DAMLA",
+   "text": "Burada Zemzem kuyusunun suyuyla tanıştım. Zemzem, çok eski zamanlardan beri Mekke'de akan bereketli bir sudur. Hacılar onu içer ve sevdiklerine götürür."
+  },
+  {
+   "row": "15",
+   "visual": "Beş durak bir harita gibi geri sayılıyor",
+   "speaker": "DAMLA",
+   "text": "Hadi sayalım: şehadet, namaz, oruç, zekât, hac. İslam'ın beş şartı!"
+  },
+  {
+   "row": "15b",
+   "visual": "Her durak tek tek parlıyor",
+   "speaker": "DAMLA",
+   "text": "Bir daha, hep birlikte! Şehadet... namaz... oruç... zekât... ve hac! Aferin sana!"
+  },
+  {
+   "row": "16",
+   "visual": "Damla tekrar yağmur olup bir parka düşüyor; çocuklar kuşlara su veriyor",
+   "speaker": "DAMLA",
+   "text": "Ama yolculuğum bitmedi. Yağmur olunca herkese, her canlıya düşerim. Ayırmadan, herkese iyilik götürürüm."
+  },
+  {
+   "row": "17",
+   "visual": "Çocuk selam veriyor, biri kediye su veriyor",
+   "speaker": "DAMLA",
+   "text": "Müslüman da böyledir: herkese selam verir, doğru söyler, canlılara merhamet eder, yardımlaşır."
+  },
+  {
+   "row": "18",
+   "visual": "Gökkuşağı, Damla gülümsüyor",
+   "speaker": "DAMLA",
+   "text": "Ben bir damlayım ama bir damla bile çok iyilik taşıyabilir. Sen de bugün bir iyilik yapar mısın?"
+  },
+  {
+   "row": "19",
+   "visual": "Kapanış",
+   "speaker": "DAMLA",
+   "text": "Ben Damla! Bir sonraki yolculukta görüşmek üzere!"
+  }
+ ]
+}

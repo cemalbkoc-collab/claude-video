@@ -28,3 +28,7 @@ docs/superpowers/
 
 # HyperFrames check/snapshot artifacts
 .hyperframes/
+
+# HyperFrames render scratch folders
+videos/**/work-*/
+videos/**/.*.hf-transaction-*/

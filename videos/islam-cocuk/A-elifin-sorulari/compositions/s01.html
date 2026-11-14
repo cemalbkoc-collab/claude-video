@@ -1,0 +1,74 @@
+<template>
+  <style>
+    @font-face { font-family: "Amiri"; src: url("assets/fonts/amiri-arabic-700.woff2") format("woff2"); font-weight: 700; }
+    #root { position: absolute; inset: 0; overflow: hidden; font-family: "Nunito", sans-serif; }
+    #s01-cam { position: absolute; inset: 0; }
+    .actor { position: absolute; }
+    #s01-fade { position: absolute; inset: 0; background: #FFF8EC; }
+    .cap { position: absolute; left: 0; right: 0; bottom: 70px; text-align: center; font-weight: 900; font-size: 76px; color: #fff;
+      -webkit-text-stroke: 11px #2B3A55; paint-order: stroke fill; }
+    .title { position: absolute; left: 0; right: 0; top: 330px; text-align: center; font-weight: 900; font-size: 150px; color: #fff;
+      -webkit-text-stroke: 16px #2B6E3F; paint-order: stroke fill; line-height: 1; }
+    .arabic { position: absolute; left: 0; right: 0; text-align: center; font-family: "Amiri", serif; font-weight: 700; color: #1E6B52;
+      direction: rtl; text-shadow: 0 4px 0 #fff; }
+    .chip { position: absolute; padding: 12px 30px; border-radius: 40px; background: #fff; color: #2B3A55; font-weight: 900; font-size: 46px;
+      white-space: nowrap; box-shadow: 0 6px 0 rgba(0,0,0,0.15); }
+  </style>
+  <div id="root" data-composition-id="s01" data-width="1920" data-height="1080">
+    <div id="s01-cam"><svg viewBox="0 0 1920 1080" style="position:absolute;inset:0;width:100%;height:100%"><rect width="1920" height="1080" fill="#FCE3C4"/><rect y="820" width="1920" height="260" fill="#C99A6B"/><rect y="806" width="1920" height="14" fill="#00000014"/><path d="M80 0 v820" stroke="#ffffff22" stroke-width="40"/><path d="M320 0 v820" stroke="#ffffff22" stroke-width="40"/><path d="M560 0 v820" stroke="#ffffff22" stroke-width="40"/><path d="M800 0 v820" stroke="#ffffff22" stroke-width="40"/><path d="M1040 0 v820" stroke="#ffffff22" stroke-width="40"/><path d="M1280 0 v820" stroke="#ffffff22" stroke-width="40"/><path d="M1520 0 v820" stroke="#ffffff22" stroke-width="40"/><path d="M1760 0 v820" stroke="#ffffff22" stroke-width="40"/><rect x="1260" y="150" width="440" height="380" rx="20" fill="#FFB88C" stroke="#FFFFFF" stroke-width="22"/><path d="M1480 150 v380 M1260 340 h440" stroke="#FFFFFF" stroke-width="14"/><circle cx="1380" cy="440" r="44" fill="#FFD23F"/><rect x="180" y="600" width="700" height="220" rx="30" fill="#7FB2D9"/><rect x="180" y="560" width="120" height="260" rx="20" fill="#5E8FB8"/><rect x="230" y="600" width="220" height="70" rx="30" fill="#fff"/></svg>
+    <svg id="s01-mosque" class="actor" viewBox="-1000 -1000 2000 1200" style="left:1030px;top:70px;width:900px;height:540px;overflow:visible"><g id="s01-mosque-g" transform="scale(1 1)"><g transform="scale(0.9)"><g transform="scale(1.0)"><rect x="-260" y="-260" width="520" height="260" fill="#F3EBDD"/>
+  <path d="M-170 -260 Q-170 -470 0 -480 Q170 -470 170 -260 Z" fill="#7FB8C9"/><rect x="-6" y="-540" width="12" height="70" fill="#D4AF37"/>
+  <path d="M0 -556 a14 14 0 1 0 0.1 0 Z" fill="#D4AF37"/>
+  <rect x="300" y="-640" width="56" height="640" fill="#F3EBDD"/><path d="M296 -640 L328 -730 L360 -640 Z" fill="#7FB8C9"/><rect x="292" y="-470" width="72" height="16" fill="#D9CDB6"/>
+  <path d="M-60 0 L-60 -130 Q0 -200 60 -130 L60 0 Z" fill="#5B8FA3"/><path d="M-216 -160 L-216 -200 Q-190 -236 -164 -200 L-164 -160 Z" fill="#5B8FA3"/><path d="M-136 -160 L-136 -200 Q-110 -236 -84 -200 L-84 -160 Z" fill="#5B8FA3"/><path d="M84 -160 L84 -200 Q110 -236 136 -200 L136 -160 Z" fill="#5B8FA3"/><path d="M164 -160 L164 -200 Q190 -236 216 -200 L216 -160 Z" fill="#5B8FA3"/></g></g></g></svg><svg id="s01-waves" class="actor" viewBox="-1000 -1000 2000 1200" style="left:560px;top:-670px;width:2000px;height:1200px;overflow:visible"><g id="s01-waves-g" transform="scale(1 1)"><path d="M20 -60 q20 30 0 60" stroke="#fff" stroke-width="8" fill="none" opacity="1.0"/><path d="M46 -60 q20 30 0 60" stroke="#fff" stroke-width="8" fill="none" opacity="0.75"/><path d="M72 -60 q20 30 0 60" stroke="#fff" stroke-width="8" fill="none" opacity="0.5"/></g></svg><svg id="s01-elif" class="actor" viewBox="-1000 -1000 2000 1200" style="left:-390px;top:-250px;width:2300px;height:1380px;overflow:visible"><g id="s01-elif-g" transform="scale(1 1)">
+  <g class="legs"><rect x="-34" y="-96" width="24" height="86" rx="10" fill="#F6CFA8"/><rect x="10" y="-96" width="24" height="86" rx="10" fill="#F6CFA8"/>
+    <ellipse cx="-22" cy="-6" rx="24" ry="12" fill="#7A4B2A"/><ellipse cx="22" cy="-6" rx="24" ry="12" fill="#7A4B2A"/></g>
+  <path d="M-62 -120 L62 -120 L76 -60 L-76 -60 Z" fill="#2A9D8F"/>
+  <rect x="-58" y="-232" width="116" height="122" rx="40" fill="#F2B632"/>
+  <path d="M-16 -232 L0 -200 L16 -232 Z" fill="#fff"/>
+  <g class="arm-l" transform="rotate(10 -54 -214)"><rect x="-70" y="-220" width="30" height="104" rx="15" fill="#F2B632"/><circle cx="-55" cy="-112" r="15" fill="#F6CFA8"/></g>
+  <g class="arm-r" data-rest="8" transform="rotate(8 54 -214)"><rect x="40" y="-220" width="30" height="104" rx="15" fill="#F2B632"/><circle cx="55" cy="-112" r="15" fill="#F6CFA8"/></g>
+  <g class="head" transform="translate(0 -296)">
+    <path d="M-78 10 Q-84 -86 0 -88 Q84 -86 78 10 Q70 50 54 54 L-54 54 Q-70 50 -78 10 Z" fill="#7B4A2A"/>
+    <ellipse cx="0" cy="0" rx="62" ry="66" fill="#F6CFA8"/>
+    <path d="M-64 -16 Q-40 -76 10 -66 Q50 -60 64 -20 Q40 -46 -6 -44 Q-40 -42 -64 -16 Z" fill="#7B4A2A"/>
+    <rect x="34" y="-58" width="26" height="12" rx="6" fill="#2EC4B6" transform="rotate(-20 47 -52)"/>
+    <g class="eyes"><ellipse cx="-22" cy="4" rx="7" ry="9" fill="#3A2A20"/><ellipse cx="22" cy="4" rx="7" ry="9" fill="#3A2A20"/><circle cx="-19" cy="1" r="2.5" fill="#fff"/><circle cx="25" cy="1" r="2.5" fill="#fff"/></g><path class="mouth-c" d="M-14 34 Q0 46 14 34" stroke="#3A2A20" stroke-width="4" fill="none" stroke-linecap="round"/><ellipse class="mouth-o" cx="0" cy="38" rx="11" ry="9" fill="#7A2E2E" opacity="0"/><circle cx="-36" cy="24" r="8" fill="#F29C8F" opacity="0.55"/><circle cx="36" cy="24" r="8" fill="#F29C8F" opacity="0.55"/>
+  </g></g></svg></div>
+    
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+        tl.fromTo("#s01-cam", { scale: 1.12, transformOrigin: "1200px 500px" }, { scale: 1.0, duration: 8.37, ease: "sine.inOut" }, 0);
+    tl.fromTo("#s01-waves", { opacity: 0 }, { opacity: 1, duration: 0.6 }, 0.6);
+    tl.fromTo("#s01-elif", { opacity: 0 }, { opacity: 1, duration: 0.6 }, 0.3);
+    tl.fromTo("#s01-elif .eyes", { scaleY: 1, transformOrigin: "50% 50%" }, { scaleY: 0.1, duration: 0.07, yoyo: true, repeat: 1 }, 2.6);
+    tl.fromTo("#s01-elif .eyes", { scaleY: 1, transformOrigin: "50% 50%" }, { scaleY: 0.1, duration: 0.07, yoyo: true, repeat: 1 }, 5.9);
+    tl.fromTo("#s01-elif-g", { y: 0 }, { y: -6, duration: 0.8, yoyo: true, repeat: 9, ease: "sine.inOut" }, 0.70);
+    tl.set("#s01-elif .mouth-o", { opacity: 1 }, 6.14);
+    tl.set("#s01-elif .mouth-c", { opacity: 0 }, 6.14);
+    tl.set("#s01-elif .mouth-o", { opacity: 0 }, 6.27);
+    tl.set("#s01-elif .mouth-c", { opacity: 1 }, 6.27);
+    tl.set("#s01-elif .mouth-o", { opacity: 1 }, 6.44);
+    tl.set("#s01-elif .mouth-c", { opacity: 0 }, 6.44);
+    tl.set("#s01-elif .mouth-o", { opacity: 0 }, 6.65);
+    tl.set("#s01-elif .mouth-c", { opacity: 1 }, 6.65);
+    tl.set("#s01-elif .mouth-o", { opacity: 1 }, 6.78);
+    tl.set("#s01-elif .mouth-c", { opacity: 0 }, 6.78);
+    tl.set("#s01-elif .mouth-o", { opacity: 0 }, 6.95);
+    tl.set("#s01-elif .mouth-c", { opacity: 1 }, 6.95);
+    tl.set("#s01-elif .mouth-o", { opacity: 1 }, 7.16);
+    tl.set("#s01-elif .mouth-c", { opacity: 0 }, 7.16);
+    tl.set("#s01-elif .mouth-o", { opacity: 0 }, 7.29);
+    tl.set("#s01-elif .mouth-c", { opacity: 1 }, 7.29);
+    tl.set("#s01-elif .mouth-o", { opacity: 1 }, 7.46);
+    tl.set("#s01-elif .mouth-c", { opacity: 0 }, 7.46);
+    tl.set("#s01-elif .mouth-o", { opacity: 0 }, 7.67);
+    tl.set("#s01-elif .mouth-c", { opacity: 1 }, 7.67);
+    tl.set("#s01-elif .mouth-o", { opacity: 1 }, 7.80);
+    tl.set("#s01-elif .mouth-c", { opacity: 0 }, 7.80);
+    tl.set("#s01-elif .mouth-o", { opacity: 0 }, 7.97);
+    tl.set("#s01-elif .mouth-c", { opacity: 1 }, 7.97);
+    window.__timelines["s01"] = tl;
+  </script>
+</template>

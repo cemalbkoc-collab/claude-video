@@ -1,0 +1,194 @@
+<template>
+  <style>
+    @font-face { font-family: "Amiri"; src: url("assets/fonts/amiri-arabic-700.woff2") format("woff2"); font-weight: 700; }
+    #root { position: absolute; inset: 0; overflow: hidden; font-family: "Nunito", sans-serif; }
+    #c16-cam { position: absolute; inset: 0; }
+    .actor { position: absolute; }
+    #c16-fade { position: absolute; inset: 0; background: #FFF8EC; }
+    .cap { position: absolute; left: 0; right: 0; bottom: 70px; text-align: center; font-weight: 900; font-size: 76px; color: #fff;
+      -webkit-text-stroke: 11px #2B3A55; paint-order: stroke fill; }
+    .title { position: absolute; left: 0; right: 0; top: 330px; text-align: center; font-weight: 900; font-size: 150px; color: #fff;
+      -webkit-text-stroke: 16px #2B6E3F; paint-order: stroke fill; line-height: 1; }
+    .arabic { position: absolute; left: 0; right: 0; text-align: center; font-family: "Amiri", serif; font-weight: 700; color: #1E6B52;
+      direction: rtl; text-shadow: 0 4px 0 #fff; }
+    .chip { position: absolute; padding: 12px 30px; border-radius: 40px; background: #fff; color: #2B3A55; font-weight: 900; font-size: 46px;
+      white-space: nowrap; box-shadow: 0 6px 0 rgba(0,0,0,0.15); }
+  </style>
+  <div id="root" data-composition-id="c16" data-width="1920" data-height="1080">
+    <div id="c16-cam"><svg viewBox="0 0 1920 1080" style="position:absolute;inset:0;width:100%;height:100%"><defs><radialGradient id="wg"><stop offset="0" stop-color="#FFF4D6"/><stop offset="1" stop-color="#F4C77A"/></radialGradient></defs><rect width="1920" height="1080" fill="url(#wg)"/></svg>
+    <svg id="c16-p0" class="actor" viewBox="-1000 -1000 2000 1200" style="left:-740px;top:-380px;width:2000px;height:1200px;overflow:visible"><g id="c16-p0-g" transform="scale(1 1)"><circle cx="0" cy="-110" r="110" fill="#2A9D8F"/><text x="0" y="-70" text-anchor="middle" font-size="120" font-weight="900" fill="#fff" font-family="Nunito">1</text><text x="0" y="70" text-anchor="middle" font-size="52" font-weight="900" fill="#2B3A55" font-family="Nunito">Şehadet</text></g></svg><svg id="c16-p1" class="actor" viewBox="-1000 -1000 2000 1200" style="left:-390px;top:-380px;width:2000px;height:1200px;overflow:visible"><g id="c16-p1-g" transform="scale(1 1)"><circle cx="0" cy="-110" r="110" fill="#3BA7E0"/><text x="0" y="-70" text-anchor="middle" font-size="120" font-weight="900" fill="#fff" font-family="Nunito">2</text><text x="0" y="70" text-anchor="middle" font-size="52" font-weight="900" fill="#2B3A55" font-family="Nunito">Namaz</text></g></svg><svg id="c16-p2" class="actor" viewBox="-1000 -1000 2000 1200" style="left:-40px;top:-380px;width:2000px;height:1200px;overflow:visible"><g id="c16-p2-g" transform="scale(1 1)"><circle cx="0" cy="-110" r="110" fill="#F4A100"/><text x="0" y="-70" text-anchor="middle" font-size="120" font-weight="900" fill="#fff" font-family="Nunito">3</text><text x="0" y="70" text-anchor="middle" font-size="52" font-weight="900" fill="#2B3A55" font-family="Nunito">Oruç</text></g></svg><svg id="c16-p3" class="actor" viewBox="-1000 -1000 2000 1200" style="left:310px;top:-380px;width:2000px;height:1200px;overflow:visible"><g id="c16-p3-g" transform="scale(1 1)"><circle cx="0" cy="-110" r="110" fill="#E63946"/><text x="0" y="-70" text-anchor="middle" font-size="120" font-weight="900" fill="#fff" font-family="Nunito">4</text><text x="0" y="70" text-anchor="middle" font-size="52" font-weight="900" fill="#2B3A55" font-family="Nunito">Zekât</text></g></svg><svg id="c16-p4" class="actor" viewBox="-1000 -1000 2000 1200" style="left:660px;top:-380px;width:2000px;height:1200px;overflow:visible"><g id="c16-p4-g" transform="scale(1 1)"><circle cx="0" cy="-110" r="110" fill="#151515"/><text x="0" y="-70" text-anchor="middle" font-size="120" font-weight="900" fill="#fff" font-family="Nunito">5</text><text x="0" y="70" text-anchor="middle" font-size="52" font-weight="900" fill="#2B3A55" font-family="Nunito">Hac</text></g></svg><svg id="c16-damla" class="actor" viewBox="-1000 -1000 2000 1200" style="left:460px;top:560px;width:1000px;height:600px;overflow:visible"><g id="c16-damla-g" transform="scale(1 1)">
+  <path d="M0 -300 C 40 -220, 110 -160, 110 -96 C 110 -36, 60 0, 0 0 C -60 0, -110 -36, -110 -96 C -110 -160, -40 -220, 0 -300 Z" fill="#5BC0F8" stroke="#2E8BC9" stroke-width="6"/>
+  <path d="M-62 -130 C -60 -170, -34 -200, -16 -222" stroke="#DFF4FF" stroke-width="14" fill="none" stroke-linecap="round" opacity="0.8"/>
+  <g class="arm-l" transform="rotate(-10 -100 -100)"><rect x="-136" y="-110" width="44" height="20" rx="10" fill="#5BC0F8" stroke="#2E8BC9" stroke-width="4"/></g>
+  <g class="arm-r" data-rest="-20" transform="rotate(-20 100 -100)"><rect x="92" y="-110" width="44" height="20" rx="10" fill="#5BC0F8" stroke="#2E8BC9" stroke-width="4"/></g>
+  <g class="head" transform="translate(0 -110)"><g class="eyes"><ellipse cx="-22" cy="0" rx="7" ry="9" fill="#3A2A20"/><ellipse cx="22" cy="0" rx="7" ry="9" fill="#3A2A20"/><circle cx="-19" cy="-3" r="2.5" fill="#fff"/><circle cx="25" cy="-3" r="2.5" fill="#fff"/></g><path class="mouth-c" d="M-14 30 Q0 42 14 30" stroke="#3A2A20" stroke-width="4" fill="none" stroke-linecap="round"/><ellipse class="mouth-o" cx="0" cy="34" rx="11" ry="9" fill="#7A2E2E" opacity="0"/><circle cx="-36" cy="20" r="8" fill="#F29C8F" opacity="0.55"/><circle cx="36" cy="20" r="8" fill="#F29C8F" opacity="0.55"/></g></g></svg></div>
+    <div id="c16-fade"></div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+        tl.fromTo("#c16-fade", { opacity: 1 }, { opacity: 0, duration: 0.45, ease: "power2.out" }, 0);
+    tl.fromTo("#c16-cam", { scale: 1.0, transformOrigin: "960px 600px" }, { scale: 1.06, duration: 13.49, ease: "sine.inOut" }, 0);
+    tl.fromTo("#c16-p0", { scale: 0.3, opacity: 0, transformOrigin: "50% 83%" }, { scale: 1, opacity: 1, duration: 0.5, ease: "back.out(2.2)" }, 1.7);
+    tl.fromTo("#c16-p1", { scale: 0.3, opacity: 0, transformOrigin: "50% 83%" }, { scale: 1, opacity: 1, duration: 0.5, ease: "back.out(2.2)" }, 2.5);
+    tl.fromTo("#c16-p2", { scale: 0.3, opacity: 0, transformOrigin: "50% 83%" }, { scale: 1, opacity: 1, duration: 0.5, ease: "back.out(2.2)" }, 3.13);
+    tl.fromTo("#c16-p3", { scale: 0.3, opacity: 0, transformOrigin: "50% 83%" }, { scale: 1, opacity: 1, duration: 0.5, ease: "back.out(2.2)" }, 3.66);
+    tl.fromTo("#c16-p4", { scale: 0.3, opacity: 0, transformOrigin: "50% 83%" }, { scale: 1, opacity: 1, duration: 0.5, ease: "back.out(2.2)" }, 4.29);
+    tl.fromTo("#c16-damla .eyes", { scaleY: 1, transformOrigin: "50% 50%" }, { scaleY: 0.1, duration: 0.07, yoyo: true, repeat: 1 }, 4.7);
+    tl.fromTo("#c16-damla .eyes", { scaleY: 1, transformOrigin: "50% 50%" }, { scaleY: 0.1, duration: 0.07, yoyo: true, repeat: 1 }, 8.0);
+    tl.fromTo("#c16-damla .eyes", { scaleY: 1, transformOrigin: "50% 50%" }, { scaleY: 0.1, duration: 0.07, yoyo: true, repeat: 1 }, 11.3);
+    tl.fromTo("#c16-damla-g", { y: 0 }, { y: -6, duration: 0.8, yoyo: true, repeat: 15, ease: "sine.inOut" }, 1.60);
+    tl.set("#c16-damla .mouth-o", { opacity: 1 }, 0.60);
+    tl.set("#c16-damla .mouth-c", { opacity: 0 }, 0.60);
+    tl.set("#c16-damla .mouth-o", { opacity: 0 }, 0.73);
+    tl.set("#c16-damla .mouth-c", { opacity: 1 }, 0.73);
+    tl.set("#c16-damla .mouth-o", { opacity: 1 }, 0.90);
+    tl.set("#c16-damla .mouth-c", { opacity: 0 }, 0.90);
+    tl.set("#c16-damla .mouth-o", { opacity: 0 }, 1.11);
+    tl.set("#c16-damla .mouth-c", { opacity: 1 }, 1.11);
+    tl.set("#c16-damla .mouth-o", { opacity: 1 }, 1.24);
+    tl.set("#c16-damla .mouth-c", { opacity: 0 }, 1.24);
+    tl.set("#c16-damla .mouth-o", { opacity: 0 }, 1.41);
+    tl.set("#c16-damla .mouth-c", { opacity: 1 }, 1.41);
+    tl.set("#c16-damla .mouth-o", { opacity: 1 }, 1.62);
+    tl.set("#c16-damla .mouth-c", { opacity: 0 }, 1.62);
+    tl.set("#c16-damla .mouth-o", { opacity: 0 }, 1.75);
+    tl.set("#c16-damla .mouth-c", { opacity: 1 }, 1.75);
+    tl.set("#c16-damla .mouth-o", { opacity: 1 }, 1.92);
+    tl.set("#c16-damla .mouth-c", { opacity: 0 }, 1.92);
+    tl.set("#c16-damla .mouth-o", { opacity: 0 }, 2.13);
+    tl.set("#c16-damla .mouth-c", { opacity: 1 }, 2.13);
+    tl.set("#c16-damla .mouth-o", { opacity: 1 }, 2.26);
+    tl.set("#c16-damla .mouth-c", { opacity: 0 }, 2.26);
+    tl.set("#c16-damla .mouth-o", { opacity: 0 }, 2.43);
+    tl.set("#c16-damla .mouth-c", { opacity: 1 }, 2.43);
+    tl.set("#c16-damla .mouth-o", { opacity: 1 }, 2.64);
+    tl.set("#c16-damla .mouth-c", { opacity: 0 }, 2.64);
+    tl.set("#c16-damla .mouth-o", { opacity: 0 }, 2.77);
+    tl.set("#c16-damla .mouth-c", { opacity: 1 }, 2.77);
+    tl.set("#c16-damla .mouth-o", { opacity: 1 }, 2.94);
+    tl.set("#c16-damla .mouth-c", { opacity: 0 }, 2.94);
+    tl.set("#c16-damla .mouth-o", { opacity: 0 }, 3.15);
+    tl.set("#c16-damla .mouth-c", { opacity: 1 }, 3.15);
+    tl.set("#c16-damla .mouth-o", { opacity: 1 }, 3.28);
+    tl.set("#c16-damla .mouth-c", { opacity: 0 }, 3.28);
+    tl.set("#c16-damla .mouth-o", { opacity: 0 }, 3.45);
+    tl.set("#c16-damla .mouth-c", { opacity: 1 }, 3.45);
+    tl.set("#c16-damla .mouth-o", { opacity: 1 }, 3.66);
+    tl.set("#c16-damla .mouth-c", { opacity: 0 }, 3.66);
+    tl.set("#c16-damla .mouth-o", { opacity: 0 }, 3.79);
+    tl.set("#c16-damla .mouth-c", { opacity: 1 }, 3.79);
+    tl.set("#c16-damla .mouth-o", { opacity: 1 }, 3.96);
+    tl.set("#c16-damla .mouth-c", { opacity: 0 }, 3.96);
+    tl.set("#c16-damla .mouth-o", { opacity: 0 }, 4.17);
+    tl.set("#c16-damla .mouth-c", { opacity: 1 }, 4.17);
+    tl.set("#c16-damla .mouth-o", { opacity: 1 }, 4.30);
+    tl.set("#c16-damla .mouth-c", { opacity: 0 }, 4.30);
+    tl.set("#c16-damla .mouth-o", { opacity: 0 }, 4.47);
+    tl.set("#c16-damla .mouth-c", { opacity: 1 }, 4.47);
+    tl.set("#c16-damla .mouth-o", { opacity: 1 }, 4.68);
+    tl.set("#c16-damla .mouth-c", { opacity: 0 }, 4.68);
+    tl.set("#c16-damla .mouth-o", { opacity: 0 }, 4.81);
+    tl.set("#c16-damla .mouth-c", { opacity: 1 }, 4.81);
+    tl.set("#c16-damla .mouth-o", { opacity: 1 }, 4.98);
+    tl.set("#c16-damla .mouth-c", { opacity: 0 }, 4.98);
+    tl.set("#c16-damla .mouth-o", { opacity: 0 }, 5.19);
+    tl.set("#c16-damla .mouth-c", { opacity: 1 }, 5.19);
+    tl.set("#c16-damla .mouth-o", { opacity: 1 }, 5.32);
+    tl.set("#c16-damla .mouth-c", { opacity: 0 }, 5.32);
+    tl.set("#c16-damla .mouth-o", { opacity: 0 }, 5.49);
+    tl.set("#c16-damla .mouth-c", { opacity: 1 }, 5.49);
+    tl.set("#c16-damla .mouth-o", { opacity: 1 }, 5.70);
+    tl.set("#c16-damla .mouth-c", { opacity: 0 }, 5.70);
+    tl.set("#c16-damla .mouth-o", { opacity: 0 }, 5.83);
+    tl.set("#c16-damla .mouth-c", { opacity: 1 }, 5.83);
+    tl.set("#c16-damla .mouth-o", { opacity: 1 }, 6.00);
+    tl.set("#c16-damla .mouth-c", { opacity: 0 }, 6.00);
+    tl.set("#c16-damla .mouth-o", { opacity: 0 }, 6.21);
+    tl.set("#c16-damla .mouth-c", { opacity: 1 }, 6.21);
+    tl.set("#c16-damla .mouth-o", { opacity: 1 }, 6.34);
+    tl.set("#c16-damla .mouth-c", { opacity: 0 }, 6.34);
+    tl.set("#c16-damla .mouth-o", { opacity: 0 }, 6.58);
+    tl.set("#c16-damla .mouth-c", { opacity: 1 }, 6.58);
+    tl.set("#c16-damla .mouth-o", { opacity: 1 }, 6.98);
+    tl.set("#c16-damla .mouth-c", { opacity: 0 }, 6.98);
+    tl.set("#c16-damla .mouth-o", { opacity: 0 }, 7.11);
+    tl.set("#c16-damla .mouth-c", { opacity: 1 }, 7.11);
+    tl.set("#c16-damla .mouth-o", { opacity: 1 }, 7.28);
+    tl.set("#c16-damla .mouth-c", { opacity: 0 }, 7.28);
+    tl.set("#c16-damla .mouth-o", { opacity: 0 }, 7.49);
+    tl.set("#c16-damla .mouth-c", { opacity: 1 }, 7.49);
+    tl.set("#c16-damla .mouth-o", { opacity: 1 }, 7.62);
+    tl.set("#c16-damla .mouth-c", { opacity: 0 }, 7.62);
+    tl.set("#c16-damla .mouth-o", { opacity: 0 }, 7.79);
+    tl.set("#c16-damla .mouth-c", { opacity: 1 }, 7.79);
+    tl.set("#c16-damla .mouth-o", { opacity: 1 }, 8.00);
+    tl.set("#c16-damla .mouth-c", { opacity: 0 }, 8.00);
+    tl.set("#c16-damla .mouth-o", { opacity: 0 }, 8.13);
+    tl.set("#c16-damla .mouth-c", { opacity: 1 }, 8.13);
+    tl.set("#c16-damla .mouth-o", { opacity: 1 }, 8.30);
+    tl.set("#c16-damla .mouth-c", { opacity: 0 }, 8.30);
+    tl.set("#c16-damla .mouth-o", { opacity: 0 }, 8.51);
+    tl.set("#c16-damla .mouth-c", { opacity: 1 }, 8.51);
+    tl.set("#c16-damla .mouth-o", { opacity: 1 }, 8.64);
+    tl.set("#c16-damla .mouth-c", { opacity: 0 }, 8.64);
+    tl.set("#c16-damla .mouth-o", { opacity: 0 }, 8.81);
+    tl.set("#c16-damla .mouth-c", { opacity: 1 }, 8.81);
+    tl.set("#c16-damla .mouth-o", { opacity: 1 }, 9.02);
+    tl.set("#c16-damla .mouth-c", { opacity: 0 }, 9.02);
+    tl.set("#c16-damla .mouth-o", { opacity: 0 }, 9.15);
+    tl.set("#c16-damla .mouth-c", { opacity: 1 }, 9.15);
+    tl.set("#c16-damla .mouth-o", { opacity: 1 }, 9.32);
+    tl.set("#c16-damla .mouth-c", { opacity: 0 }, 9.32);
+    tl.set("#c16-damla .mouth-o", { opacity: 0 }, 9.53);
+    tl.set("#c16-damla .mouth-c", { opacity: 1 }, 9.53);
+    tl.set("#c16-damla .mouth-o", { opacity: 1 }, 9.66);
+    tl.set("#c16-damla .mouth-c", { opacity: 0 }, 9.66);
+    tl.set("#c16-damla .mouth-o", { opacity: 0 }, 9.83);
+    tl.set("#c16-damla .mouth-c", { opacity: 1 }, 9.83);
+    tl.set("#c16-damla .mouth-o", { opacity: 1 }, 10.04);
+    tl.set("#c16-damla .mouth-c", { opacity: 0 }, 10.04);
+    tl.set("#c16-damla .mouth-o", { opacity: 0 }, 10.17);
+    tl.set("#c16-damla .mouth-c", { opacity: 1 }, 10.17);
+    tl.set("#c16-damla .mouth-o", { opacity: 1 }, 10.34);
+    tl.set("#c16-damla .mouth-c", { opacity: 0 }, 10.34);
+    tl.set("#c16-damla .mouth-o", { opacity: 0 }, 10.55);
+    tl.set("#c16-damla .mouth-c", { opacity: 1 }, 10.55);
+    tl.set("#c16-damla .mouth-o", { opacity: 1 }, 10.68);
+    tl.set("#c16-damla .mouth-c", { opacity: 0 }, 10.68);
+    tl.set("#c16-damla .mouth-o", { opacity: 0 }, 10.85);
+    tl.set("#c16-damla .mouth-c", { opacity: 1 }, 10.85);
+    tl.set("#c16-damla .mouth-o", { opacity: 1 }, 11.06);
+    tl.set("#c16-damla .mouth-c", { opacity: 0 }, 11.06);
+    tl.set("#c16-damla .mouth-o", { opacity: 0 }, 11.19);
+    tl.set("#c16-damla .mouth-c", { opacity: 1 }, 11.19);
+    tl.set("#c16-damla .mouth-o", { opacity: 1 }, 11.36);
+    tl.set("#c16-damla .mouth-c", { opacity: 0 }, 11.36);
+    tl.set("#c16-damla .mouth-o", { opacity: 0 }, 11.57);
+    tl.set("#c16-damla .mouth-c", { opacity: 1 }, 11.57);
+    tl.set("#c16-damla .mouth-o", { opacity: 1 }, 11.70);
+    tl.set("#c16-damla .mouth-c", { opacity: 0 }, 11.70);
+    tl.set("#c16-damla .mouth-o", { opacity: 0 }, 11.87);
+    tl.set("#c16-damla .mouth-c", { opacity: 1 }, 11.87);
+    tl.set("#c16-damla .mouth-o", { opacity: 1 }, 12.08);
+    tl.set("#c16-damla .mouth-c", { opacity: 0 }, 12.08);
+    tl.set("#c16-damla .mouth-o", { opacity: 0 }, 12.21);
+    tl.set("#c16-damla .mouth-c", { opacity: 1 }, 12.21);
+    tl.set("#c16-damla .mouth-o", { opacity: 1 }, 12.38);
+    tl.set("#c16-damla .mouth-c", { opacity: 0 }, 12.38);
+    tl.set("#c16-damla .mouth-o", { opacity: 0 }, 12.59);
+    tl.set("#c16-damla .mouth-c", { opacity: 1 }, 12.59);
+    tl.set("#c16-damla .mouth-o", { opacity: 1 }, 12.72);
+    tl.set("#c16-damla .mouth-c", { opacity: 0 }, 12.72);
+    tl.set("#c16-damla .mouth-o", { opacity: 0 }, 12.89);
+    tl.set("#c16-damla .mouth-c", { opacity: 1 }, 12.89);
+    tl.set("#c16-damla .mouth-o", { opacity: 0 }, 13.19);
+    tl.set("#c16-damla .mouth-c", { opacity: 1 }, 13.19);
+    tl.to("#c16-damla", { y: -60, duration: 0.25, yoyo: true, repeat: 3, ease: "power2.out" }, 12.12);
+    tl.fromTo("#c16-p0", { scale: 1 }, { scale: 1.25, transformOrigin: "50% 60%", duration: 0.2, yoyo: true, repeat: 1 }, 8.67);
+    tl.fromTo("#c16-p1", { scale: 1 }, { scale: 1.25, transformOrigin: "50% 60%", duration: 0.2, yoyo: true, repeat: 1 }, 9.51);
+    tl.fromTo("#c16-p2", { scale: 1 }, { scale: 1.25, transformOrigin: "50% 60%", duration: 0.2, yoyo: true, repeat: 1 }, 10.2);
+    tl.fromTo("#c16-p3", { scale: 1 }, { scale: 1.25, transformOrigin: "50% 60%", duration: 0.2, yoyo: true, repeat: 1 }, 10.82);
+    tl.fromTo("#c16-p4", { scale: 1 }, { scale: 1.25, transformOrigin: "50% 60%", duration: 0.2, yoyo: true, repeat: 1 }, 11.74);
+    window.__timelines["c16"] = tl;
+  </script>
+</template>
